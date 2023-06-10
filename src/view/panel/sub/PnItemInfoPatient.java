@@ -21,14 +21,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import custom.TableCustom;
-import data.PatientDAO;
 import main.Main;
 import model.Clinic;
 import model.Patient;
 import observer.Observer;
-import observer.Subject;
 
-public class PnSubBenhNhan extends JPanel implements Observer {
+public class PnItemInfoPatient extends JPanel implements Observer {
 	private JPanel pnMain, pnTitle, pnInput, pnButton, pnSearch, pnTable;
 	private JButton btnAdd, btnEdit, btnRemove, btnView;
 	private JLabel lbId, lbName, lbYearOfBirth, lbGender, lbPhone, lbAddress, lbSearch;
@@ -85,11 +83,13 @@ public class PnSubBenhNhan extends JPanel implements Observer {
 	public void setClinic(Clinic clinic) {
 		this.clinic = clinic;
 	}
-	public PnSubBenhNhan() {
+
+	public PnItemInfoPatient() {
 		Main.changLNF("Windows");
 		addControls();
 		addEvents();
 	}
+
 	public void addControls() {
 		Font font = new Font("Tahoma", Font.PLAIN, 20);
 
@@ -253,7 +253,6 @@ public class PnSubBenhNhan extends JPanel implements Observer {
 		pnMain.add(pnTable);
 	}
 
-	// Viết code xử lí sự kiện trong đây
 	public void addEvents() {
 		tbPatient.addMouseListener(new MouseListener() {
 			@Override

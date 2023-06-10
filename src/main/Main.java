@@ -1,5 +1,6 @@
 package main;
 
+import controller.DiagnosticController;
 import controller.PatientController;
 import data.PatientDAO;
 import model.Clinic;
@@ -10,6 +11,7 @@ public class Main {
 		Container view = new Container();
 		Clinic model = new Clinic("Phongkhamabc", "Thu duc", "18000018", PatientDAO.patients, null);
 		PatientController controller = new PatientController(view, model);
+		DiagnosticController controller2 = new DiagnosticController(view, model);
 	}
 
 	public static void changLNF(String nameLNF) {

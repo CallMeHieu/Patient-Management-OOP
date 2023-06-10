@@ -1,34 +1,34 @@
 package view.panel.sub;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import main.Main;
+import model.Clinic;
+import model.Patient;
 
-public class PnSubChuanHoa extends JPanel {
+public class PnItemDiagnostic extends JPanel {
 	private JPanel pnMain, pnTitle, pnContent, pnInput, pnButton;
 	private JLabel lbId, lbName, lbBirthDay, lbGender, lbPhone, lbAddress, lbSymptom, lbCnclude;
-	private JTextField tfId, tfName, tfBirthDay, tfPhone, tfAddress, tfSymptom, tfCnclude;
-	private JComboBox<String> cbbGender;
-	private JButton btnCancel, btnReset, btnSave;
+	private JTextField tfId, tfName, tfBirthDay, tfGender, tfPhone, tfAddress;
+	private JTextArea taSymptom, taCnclude;
+	private JButton btnBack, btnContinue;
+	private Clinic clinic;
 
-	public PnSubChuanHoa() {
+	public PnItemDiagnostic() {
 		Main.changLNF("Windows");
 		addControls();
-		addEvents();
 	}
 
-//Viết code tạo view trong đây
 	public void addControls() {
 		Font font = new Font("Tahoma", Font.PLAIN, 20);
 
@@ -76,24 +76,26 @@ public class PnSubChuanHoa extends JPanel {
 		tfId = new JTextField(24);
 		tfId.setEditable(false);
 		tfName = new JTextField(24);
+		tfName.setEditable(false);
 		tfBirthDay = new JTextField(24);
-		cbbGender = new JComboBox<>();
-		cbbGender.addItem("Chọn giới tính");
-		cbbGender.addItem("Nam");
-		cbbGender.addItem("Nữ");
+		tfBirthDay.setEditable(false);
+		tfGender = new JTextField(24);
+		tfGender.setEditable(false);
 		tfPhone = new JTextField(24);
+		tfPhone.setEditable(false);
 		tfAddress = new JTextField(24);
-		tfSymptom = new JTextField(24);
-		tfCnclude = new JTextField(24);
+		tfAddress.setEditable(false);
+		taSymptom = new JTextArea(4, 24);
+		taCnclude = new JTextArea(4, 24);
 
 		tfId.setFont(font);
 		tfName.setFont(font);
 		tfBirthDay.setFont(font);
-		cbbGender.setFont(font);
+		tfGender.setFont(font);
 		tfPhone.setFont(font);
 		tfAddress.setFont(font);
-		tfSymptom.setFont(font);
-		tfCnclude.setFont(font);
+		taSymptom.setFont(font);
+		taCnclude.setFont(font);
 
 		JPanel pnId = new JPanel();
 		pnId.add(lbId);
@@ -112,7 +114,7 @@ public class PnSubChuanHoa extends JPanel {
 
 		JPanel pnGender = new JPanel();
 		pnGender.add(lbGender);
-		pnGender.add(cbbGender);
+		pnGender.add(tfGender);
 		pnInput.add(pnGender);
 
 		JPanel pnPhone = new JPanel();
@@ -127,12 +129,12 @@ public class PnSubChuanHoa extends JPanel {
 
 		JPanel pnSymptom = new JPanel();
 		pnSymptom.add(lbSymptom);
-		pnSymptom.add(tfSymptom);
+		pnSymptom.add(taSymptom);
 		pnInput.add(pnSymptom);
 
 		JPanel pnCnclude = new JPanel();
 		pnCnclude.add(lbCnclude);
-		pnCnclude.add(tfCnclude);
+		pnCnclude.add(taCnclude);
 		pnInput.add(pnCnclude);
 
 		Dimension lbSize = lbId.getPreferredSize();
@@ -144,24 +146,23 @@ public class PnSubChuanHoa extends JPanel {
 		lbAddress.setPreferredSize(lbSize);
 		lbSymptom.setPreferredSize(lbSize);
 		lbCnclude.setPreferredSize(lbSize);
-		cbbGender.setPreferredSize(tfId.getPreferredSize());
+		tfGender.setPreferredSize(lbSize);
+		taCnclude.setPreferredSize(lbSize);
+		taSymptom.setPreferredSize(lbSize);
 
 		/*
 		 * ======================= PANEL BUTTON =======================
 		 */
 
 		pnButton = new JPanel();
-		btnCancel = new JButton("Hủy");
-		btnReset = new JButton("Làm mới");
-		btnSave = new JButton("Lưu");
+		btnBack = new JButton("Quay lại");
+		btnContinue = new JButton("Tiếp tục");
 
 		Font fontButton = new Font("Tahoma", Font.PLAIN, 16);
-		btnCancel.setFont(fontButton);
-		btnReset.setFont(fontButton);
-		btnSave.setFont(fontButton);
-		pnButton.add(btnCancel);
-		pnButton.add(btnReset);
-		pnButton.add(btnSave);
+		btnBack.setFont(fontButton);
+		btnContinue.setFont(fontButton);
+		pnButton.add(btnBack);
+		pnButton.add(btnContinue);
 		pnMain.add(pnButton);
 
 		JPanel pnTable = new JPanel();
@@ -171,8 +172,64 @@ public class PnSubChuanHoa extends JPanel {
 
 	}
 
-//Viết code xử lí sự kiện trong đây
-	public void addEvents() {
+	public JTextField getTfId() {
+		return tfId;
+	}
 
+	public JTextField getTfName() {
+		return tfName;
+	}
+
+	public JTextField getTfBirthDay() {
+		return tfBirthDay;
+	}
+
+	public JTextField getTfGender() {
+		return tfGender;
+	}
+
+	public JTextField getTfPhone() {
+		return tfPhone;
+	}
+
+	public JTextField getTfAddress() {
+		return tfAddress;
+	}
+
+	public JTextArea getTaSymptom() {
+		return taSymptom;
+	}
+
+	public JTextArea getTaCnclude() {
+		return taCnclude;
+	}
+
+	public Clinic getClinic() {
+		return clinic;
+	}
+
+	public void setClinic(Clinic clinic) {
+		this.clinic = clinic;
+	}
+
+	public JButton getBtnBack() {
+		return btnBack;
+	}
+
+	public JButton getBtnContinue() {
+		return btnContinue;
+	}
+
+	public void loadPatient(Patient patient) {
+		tfId.setText(patient.getId());
+		tfName.setText(patient.getName());
+		tfBirthDay.setText(patient.getYearOfBirth() + "");
+		if (patient.isGender()) {
+			tfGender.setText("Nam");
+		} else {
+			tfGender.setText("Nữ");
+		}
+		tfPhone.setText(patient.getPhone());
+		tfAddress.setText(patient.getAddress());
 	}
 }
