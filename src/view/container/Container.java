@@ -22,7 +22,7 @@ import view.panel.PnDanh;
 import view.panel.PnPrescription;
 import view.panel.PnMedicine;
 import view.panel.PnPatient;
-import view.panel.sub.PnSubChuanHoa;
+import view.panel.sub.PnItemDiagnostic;
 
 public class Container extends JFrame {
 	JPanel pnMenu, pnRight, pnTitle, pnContent, pnPatient, pnDinh, pnDanh, pnDuc, pnMedicine;
@@ -32,7 +32,7 @@ public class Container extends JFrame {
 	PnPatient patientPanel;
 	PnPrescription dinhPanel;
 	PnDanh danhPanel;
-	PnSubChuanHoa ducPanel;
+	PnItemDiagnostic ducPanel;
 	PnMedicine minhPanel;
 
 	public Container() {
@@ -155,7 +155,7 @@ public class Container extends JFrame {
 		pnDanh.setLayout(new BorderLayout());
 		pnDanh.add(danhPanel, BorderLayout.CENTER);
 
-		ducPanel = new PnSubChuanHoa();
+		ducPanel = new PnItemDiagnostic();
 		pnDuc.setLayout(new BorderLayout());
 		pnDuc.add(ducPanel, BorderLayout.CENTER);
 

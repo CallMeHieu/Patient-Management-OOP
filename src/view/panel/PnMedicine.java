@@ -21,8 +21,8 @@ import custom.TableCustom;
 import main.Main;
 import observer.Observer;
 
-public class PnMedicine extends JPanel implements Observer{
-	JPanel pnMain, pnTitle, pnInput, pnButton,pnTable;
+public class PnMedicine extends JPanel implements Observer {
+	JPanel pnMain, pnTitle, pnInput, pnButton, pnTable;
 	JLabel lbId, lbName, lbUnit;
 	JTextField tfId, tfName;
 	JComboBox<String> cbbUnit;
@@ -37,7 +37,6 @@ public class PnMedicine extends JPanel implements Observer{
 		addEvents();
 	}
 
-//Viết code tạo view trong đây
 	public void addControls() {
 		font = new Font("Tahoma", Font.PLAIN, 20);
 		fontMenu = new Font("Tahoma", Font.PLAIN, 14);
@@ -153,7 +152,6 @@ public class PnMedicine extends JPanel implements Observer{
 
 	}
 
-//Viết code xử lí sự kiện trong đây
 	public void addEvents() {
 
 	}
@@ -161,6 +159,6 @@ public class PnMedicine extends JPanel implements Observer{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
