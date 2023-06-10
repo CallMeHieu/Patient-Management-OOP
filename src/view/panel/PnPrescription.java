@@ -1,10 +1,12 @@
 package view.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -129,7 +131,6 @@ public class PnPrescription extends JPanel implements Observer {
 		pnTable.add(pnTablePrescription);
 	}
 
-//Viết code xử lí sự kiện trong đây
 	public void addEvents() {
 
 	}
