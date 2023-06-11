@@ -2,11 +2,14 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import model.Clinic;
 import model.Patient;
+import model.Visit;
 import view.container.Container;
 
 public class PatientController {
@@ -49,6 +52,8 @@ public class PatientController {
 					if (gender.equalsIgnoreCase("Nữ")) {
 						patient = new Patient(id, name, address, phone, yearOfBirth, false);
 					}
+					List<Visit> visits = new ArrayList<>();
+					patient.setVisits(visits);
 					model.addPatient(patient);
 					JOptionPane.showMessageDialog(null, "Thêm thành công");
 				} else {
@@ -99,7 +104,7 @@ public class PatientController {
 					else
 						JOptionPane.showMessageDialog(null, "Xóa thất bại!!!");
 				} else if (result == JOptionPane.NO_OPTION) {
-					System.out.println("Mày vừa chọn không");
+					System.out.println("Bạn chọn không");
 				} else {
 					System.out.println("...");
 				}

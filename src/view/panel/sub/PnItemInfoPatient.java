@@ -299,7 +299,7 @@ public class PnItemInfoPatient extends JPanel implements Observer {
 	public void update() {
 		dtmPatient.setRowCount(0);
 		for (Patient patient : clinic.getPatients()) {
-			Vector vec = new Vector();
+			Vector<Object> vec = new Vector<>();
 			vec.add(patient.getId());
 			vec.add(patient.getName());
 			vec.add(patient.getYearOfBirth());

@@ -11,11 +11,10 @@ public class Visit implements Subject {// Các lần khám bệnh
 	private String visitID;
 	private Date date;// ngày khám
 	private String symptom;// danh sách chuẩn đoán bệnh
-	private String conclusion;
+	private String conclusion;// kết quả
 	private Prescription prescription;// đơn thuốc
-	private Date appointmentDate;// ngày hẹn tái khám
 
-	public Visit(String visitID, Date date, String symptom,String conclusion,Prescription prescription) {
+	public Visit(String visitID, Date date, String symptom, String conclusion, Prescription prescription) {
 		observers = new ArrayList<Observer>();
 		this.visitID = visitID;
 		this.date = date;
@@ -74,15 +73,6 @@ public class Visit implements Subject {// Các lần khám bệnh
 
 	public void setPrescription(Prescription prescription) {
 		this.prescription = prescription;
-		notifyObservers();
-	}
-
-	public Date getAppointmentDate() {
-		return appointmentDate;
-	}
-
-	public void setAppointmentDate(Date appointmentDate) {
-		this.appointmentDate = appointmentDate;
 		notifyObservers();
 	}
 

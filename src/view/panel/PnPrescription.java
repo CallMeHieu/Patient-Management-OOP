@@ -1,12 +1,11 @@
 package view.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,6 +17,7 @@ import javax.swing.table.TableColumnModel;
 import custom.TableCustom;
 import main.Main;
 import model.Clinic;
+import model.Medicine;
 import observer.Observer;
 
 public class PnPrescription extends JPanel implements Observer {
@@ -110,6 +110,7 @@ public class PnPrescription extends JPanel implements Observer {
 		dtmPrescription.addColumn("Mã số");
 		dtmPrescription.addColumn("Tên thuốc");
 		dtmPrescription.addColumn("Liều dùng");
+		dtmPrescription.addColumn("Đơn vị");
 
 		tbPrescription = new JTable();
 		tbPrescription = new TableCustom(dtmPrescription);
@@ -120,11 +121,13 @@ public class PnPrescription extends JPanel implements Observer {
 		tbPrescription.getColumnModel().getColumn(0).setCellRenderer(renderer1);
 		tbPrescription.getColumnModel().getColumn(1).setCellRenderer(renderer1);
 		tbPrescription.getColumnModel().getColumn(2).setCellRenderer(renderer1);
+		tbPrescription.getColumnModel().getColumn(3).setCellRenderer(renderer1);
 
 		TableColumnModel columnModelBanHang1 = tbPrescription.getColumnModel();
 		columnModelBanHang1.getColumn(0).setPreferredWidth(60);
-		columnModelBanHang1.getColumn(1).setPreferredWidth(550);
-		columnModelBanHang1.getColumn(2).setPreferredWidth(200);
+		columnModelBanHang1.getColumn(1).setPreferredWidth(400);
+		columnModelBanHang1.getColumn(2).setPreferredWidth(400);
+		columnModelBanHang1.getColumn(3).setPreferredWidth(200);
 
 		JScrollPane scrTblSanPham1 = new JScrollPane(tbPrescription);
 		pnTablePrescription.add(scrTblSanPham1, BorderLayout.CENTER);
@@ -137,21 +140,14 @@ public class PnPrescription extends JPanel implements Observer {
 
 	@Override
 	public void update() {
-//		dtmMedicine.setRowCount(0);
-//		for (Medicine medicine : clinic.getMedicines()) {
-//			Vector<Object> vec = new Vector<Object>();
-//			vec.add(medicine.getMedicineID());
-//			vec.add(medicine.getName());
-//			vec.add(medicine.getUnit());
-//			dtmMedicine.addRow(vec);
-//		}
-//		dtmPrescription.setRowCount(0);
-//		for (Prescription prescription : clinic.getPatients().) {
-//			Vector<Object> vec = new Vector<Object>();
-//			vec.add(prescription.getPrescriptionID());
-//			vec.add(prescription.getName());
-//			vec.add(prescription.getUnit());
-//			dtmPrescription.addRow(vec);
-//		}
+		dtmPrescription.setRowCount(0);
+		for (Medicine medicine : clinic.getMedicines()) {
+			Vector<Object> vec = new Vector<>();
+			vec.add(medicine.getMedicineID());
+			vec.add(medicine.getName());
+			vec.add(medicine.getDosage());
+			vec.add(medicine.getUnit());
+			dtmPrescription.addRow(vec);
+		}
 	}
 }

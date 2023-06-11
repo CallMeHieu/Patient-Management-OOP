@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.MedicineDAO;
 import data.PatientDAO;
 import observer.Observer;
 import observer.Subject;
@@ -15,7 +16,7 @@ public class Clinic implements Subject { // Phòng khám
 	private List<Patient> patients = new ArrayList<>();
 	private List<Medicine> medicines = new ArrayList<>();
 
-	public Clinic(String name, String address, String phone, List<Patient> patients, List<Medicine> medicines ) {
+	public Clinic(String name, String address, String phone, List<Patient> patients, List<Medicine> medicines) {
 		observers = new ArrayList<>();
 		this.name = name;
 		this.address = address;
@@ -24,7 +25,6 @@ public class Clinic implements Subject { // Phòng khám
 		this.medicines = medicines;
 	}
 
-
 	public List<Patient> getPatients() {
 		return patients;
 	}
@@ -32,6 +32,14 @@ public class Clinic implements Subject { // Phòng khám
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 		notifyObservers();
+	}
+
+	public List<Medicine> getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(List<Medicine> medicines) {
+		this.medicines = medicines;
 	}
 
 	public ArrayList<Observer> getObservers() {
@@ -81,16 +89,45 @@ public class Clinic implements Subject { // Phòng khám
 	}
 
 	public boolean deletePatient(String id) {
-		if(PatientDAO.deletePatient(id)){
+		if (PatientDAO.deletePatient(id)) {
 			this.patients = PatientDAO.patients;
 			notifyObservers();
 			return true;
 		}
 		return false;
 	}
+
 	public boolean updatePatient(Patient patient) {
-		if(PatientDAO.updatePatient(patient)){
+		if (PatientDAO.updatePatient(patient)) {
 			this.patients = PatientDAO.patients;
+			notifyObservers();
+			return true;
+		}
+		return false;
+	}
+
+	public void addMedicine(Medicine medicine) {
+		MedicineDAO.saveMedicine(medicine);
+		this.medicines = MedicineDAO.medicines;
+		notifyObservers();
+	}
+
+	public Medicine findMedicineById(String id) {
+		return MedicineDAO.findMedicineById(id);
+	}
+
+	public boolean deleteMedicine(String id) {
+		if (MedicineDAO.deleteMedicine(id)) {
+			this.medicines = MedicineDAO.medicines;
+			notifyObservers();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean updateMedicine(Medicine medicine) {
+		if (MedicineDAO.updateMedicine(medicine)) {
+			this.medicines = MedicineDAO.medicines;
 			notifyObservers();
 			return true;
 		}
@@ -109,7 +146,7 @@ public class Clinic implements Subject { // Phòng khám
 
 	@Override
 	public void notifyObservers() {
-		for(Observer o : observers) {
+		for (Observer o : observers) {
 			o.update();
 		}
 	}

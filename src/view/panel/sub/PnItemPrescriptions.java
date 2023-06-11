@@ -21,8 +21,10 @@ import javax.swing.table.TableColumnModel;
 import custom.TableCustom;
 import main.Main;
 import model.Clinic;
+import model.Medicine;
+import observer.Observer;
 
-public class PnItemPrescriptions extends JPanel {
+public class PnItemPrescriptions extends JPanel implements Observer {
 	private JPanel pnMain, pnTitle, pnTable, pnSearch, pnContent, pnButton;
 	private JLabel lbSearch, lbName, lbPhone, lbAddress, lbYearOfBirth;
 	private JTextArea taPrescriptions;
@@ -35,7 +37,6 @@ public class PnItemPrescriptions extends JPanel {
 	public PnItemPrescriptions() {
 		Main.changLNF("Windows");
 		addControls();
-		addEvents();
 	}
 
 	private void addControls() {
@@ -58,11 +59,10 @@ public class PnItemPrescriptions extends JPanel {
 		 */
 		pnContent = new JPanel();
 		pnContent.setLayout(new BoxLayout(pnContent, BoxLayout.Y_AXIS));
-		String s = "hieu";
-		lbName = new JLabel(s);
-		lbYearOfBirth = new JLabel(s);
-		lbPhone = new JLabel(s);
-		lbAddress = new JLabel(s);
+		lbName = new JLabel("Nguyen");
+		lbYearOfBirth = new JLabel();
+		lbPhone = new JLabel();
+		lbAddress = new JLabel();
 
 		lbName.setFont(font);
 		lbYearOfBirth.setFont(font);
@@ -141,16 +141,42 @@ public class PnItemPrescriptions extends JPanel {
 		JScrollPane scrTblSanPham = new JScrollPane(tbPrescription);
 		pnTable.add(scrTblSanPham, BorderLayout.CENTER);
 		pnMain.add(pnTable);
+	}
 
+	@Override
+	public void update() {
 		dtmPrescription.setRowCount(0);
-		Vector<Object> vec = new Vector<>();
-		vec.add("001");
-		vec.add("Ten");
-		vec.add("lieu");
-		dtmPrescription.addRow(vec);
+		for (Medicine medicine : clinic.getMedicines()) {
+			Vector<Object> vec = new Vector<>();
+			vec.add(medicine.getMedicineID());
+			vec.add(medicine.getName());
+			vec.add(medicine.getUnit());
+			dtmPrescription.addRow(vec);
+		}
 	}
 
-	private void addEvents() {
-
+	public Clinic getClinic() {
+		return clinic;
 	}
+
+	public void setClinic(Clinic clinic) {
+		this.clinic = clinic;
+	}
+
+	public JLabel getLbName() {
+		return lbName;
+	}
+
+	public JLabel getLbPhone() {
+		return lbPhone;
+	}
+
+	public JLabel getLbAddress() {
+		return lbAddress;
+	}
+
+	public JLabel getLbYearOfBirth() {
+		return lbYearOfBirth;
+	}
+
 }
