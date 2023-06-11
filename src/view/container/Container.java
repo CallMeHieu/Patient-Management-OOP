@@ -19,9 +19,9 @@ import javax.swing.WindowConstants;
 import main.Main;
 import utils.SystemColor;
 import view.panel.PnDanh;
-import view.panel.PnPrescription;
 import view.panel.PnMedicine;
 import view.panel.PnPatient;
+import view.panel.PnPrescription;
 import view.panel.sub.PnItemDiagnostic;
 
 public class Container extends JFrame {
@@ -30,10 +30,10 @@ public class Container extends JFrame {
 	ArrayList<JLabel> listMenu;
 	CardLayout cardMenuLeftGroup = new CardLayout();
 	PnPatient patientPanel;
-	PnPrescription dinhPanel;
+	PnPrescription prescriptionPanel;
 	PnDanh danhPanel;
 	PnItemDiagnostic ducPanel;
-	PnMedicine minhPanel;
+	PnMedicine medicinePanel;
 
 	public Container() {
 		Main.changLNF("Nimbus");
@@ -46,6 +46,14 @@ public class Container extends JFrame {
 
 	public PnPatient getPatientPanel() {
 		return patientPanel;
+	}
+
+	public PnPrescription getPrescriptionPanel() {
+		return prescriptionPanel;
+	}
+
+	public PnMedicine getMedicinePanel() {
+		return medicinePanel;
 	}
 
 	public void showWindow() {
@@ -147,9 +155,9 @@ public class Container extends JFrame {
 		pnPatient.setLayout(new BorderLayout());
 		pnPatient.add(patientPanel, BorderLayout.CENTER);
 
-		dinhPanel = new PnPrescription();
+		prescriptionPanel = new PnPrescription();
 		pnDinh.setLayout(new BorderLayout());
-		pnDinh.add(dinhPanel, BorderLayout.CENTER);
+		pnDinh.add(prescriptionPanel, BorderLayout.CENTER);
 
 		danhPanel = new PnDanh();
 		pnDanh.setLayout(new BorderLayout());
@@ -159,9 +167,9 @@ public class Container extends JFrame {
 		pnDuc.setLayout(new BorderLayout());
 		pnDuc.add(ducPanel, BorderLayout.CENTER);
 
-		minhPanel = new PnMedicine();
+		medicinePanel = new PnMedicine();
 		pnMedicine.setLayout(new BorderLayout());
-		pnMedicine.add(minhPanel, BorderLayout.CENTER);
+		pnMedicine.add(medicinePanel, BorderLayout.CENTER);
 
 	}
 
