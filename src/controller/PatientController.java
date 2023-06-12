@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
+import data.PatientDAO;
 import model.Clinic;
 import model.Patient;
 import model.Visit;
@@ -30,6 +32,7 @@ public class PatientController {
 		addPatient();
 		updatePatient();
 		deletePatient();
+		searchPatient();
 	}
 
 	private void addPatient() {
@@ -107,6 +110,30 @@ public class PatientController {
 					System.out.println("Bạn chọn không");
 				} else {
 					System.out.println("...");
+				}
+			}
+		});
+	}
+
+	private void searchPatient() {
+		this.view.getPatientPanel().getPnSubBenhNhan().getTfSearch().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String charName = view.getPatientPanel().getPnSubBenhNhan().getTfSearch().getText();
+				List<Patient> patients = PatientDAO.findAllByCharName(charName);
+				view.getPatientPanel().getPnSubBenhNhan().getDtmPatient().setRowCount(0);
+				for (Patient patient : patients) {
+					Vector<Object> vec = new Vector<>();
+					vec.add(patient.getId());
+					vec.add(patient.getName());
+					vec.add(patient.getYearOfBirth());
+					if (patient.isGender()) {
+						vec.add("Nam");
+					} else
+						vec.add("Nữ");
+					vec.add(patient.getPhone());
+					vec.add(patient.getAddress());
+					view.getPatientPanel().getPnSubBenhNhan().getDtmPatient().addRow(vec);
 				}
 			}
 		});

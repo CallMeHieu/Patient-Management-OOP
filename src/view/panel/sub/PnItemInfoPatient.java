@@ -84,6 +84,10 @@ public class PnItemInfoPatient extends JPanel implements Observer {
 		this.clinic = clinic;
 	}
 
+	public JTextField getTfSearch() {
+		return tfSearch;
+	}
+
 	public PnItemInfoPatient() {
 		Main.changLNF("Windows");
 		addControls();
