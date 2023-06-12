@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 
 public class PnItemDiagnostic extends JPanel {
 	private JPanel pnMain, pnTitle, pnContent, pnInput, pnButton;
-	private JLabel lbId, lbName, lbBirthDay, lbGender, lbPhone, lbAddress, lbSymptom, lbCnclude;
+	private JLabel lbId, lbName, lbBirthDay, lbGender, lbPhone, lbAddress, lbSymptom, lbConclusion;
 	private JTextField tfId, tfName, tfBirthDay, tfGender, tfPhone, tfAddress;
 	private JTextArea taSymptom, taCnclude;
 	private JButton btnBack, btnContinue;
@@ -63,7 +63,7 @@ public class PnItemDiagnostic extends JPanel {
 		lbPhone = new JLabel("Số điện thoại");
 		lbAddress = new JLabel("Địa chỉ");
 		lbSymptom = new JLabel("Triệu chứng");
-		lbCnclude = new JLabel("Kết luận");
+		lbConclusion = new JLabel("Kết luận");
 
 		lbId.setFont(font);
 		lbName.setFont(font);
@@ -72,7 +72,7 @@ public class PnItemDiagnostic extends JPanel {
 		lbPhone.setFont(font);
 		lbAddress.setFont(font);
 		lbSymptom.setFont(font);
-		lbCnclude.setFont(font);
+		lbConclusion.setFont(font);
 
 		tfId = new JTextField(24);
 		tfId.setEditable(false);
@@ -134,7 +134,7 @@ public class PnItemDiagnostic extends JPanel {
 		pnInput.add(pnSymptom);
 
 		JPanel pnCnclude = new JPanel();
-		pnCnclude.add(lbCnclude);
+		pnCnclude.add(lbConclusion);
 		pnCnclude.add(taCnclude);
 		pnInput.add(pnCnclude);
 
@@ -146,7 +146,7 @@ public class PnItemDiagnostic extends JPanel {
 		lbPhone.setPreferredSize(lbSize);
 		lbAddress.setPreferredSize(lbSize);
 		lbSymptom.setPreferredSize(lbSize);
-		lbCnclude.setPreferredSize(lbSize);
+		lbConclusion.setPreferredSize(lbSize);
 		tfGender.setPreferredSize(lbSize);
 		taCnclude.setPreferredSize(lbSize);
 		taSymptom.setPreferredSize(lbSize);
@@ -173,10 +173,17 @@ public class PnItemDiagnostic extends JPanel {
 
 	}
 
+	public JLabel getLbSymptom() {
+		return lbSymptom;
+	}
+
+	public JLabel getLbConclusion() {
+		return lbConclusion;
+	}
+
 	public JTextField getTfId() {
 		return tfId;
 	}
-
 	public JTextField getTfName() {
 		return tfName;
 	}
