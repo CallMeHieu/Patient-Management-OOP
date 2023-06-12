@@ -31,7 +31,7 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 	private JTextField tfSearch;
 	private DefaultTableModel dtmPrescription;
 	private JTable tbPrescription;
-	private JButton btnBack, btnSave, btnSelected;
+	public JButton btnBack, btnSave, btnSelected;
 	private Clinic clinic;
 
 	public PnItemPrescriptions() {
@@ -59,7 +59,7 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 		 */
 		pnContent = new JPanel();
 		pnContent.setLayout(new BoxLayout(pnContent, BoxLayout.Y_AXIS));
-		lbName = new JLabel("Nguyen");
+		lbName = new JLabel("hieu");
 		lbYearOfBirth = new JLabel();
 		lbPhone = new JLabel();
 		lbAddress = new JLabel();
@@ -69,9 +69,23 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 		lbPhone.setFont(font);
 		lbAddress.setFont(font);
 
-		taPrescriptions = new JTextArea(4, 24);
+		taPrescriptions = new JTextArea(10, 30);
 		taPrescriptions.setEditable(false);
 		taPrescriptions.setFont(font);
+
+		JPanel pnInfo = new JPanel();
+		pnInfo.setLayout(new BoxLayout(pnInfo, BoxLayout.Y_AXIS));
+		pnInfo.add(lbName);
+		pnInfo.add(lbYearOfBirth);
+		pnInfo.add(lbPhone);
+		pnInfo.add(lbAddress);
+		pnContent.add(pnInfo);
+
+		JPanel pnTa = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(taPrescriptions);
+		pnTa.add(scrollPane);
+//		pnTa.add(taPrescriptions);
+		pnContent.add(pnTa);
 
 		Dimension lbSize = lbName.getPreferredSize();
 		lbName.setPreferredSize(lbSize);
@@ -79,11 +93,6 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 		lbPhone.setPreferredSize(lbSize);
 		lbAddress.setPreferredSize(lbSize);
 
-		pnContent.add(lbName);
-		pnContent.add(lbYearOfBirth);
-		pnContent.add(lbPhone);
-		pnContent.add(lbAddress);
-		pnContent.add(taPrescriptions);
 		pnMain.add(pnContent);
 		/*
 		 * ======================= PANEL BUTTON =======================
@@ -177,6 +186,70 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 
 	public JLabel getLbYearOfBirth() {
 		return lbYearOfBirth;
+	}
+
+	public JPanel getPnMain() {
+		return pnMain;
+	}
+
+	public JPanel getPnTitle() {
+		return pnTitle;
+	}
+
+	public JPanel getPnTable() {
+		return pnTable;
+	}
+
+	public JPanel getPnSearch() {
+		return pnSearch;
+	}
+
+	public JPanel getPnContent() {
+		return pnContent;
+	}
+
+	public JPanel getPnButton() {
+		return pnButton;
+	}
+
+	public JLabel getLbSearch() {
+		return lbSearch;
+	}
+
+	public JTextArea getTaPrescriptions() {
+		return taPrescriptions;
+	}
+
+	public JTextField getTfSearch() {
+		return tfSearch;
+	}
+
+	public DefaultTableModel getDtmPrescription() {
+		return dtmPrescription;
+	}
+
+	public JTable getTbPrescription() {
+		return tbPrescription;
+	}
+
+	public JButton getBtnBack() {
+		return btnBack;
+	}
+
+	public JButton getBtnSave() {
+		return btnSave;
+	}
+
+	public JButton getBtnSelected() {
+		return btnSelected;
+	}
+
+	public void setLbPhone(JLabel lbPhone) {
+		this.lbPhone = lbPhone;
+	}
+
+	public void setLbYearOfBirth(JLabel lbYearOfBirth) {
+		this.lbYearOfBirth = lbYearOfBirth;
 	}
 
 }

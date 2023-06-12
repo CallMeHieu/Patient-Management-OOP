@@ -73,4 +73,14 @@ public class MedicineDAO {
 		}
 		return false;
 	}
+
+	public static List<Medicine> findAllByCharName(String charName) {
+		List<Medicine> result = new ArrayList<>();
+		for (Medicine medicine : medicines) {
+			if (medicine.getName().toLowerCase().contains(charName.toLowerCase())) {
+				result.add(medicine);
+			}
+		}
+		return result;
+	}
 }
