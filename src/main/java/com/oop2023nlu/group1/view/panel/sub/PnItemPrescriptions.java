@@ -4,6 +4,8 @@ import com.oop2023nlu.group1.custom.TableCustom;
 import com.oop2023nlu.group1.main.Main;
 import com.oop2023nlu.group1.model.Clinic;
 import com.oop2023nlu.group1.model.Medicine;
+import com.oop2023nlu.group1.model.Patient;
+import com.oop2023nlu.group1.model.Visit;
 import com.oop2023nlu.group1.observer.Observer;
 
 import javax.swing.*;
@@ -14,231 +16,264 @@ import java.awt.*;
 import java.util.Vector;
 
 public class PnItemPrescriptions extends JPanel implements Observer {
-	private JPanel pnMain, pnTitle, pnTable, pnSearch, pnContent, pnButton;
-	private JLabel lbSearch, lbName, lbPhone, lbAddress, lbYearOfBirth;
-	private JTextArea taPrescriptions;
-	private JTextField tfSearch;
-	private DefaultTableModel dtmPrescription;
-	private JTable tbPrescription;
-	public JButton btnBack, btnSave, btnSelected;
-	private Clinic clinic;
+    private JPanel pnMain, pnTitle, pnTable, pnSearch, pnContent, pnButton;
+    private JLabel lbSearch, lbName, lbPhone, lbAddress, lbYearOfBirth, lbSymptom, lbConclusion;
+    private JTextArea taPrescriptions;
+    private JTextField tfSearch;
+    private DefaultTableModel dtmPrescription;
+    private JTable tbPrescription;
+    public JButton btnBack, btnSave, btnSelected;
+    private Clinic clinic;
 
-	public PnItemPrescriptions() {
-		Main.changLNF("Windows");
-		addControls();
-	}
+    public PnItemPrescriptions() {
+        Main.changLNF("Windows");
+        addControls();
+    }
 
-	private void addControls() {
-		Font font = new Font("Tahoma", Font.PLAIN, 20);
-		/*
-		 * ======================= PANEL CARD =======================
-		 */
-		this.setLayout(new BorderLayout());
-		pnMain = new JPanel();
-		pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
-		this.add(pnMain, BorderLayout.CENTER);
-		/*
-		 * ======================= PANEL TITLE =======================
-		 */
-		pnTitle = new JPanel();
-		pnMain.add(pnTitle);
-		pnTitle.add(new JLabel("<html><h1>TOA THUỐC</h1></html>"), BorderLayout.CENTER);
-		/*
-		 * ======================= PANEL CONTENT =======================
-		 */
-		pnContent = new JPanel();
-		pnContent.setLayout(new BoxLayout(pnContent, BoxLayout.Y_AXIS));
-		lbName = new JLabel("hieu");
-		lbYearOfBirth = new JLabel();
-		lbPhone = new JLabel();
-		lbAddress = new JLabel();
+    private void addControls() {
+        Font font = new Font("Tahoma", Font.PLAIN, 20);
+        /*
+         * ======================= PANEL CARD =======================
+         */
+        this.setLayout(new BorderLayout());
+        pnMain = new JPanel();
+        pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
+        this.add(pnMain, BorderLayout.CENTER);
+        /*
+         * ======================= PANEL TITLE =======================
+         */
+        pnTitle = new JPanel();
+        pnMain.add(pnTitle);
+        pnTitle.add(new JLabel("<html><h1>TOA THUỐC</h1></html>"), BorderLayout.CENTER);
+        /*
+         * ======================= PANEL CONTENT =======================
+         */
+        pnContent = new JPanel();
+        pnContent.setLayout(new BoxLayout(pnContent, BoxLayout.Y_AXIS));
+        lbName = new JLabel("Name");
+        lbYearOfBirth = new JLabel("YearOfBirth");
+        lbPhone = new JLabel("Phone");
+        lbAddress = new JLabel("Address");
+        lbSymptom = new JLabel();
+        lbConclusion = new JLabel();
 
-		lbName.setFont(font);
-		lbYearOfBirth.setFont(font);
-		lbPhone.setFont(font);
-		lbAddress.setFont(font);
+        lbName.setFont(font);
+        lbYearOfBirth.setFont(font);
+        lbPhone.setFont(font);
+        lbAddress.setFont(font);
+        lbSymptom.setFont(font);
+        lbConclusion.setFont(font);
 
-		taPrescriptions = new JTextArea(10, 30);
-		taPrescriptions.setEditable(false);
-		taPrescriptions.setFont(font);
+        taPrescriptions = new JTextArea(10, 30);
+        taPrescriptions.setEditable(false);
+        taPrescriptions.setFont(font);
 
-		JPanel pnInfo = new JPanel();
-		pnInfo.setLayout(new BoxLayout(pnInfo, BoxLayout.Y_AXIS));
-		pnInfo.add(lbName);
-		pnInfo.add(lbYearOfBirth);
-		pnInfo.add(lbPhone);
-		pnInfo.add(lbAddress);
-		pnContent.add(pnInfo);
+        JPanel pnInfo = new JPanel();
+        pnInfo.setLayout(new BoxLayout(pnInfo, BoxLayout.X_AXIS));
+        JPanel pnInfo1 = new JPanel();
+        pnInfo1.setLayout(new BoxLayout(pnInfo1, BoxLayout.Y_AXIS));
+        pnInfo1.add(lbName);
+        pnInfo1.add(lbYearOfBirth);
+        pnInfo1.add(lbPhone);
+        pnInfo1.add(lbAddress);
 
-		JPanel pnTa = new JPanel();
-		JScrollPane scrollPane = new JScrollPane(taPrescriptions);
-		pnTa.add(scrollPane);
+        JPanel pnInfo2 = new JPanel();
+        pnInfo2.setLayout(new BoxLayout(pnInfo2, BoxLayout.Y_AXIS));
+        pnInfo2.add(lbSymptom);
+        pnInfo2.add(lbConclusion);
+
+        pnInfo.add(pnInfo1);
+        pnInfo.add(pnInfo2);
+        pnContent.add(pnInfo);
+
+        JPanel pnTa = new JPanel();
+        JScrollPane scrollPane = new JScrollPane(taPrescriptions);
+        pnTa.add(scrollPane);
 //		pnTa.add(taPrescriptions);
-		pnContent.add(pnTa);
+        pnContent.add(pnTa);
 
-		Dimension lbSize = lbName.getPreferredSize();
-		lbName.setPreferredSize(lbSize);
-		lbYearOfBirth.setPreferredSize(lbSize);
-		lbPhone.setPreferredSize(lbSize);
-		lbAddress.setPreferredSize(lbSize);
+        Dimension lbSize = lbName.getPreferredSize();
+        lbName.setPreferredSize(lbSize);
+        lbYearOfBirth.setPreferredSize(lbSize);
+        lbPhone.setPreferredSize(lbSize);
+        lbAddress.setPreferredSize(lbSize);
 
-		pnMain.add(pnContent);
-		/*
-		 * ======================= PANEL BUTTON =======================
-		 */
-		pnButton = new JPanel();
-		btnBack = new JButton("Quay lại");
-		btnSave = new JButton("Xuất");
+        pnMain.add(pnContent);
+        /*
+         * ======================= PANEL BUTTON =======================
+         */
+        pnButton = new JPanel();
+        btnBack = new JButton("Quay lại");
+        btnSave = new JButton("Xuất");
 
-		Font fontButton = new Font("Tahoma", Font.PLAIN, 16);
-		btnBack.setFont(fontButton);
-		btnSave.setFont(fontButton);
-		pnButton.add(btnBack);
-		pnButton.add(btnSave);
-		pnMain.add(pnButton);
+        Font fontButton = new Font("Tahoma", Font.PLAIN, 16);
+        btnBack.setFont(fontButton);
+        btnSave.setFont(fontButton);
+        pnButton.add(btnBack);
+        pnButton.add(btnSave);
+        pnMain.add(pnButton);
 
-		pnSearch = new JPanel();
-		lbSearch = new JLabel("Tìm kiếm");
-		lbSearch.setFont(font);
-		tfSearch = new JTextField(20);
-		tfSearch.setFont(font);
-		btnSelected = new JButton("Lấy thuốc");
-		btnSelected.setFont(font);
-		pnSearch.add(lbSearch);
-		pnSearch.add(tfSearch);
-		pnSearch.add(btnSelected);
-		pnMain.add(pnSearch);
-		/*
-		 * ======================= PANEL TABLE =======================
-		 */
-		pnTable = new JPanel();
-		pnTable.setLayout(new BorderLayout());
-		pnTable.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
-		pnMain.add(pnTable);
+        pnSearch = new JPanel();
+        lbSearch = new JLabel("Tìm kiếm");
+        lbSearch.setFont(font);
+        tfSearch = new JTextField(20);
+        tfSearch.setFont(font);
+        btnSelected = new JButton("Lấy thuốc");
+        btnSelected.setFont(font);
+        pnSearch.add(lbSearch);
+        pnSearch.add(tfSearch);
+        pnSearch.add(btnSelected);
+        pnMain.add(pnSearch);
+        /*
+         * ======================= PANEL TABLE =======================
+         */
+        pnTable = new JPanel();
+        pnTable.setLayout(new BorderLayout());
+        pnTable.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
+        pnMain.add(pnTable);
 
-		dtmPrescription = new DefaultTableModel();
-		dtmPrescription.addColumn("Mã số");
-		dtmPrescription.addColumn("Tên thuốc");
-		dtmPrescription.addColumn("Liều dùng");
+        dtmPrescription = new DefaultTableModel();
+        dtmPrescription.addColumn("Mã số");
+        dtmPrescription.addColumn("Tên thuốc");
+        dtmPrescription.addColumn("Liều dùng");
+        dtmPrescription.addColumn("Đơn vị");
 
-		tbPrescription = new JTable();
-		tbPrescription = new TableCustom(dtmPrescription);
+        tbPrescription = new JTable();
+        tbPrescription = new TableCustom(dtmPrescription);
 
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setHorizontalAlignment(JLabel.CENTER);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
 
-		tbPrescription.getColumnModel().getColumn(0).setCellRenderer(renderer);
-		tbPrescription.getColumnModel().getColumn(1).setCellRenderer(renderer);
-		tbPrescription.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        tbPrescription.getColumnModel().getColumn(0).setCellRenderer(renderer);
+        tbPrescription.getColumnModel().getColumn(1).setCellRenderer(renderer);
+        tbPrescription.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        tbPrescription.getColumnModel().getColumn(3).setCellRenderer(renderer);
 
-		TableColumnModel columnModelBanHang = tbPrescription.getColumnModel();
-		columnModelBanHang.getColumn(0).setPreferredWidth(60);
-		columnModelBanHang.getColumn(1).setPreferredWidth(200);
-		columnModelBanHang.getColumn(2).setPreferredWidth(200);
+        TableColumnModel columnModelBanHang = tbPrescription.getColumnModel();
+        columnModelBanHang.getColumn(0).setPreferredWidth(60);
+        columnModelBanHang.getColumn(1).setPreferredWidth(400);
+        columnModelBanHang.getColumn(2).setPreferredWidth(400);
+        columnModelBanHang.getColumn(3).setPreferredWidth(200);
 
-		JScrollPane scrTblSanPham = new JScrollPane(tbPrescription);
-		pnTable.add(scrTblSanPham, BorderLayout.CENTER);
-		pnMain.add(pnTable);
-	}
+        JScrollPane scrTblSanPham = new JScrollPane(tbPrescription);
+        pnTable.add(scrTblSanPham, BorderLayout.CENTER);
+        pnMain.add(pnTable);
 
-	@Override
-	public void update() {
-		dtmPrescription.setRowCount(0);
-		for (Medicine medicine : clinic.getMedicines()) {
-			Vector<Object> vec = new Vector<>();
-			vec.add(medicine.getMedicineID());
-			vec.add(medicine.getName());
-			vec.add(medicine.getUnit());
-			dtmPrescription.addRow(vec);
-		}
-	}
+//        Patient patient = new Patient("", "name", "address", "phone", 2001, true);
+//        lbName.setText(patient.getName());
+//        lbYearOfBirth.setText(patient.getYearOfBirth() + "");
+//        lbPhone.setText(patient.getPhone());
+//        lbAddress.setText(patient.getAddress());
+    }
 
-	public Clinic getClinic() {
-		return clinic;
-	}
+    @Override
+    public void update() {
+        dtmPrescription.setRowCount(0);
+        for (Medicine medicine : clinic.getMedicines()) {
+            Vector<Object> vec = new Vector<>();
+            vec.add(medicine.getMedicineID());
+            vec.add(medicine.getName());
+            vec.add(medicine.getDefaultDosage());
+            vec.add(medicine.getUnit());
+            dtmPrescription.addRow(vec);
+        }
+    }
 
-	public void setClinic(Clinic clinic) {
-		this.clinic = clinic;
-	}
+    public void loadInfo(Patient patient, Visit visit) {
+        lbName.setText(patient.getName());
+        lbYearOfBirth.setText(patient.getYearOfBirth() + "");
+        lbPhone.setText(patient.getPhone());
+        lbAddress.setText(patient.getAddress());
+        lbSymptom.setText("Triệu chứng: " + visit.getSymptom());
+        lbConclusion.setText("Kết luận: " +visit.getConclusion());
+    }
 
-	public JLabel getLbName() {
-		return lbName;
-	}
+    public Clinic getClinic() {
+        return clinic;
+    }
 
-	public JLabel getLbPhone() {
-		return lbPhone;
-	}
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
+    }
 
-	public JLabel getLbAddress() {
-		return lbAddress;
-	}
+    public JLabel getLbName() {
+        return lbName;
+    }
 
-	public JLabel getLbYearOfBirth() {
-		return lbYearOfBirth;
-	}
+    public JLabel getLbPhone() {
+        return lbPhone;
+    }
 
-	public JPanel getPnMain() {
-		return pnMain;
-	}
+    public JLabel getLbAddress() {
+        return lbAddress;
+    }
 
-	public JPanel getPnTitle() {
-		return pnTitle;
-	}
+    public JLabel getLbYearOfBirth() {
+        return lbYearOfBirth;
+    }
 
-	public JPanel getPnTable() {
-		return pnTable;
-	}
+    public JPanel getPnMain() {
+        return pnMain;
+    }
 
-	public JPanel getPnSearch() {
-		return pnSearch;
-	}
+    public JPanel getPnTitle() {
+        return pnTitle;
+    }
 
-	public JPanel getPnContent() {
-		return pnContent;
-	}
+    public JPanel getPnTable() {
+        return pnTable;
+    }
 
-	public JPanel getPnButton() {
-		return pnButton;
-	}
+    public JPanel getPnSearch() {
+        return pnSearch;
+    }
 
-	public JLabel getLbSearch() {
-		return lbSearch;
-	}
+    public JPanel getPnContent() {
+        return pnContent;
+    }
 
-	public JTextArea getTaPrescriptions() {
-		return taPrescriptions;
-	}
+    public JPanel getPnButton() {
+        return pnButton;
+    }
 
-	public JTextField getTfSearch() {
-		return tfSearch;
-	}
+    public JLabel getLbSearch() {
+        return lbSearch;
+    }
 
-	public DefaultTableModel getDtmPrescription() {
-		return dtmPrescription;
-	}
+    public JTextArea getTaPrescriptions() {
+        return taPrescriptions;
+    }
 
-	public JTable getTbPrescription() {
-		return tbPrescription;
-	}
+    public JTextField getTfSearch() {
+        return tfSearch;
+    }
 
-	public JButton getBtnBack() {
-		return btnBack;
-	}
+    public DefaultTableModel getDtmPrescription() {
+        return dtmPrescription;
+    }
 
-	public JButton getBtnSave() {
-		return btnSave;
-	}
+    public JTable getTbPrescription() {
+        return tbPrescription;
+    }
 
-	public JButton getBtnSelected() {
-		return btnSelected;
-	}
+    public JButton getBtnBack() {
+        return btnBack;
+    }
 
-	public void setLbPhone(JLabel lbPhone) {
-		this.lbPhone = lbPhone;
-	}
+    public JButton getBtnSave() {
+        return btnSave;
+    }
 
-	public void setLbYearOfBirth(JLabel lbYearOfBirth) {
-		this.lbYearOfBirth = lbYearOfBirth;
-	}
+    public JButton getBtnSelected() {
+        return btnSelected;
+    }
+
+    public void setLbPhone(JLabel lbPhone) {
+        this.lbPhone = lbPhone;
+    }
+
+    public void setLbYearOfBirth(JLabel lbYearOfBirth) {
+        this.lbYearOfBirth = lbYearOfBirth;
+    }
 
 }

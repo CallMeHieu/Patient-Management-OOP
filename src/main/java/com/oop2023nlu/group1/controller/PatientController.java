@@ -58,6 +58,7 @@ public class PatientController {
                     List<Visit> visits = new ArrayList<>();
                     patient.setVisits(visits);
                     model.addPatient(patient);
+                    resetForm();
                     JOptionPane.showMessageDialog(null, "Thêm thành công");
                 } else {
                     resetForm();
