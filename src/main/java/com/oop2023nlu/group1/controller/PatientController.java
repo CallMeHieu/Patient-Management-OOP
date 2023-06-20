@@ -1,9 +1,7 @@
 package com.oop2023nlu.group1.controller;
 
 import com.oop2023nlu.group1.dao.PatientDAO;
-import com.oop2023nlu.group1.model.Clinic;
-import com.oop2023nlu.group1.model.Patient;
-import com.oop2023nlu.group1.model.Visit;
+import com.oop2023nlu.group1.model.*;
 import com.oop2023nlu.group1.view.container.Container;
 
 import java.awt.event.ActionEvent;
@@ -16,16 +14,15 @@ import javax.swing.JOptionPane;
 
 public class PatientController {
     private Container view;
-    private Clinic model;
+    private Patient patientModel;
 
-    public PatientController(Container view, Clinic model) {
-        super();
+    public PatientController(Container view, Patient patientModel) {
         this.view = view;
-        this.model = model;
         initViewListeners();
-        model.registerObserver(view.getPatientPanel().getPnSubBenhNhan());
-        view.getPatientPanel().getPnSubBenhNhan().setClinic(model);
-        model.notifyObservers();
+        this.patientModel = patientModel;
+        this.patientModel.registerObserver(view.getPatientPanel().getPnSubBenhNhan());
+        this.view.getPatientPanel().getPnSubBenhNhan().setModel(patientModel);
+        this.patientModel.notifyObservers();
     }
 
     private void initViewListeners() {
@@ -41,10 +38,10 @@ public class PatientController {
             public void actionPerformed(ActionEvent e) {
                 if (view.getPatientPanel().getPnSubBenhNhan().getTfId().getText().equals("")) {
                     String id = "";
-                    if (model.getPatients() == null) {
+                    if (patientModel.getPatients() == null) {
                         id = "001";
                     } else
-                        id = "00" + (model.getPatients().size() + 1);
+                        id = "00" + (patientModel.getPatients().size() + 1);
                     String name = view.getPatientPanel().getPnSubBenhNhan().getTfName().getText();
                     String address = view.getPatientPanel().getPnSubBenhNhan().getTfAddress().getText();
                     String phone = view.getPatientPanel().getPnSubBenhNhan().getTfPhone().getText();
@@ -57,7 +54,7 @@ public class PatientController {
                     }
                     List<Visit> visits = new ArrayList<>();
                     patient.setVisits(visits);
-                    model.addPatient(patient);
+                    patientModel.addPatient(patient);
                     resetForm();
                     JOptionPane.showMessageDialog(null, "Thêm thành công");
                 } else {
@@ -68,11 +65,11 @@ public class PatientController {
     }
 
     private void updatePatient() {
-        this.view.getPatientPanel().getPnSubBenhNhan().getBtnEdit().addActionListener(new ActionListener() {
+        this.view.getPatientPanel().getPnSubBenhNhan().getBtnSave().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = view.getPatientPanel().getPnSubBenhNhan().getTfId().getText();
-                if (model.findPatientById(id) != null) {
+                if (patientModel.findPatientById(id) != null) {
                     String name = view.getPatientPanel().getPnSubBenhNhan().getTfName().getText();
                     String address = view.getPatientPanel().getPnSubBenhNhan().getTfAddress().getText();
                     String phone = view.getPatientPanel().getPnSubBenhNhan().getTfPhone().getText();
@@ -84,7 +81,7 @@ public class PatientController {
                     if (gender.equalsIgnoreCase("Nữ"))
                         patient = new Patient(id, name, address, phone, yearOfBirth, false);
 
-                    if (model.updatePatient(patient))
+                    if (patientModel.updatePatient(patient))
                         JOptionPane.showMessageDialog(null, "Cập nhật thành công");
                     else
                         JOptionPane.showMessageDialog(null, "Cập nhật thất bại!!!");
@@ -103,7 +100,7 @@ public class PatientController {
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     String id = view.getPatientPanel().getPnSubBenhNhan().getTfId().getText();
-                    if (model.deletePatient(id))
+                    if (patientModel.deletePatient(id))
                         JOptionPane.showMessageDialog(null, "Xóa thành công");
                     else
                         JOptionPane.showMessageDialog(null, "Xóa thất bại!!!");

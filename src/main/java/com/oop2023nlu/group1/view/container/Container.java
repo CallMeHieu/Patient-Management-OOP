@@ -3,7 +3,7 @@ package com.oop2023nlu.group1.view.container;
 
 import com.oop2023nlu.group1.main.Main;
 import com.oop2023nlu.group1.utils.SystemColor;
-import com.oop2023nlu.group1.view.PnPrescription;
+import com.oop2023nlu.group1.view.panel.PnPrescription;
 import com.oop2023nlu.group1.view.panel.PnDanh;
 import com.oop2023nlu.group1.view.panel.PnMedicine;
 import com.oop2023nlu.group1.view.panel.PnPatient;
@@ -85,7 +85,7 @@ public class Container extends JFrame {
 		pnMenu.setBackground(SystemColor.CONTAINER_BACKGROUND);
 		pnMain.add(pnMenu, BorderLayout.WEST);
 
-		lbLogo = new JLabel(new ImageIcon("image/ContainerView/logo.jpg"), JLabel.CENTER);
+		lbLogo = new JLabel(new ImageIcon("src/main/image/ContainerView/logo.jpg"), JLabel.CENTER);
 		lbLogo.setPreferredSize(new Dimension(250, 200));
 		pnMenu.add(lbLogo);
 

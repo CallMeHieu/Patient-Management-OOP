@@ -1,13 +1,19 @@
 package com.oop2023nlu.group1.model;
 
+import com.oop2023nlu.group1.dao.PatientDAO;
+import com.oop2023nlu.group1.observer.Observer;
+import com.oop2023nlu.group1.observer.Subject;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "patient")
-public class Patient {// bệnh nhân
+public class Patient implements Subject{// bệnh nhân
+	@Transient
+	private ArrayList<Observer> observers;
 	@Id
 	@Column(name = "patientID")
 	private String id;
@@ -16,7 +22,7 @@ public class Patient {// bệnh nhân
 	private String phone;
 	private int yearOfBirth;
 	private boolean gender;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name = "patientID")
 	private List<Visit> visits = new ArrayList<>();
 
@@ -30,6 +36,7 @@ public class Patient {// bệnh nhân
 	}
 
 	public Patient() {
+		this.observers = new ArrayList<>();
 	}
 
 	public Patient(String id, String name, String address, String phone, int yearOfBirth, boolean gender, List<Visit> visits) {
@@ -40,6 +47,49 @@ public class Patient {// bệnh nhân
 		this.yearOfBirth = yearOfBirth;
 		this.gender = gender;
 		this.visits = visits;
+	}
+
+	public void addPatient(Patient patient) {
+		PatientDAO.savePatient(patient);
+		notifyObservers();
+	}
+	public List<Patient> getPatients() {
+		return PatientDAO.findAllPatients();
+	}
+	public Patient findPatientById(String id) {
+		return PatientDAO.findPatientById(id);
+	}
+
+	public boolean deletePatient(String id) {
+		if(PatientDAO.deletePatient(id)){
+			notifyObservers();
+			return true;
+		}
+		return false;
+	}
+	public boolean updatePatient(Patient patient) {
+		if(PatientDAO.updatePatient(patient)){
+			notifyObservers();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void registerObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		observers.remove(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for(Observer o : observers) {
+			o.update();
+		}
 	}
 
 	public String getId() {

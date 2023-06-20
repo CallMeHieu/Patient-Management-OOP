@@ -31,7 +31,6 @@ public class HibernateUtils {
         conf.addAnnotatedClass(Patient.class);
         conf.addAnnotatedClass(Visit.class);
         conf.addAnnotatedClass(Medicine.class);
-        conf.addAnnotatedClass(Prescription.class);
         conf.addAnnotatedClass(PrescriptionMedicine.class);
 
 

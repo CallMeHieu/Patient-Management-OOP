@@ -1,6 +1,5 @@
 package com.oop2023nlu.group1.controller;
 
-import com.oop2023nlu.group1.model.Clinic;
 import com.oop2023nlu.group1.model.Medicine;
 import com.oop2023nlu.group1.view.container.Container;
 
@@ -10,18 +9,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 
-public class MedicineManagementController {
+public class MedicineController {
     private Container view;
-    private Clinic model;
+    private Medicine medicineModel;
 
-    public MedicineManagementController(Container view, Clinic model) {
-        super();
+    public MedicineController(Container view, Medicine medicineModel) {
         this.view = view;
-        this.model = model;
+        this.medicineModel = medicineModel;
         initViewListeners();
-        model.registerObserver(view.getMedicinePanel());
-        view.getMedicinePanel().setClinic(model);
-        model.notifyObservers();
+        this.medicineModel.registerObserver(view.getMedicinePanel());
+        this.view.getMedicinePanel().setMedicineModel(medicineModel);
+        this.medicineModel.notifyObservers();
     }
 
     private void initViewListeners() {
@@ -38,16 +36,20 @@ public class MedicineManagementController {
             public void actionPerformed(ActionEvent e) {
                 if (view.getMedicinePanel().getTfId().getText().equals("")) {
                     String id = "";
-                    if (model.getMedicines() == null) {
+                    if (medicineModel.getMedicines() == null) {
                         id = "SP001";
                     } else
-                        id = "SP00" + (model.getMedicines().size() + 1);
+                        id = "SP00" + (medicineModel.getMedicines().size() + 1);
                     String name = view.getMedicinePanel().getTfName().getText();
                     String dosage = view.getMedicinePanel().getTfDosage().getText();
-                    String unit = view.getMedicinePanel().getCbbUnit().getSelectedItem().toString();
+                    String unit = view.getMedicinePanel().getTfUnit().getText();
                     Medicine medicine = new Medicine(id, name, unit, dosage);
-                    model.addMedicine(medicine);
-                    JOptionPane.showMessageDialog(null, "Thêm thành công");
+                    if(name.equals("") || dosage.equals("") || unit.equals("")){
+                        JOptionPane.showMessageDialog(null, "Hãy nhập đủ dữ liệu");
+                    }else{
+                        medicineModel.addMedicine(medicine);
+                        JOptionPane.showMessageDialog(null, "Thêm thành công");
+                    }
                 } else {
                     resetForm();
                 }
@@ -67,17 +69,19 @@ public class MedicineManagementController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = view.getMedicinePanel().getTfId().getText();
-                if (model.findMedicineById(id) != null) {
+                if (medicineModel.findMedicineById(id) != null) {
                     String name = view.getMedicinePanel().getTfName().getText();
                     String dosage = view.getMedicinePanel().getTfDosage().getText();
-                    String unit = view.getMedicinePanel().getCbbUnit().getSelectedItem().toString();
-                    Medicine medicine = new Medicine(id, name, dosage, unit);
-                    if (model.updateMedicine(medicine))
+                    String unit = view.getMedicinePanel().getTfUnit().getText();
+                    System.out.println(dosage);
+                    System.out.println(unit);
+                    Medicine medicine = new Medicine(id, name, unit, dosage);
+                    if (medicineModel.updateMedicine(medicine))
                         JOptionPane.showMessageDialog(null, "Cập nhật thành công");
                     else
                         JOptionPane.showMessageDialog(null, "Cập nhật thất bại!!!");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Lỗi !!! Không tìm thấy bệnh nhân này");
+                    JOptionPane.showMessageDialog(null, "Lỗi !!! thuốc không tồn tại");
                 }
             }
         });
@@ -91,7 +95,7 @@ public class MedicineManagementController {
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     String id = view.getMedicinePanel().getTfId().getText();
-                    if (model.deleteMedicine(id))
+                    if (medicineModel.deleteMedicine(id))
                         JOptionPane.showMessageDialog(null, "Xóa thành công");
                     else
                         JOptionPane.showMessageDialog(null, "Xóa thất bại!!!");
