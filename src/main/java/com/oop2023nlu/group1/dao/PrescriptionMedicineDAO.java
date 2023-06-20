@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 public class PrescriptionMedicineDAO {
-
-
     public static PrescriptionMedicine savePrescriptionMedicine(PrescriptionMedicine prescriptionMedicine) {
         Session session = HibernateUtils.getFACTORY().openSession();
         Transaction transaction = null;

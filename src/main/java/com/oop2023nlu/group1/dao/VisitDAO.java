@@ -1,9 +1,13 @@
 package com.oop2023nlu.group1.dao;
 
+import com.oop2023nlu.group1.model.Medicine;
 import com.oop2023nlu.group1.model.Visit;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VisitDAO {
 
@@ -50,5 +54,13 @@ public class VisitDAO {
             Long count = query.uniqueResult();
             return count.intValue();
         }
+    }
+
+    public static List<Visit> findAllVisit() {
+        List<Visit> visits = new ArrayList<>();
+        try (Session session = HibernateUtils.getFACTORY().openSession()) {
+            visits = session.createQuery("from Visit", Visit.class).getResultList();
+        }
+        return visits;
     }
 }

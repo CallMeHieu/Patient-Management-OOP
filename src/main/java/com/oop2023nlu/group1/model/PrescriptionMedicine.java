@@ -98,5 +98,4 @@ public class PrescriptionMedicine implements Subject {
 	public String toString(){
 		return " - " + this.medicine.getMedicineID() + ", " + this.medicine.getName() + "(" + this.dosage +")"+ "SL: " + this.quantity + "\n";
 	}
-
 }

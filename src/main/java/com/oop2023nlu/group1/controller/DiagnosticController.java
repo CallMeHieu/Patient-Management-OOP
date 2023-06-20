@@ -1,6 +1,5 @@
 package com.oop2023nlu.group1.controller;
 
-import com.oop2023nlu.group1.model.Clinic;
 import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.Visit;
 import com.oop2023nlu.group1.view.container.Container;
@@ -75,10 +74,10 @@ public class DiagnosticController {
     }
 
     private void loadDataOfTableDiagnostic() {
-        view.getPatientPanel().getPnSubBenhNhan().getBtnView().addActionListener(new ActionListener() {
+        view.getPatientPanel().getPnSubPatient().getBtnView().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (view.getPatientPanel().getPnSubBenhNhan().getTfId().getText().isEmpty()) {
+                if (view.getPatientPanel().getPnSubPatient().getTfId().getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn bệnh nhân");
                     return;
                 }
@@ -89,7 +88,7 @@ public class DiagnosticController {
                 view.getPatientPanel().getLbCard1().setFont(view.getPatientPanel().fontMenu);
                 view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
                 view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
-                String id = view.getPatientPanel().getPnSubBenhNhan().getTfId().getText();
+                String id = view.getPatientPanel().getPnSubPatient().getTfId().getText();
                 Patient patient = patientModel.findPatientById(id);
                 view.getPatientPanel().getPnItemDiagnostic().loadPatient(patient);
             }

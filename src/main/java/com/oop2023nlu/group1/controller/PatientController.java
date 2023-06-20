@@ -20,8 +20,8 @@ public class PatientController {
         this.view = view;
         initViewListeners();
         this.patientModel = patientModel;
-        this.patientModel.registerObserver(view.getPatientPanel().getPnSubBenhNhan());
-        this.view.getPatientPanel().getPnSubBenhNhan().setModel(patientModel);
+        this.patientModel.registerObserver(view.getPatientPanel().getPnSubPatient());
+        this.view.getPatientPanel().getPnSubPatient().setModel(patientModel);
         this.patientModel.notifyObservers();
     }
 
@@ -33,21 +33,21 @@ public class PatientController {
     }
 
     private void addPatient() {
-        this.view.getPatientPanel().getPnSubBenhNhan().getBtnAdd().addActionListener(new ActionListener() {
+        this.view.getPatientPanel().getPnSubPatient().getBtnAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (view.getPatientPanel().getPnSubBenhNhan().getTfId().getText().equals("")) {
+                if (view.getPatientPanel().getPnSubPatient().getTfId().getText().equals("")) {
                     String id = "";
                     if (patientModel.getPatients() == null) {
                         id = "001";
                     } else
                         id = "00" + (patientModel.getPatients().size() + 1);
-                    String name = view.getPatientPanel().getPnSubBenhNhan().getTfName().getText();
-                    String address = view.getPatientPanel().getPnSubBenhNhan().getTfAddress().getText();
-                    String phone = view.getPatientPanel().getPnSubBenhNhan().getTfPhone().getText();
+                    String name = view.getPatientPanel().getPnSubPatient().getTfName().getText();
+                    String address = view.getPatientPanel().getPnSubPatient().getTfAddress().getText();
+                    String phone = view.getPatientPanel().getPnSubPatient().getTfPhone().getText();
                     int yearOfBirth = Integer
-                            .parseInt(view.getPatientPanel().getPnSubBenhNhan().getTfYearOfBirth().getText());
-                    String gender = view.getPatientPanel().getPnSubBenhNhan().getCbbGender().getSelectedItem() + "";
+                            .parseInt(view.getPatientPanel().getPnSubPatient().getTfYearOfBirth().getText());
+                    String gender = view.getPatientPanel().getPnSubPatient().getCbbGender().getSelectedItem() + "";
                     Patient patient = new Patient(id, name, address, phone, yearOfBirth, true);
                     if (gender.equalsIgnoreCase("Nữ")) {
                         patient = new Patient(id, name, address, phone, yearOfBirth, false);
@@ -65,17 +65,17 @@ public class PatientController {
     }
 
     private void updatePatient() {
-        this.view.getPatientPanel().getPnSubBenhNhan().getBtnSave().addActionListener(new ActionListener() {
+        this.view.getPatientPanel().getPnSubPatient().getBtnSave().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = view.getPatientPanel().getPnSubBenhNhan().getTfId().getText();
+                String id = view.getPatientPanel().getPnSubPatient().getTfId().getText();
                 if (patientModel.findPatientById(id) != null) {
-                    String name = view.getPatientPanel().getPnSubBenhNhan().getTfName().getText();
-                    String address = view.getPatientPanel().getPnSubBenhNhan().getTfAddress().getText();
-                    String phone = view.getPatientPanel().getPnSubBenhNhan().getTfPhone().getText();
+                    String name = view.getPatientPanel().getPnSubPatient().getTfName().getText();
+                    String address = view.getPatientPanel().getPnSubPatient().getTfAddress().getText();
+                    String phone = view.getPatientPanel().getPnSubPatient().getTfPhone().getText();
                     int yearOfBirth = Integer
-                            .parseInt(view.getPatientPanel().getPnSubBenhNhan().getTfYearOfBirth().getText());
-                    String gender = view.getPatientPanel().getPnSubBenhNhan().getCbbGender().getSelectedItem() + "";
+                            .parseInt(view.getPatientPanel().getPnSubPatient().getTfYearOfBirth().getText());
+                    String gender = view.getPatientPanel().getPnSubPatient().getCbbGender().getSelectedItem() + "";
 
                     Patient patient = new Patient(id, name, address, phone, yearOfBirth, true);
                     if (gender.equalsIgnoreCase("Nữ"))
@@ -93,13 +93,13 @@ public class PatientController {
     }
 
     private void deletePatient() {
-        this.view.getPatientPanel().getPnSubBenhNhan().getBtnRemove().addActionListener(new ActionListener() {
+        this.view.getPatientPanel().getPnSubPatient().getBtnRemove().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc là xóa bệnh nhân này", "Xác nhận",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
-                    String id = view.getPatientPanel().getPnSubBenhNhan().getTfId().getText();
+                    String id = view.getPatientPanel().getPnSubPatient().getTfId().getText();
                     if (patientModel.deletePatient(id))
                         JOptionPane.showMessageDialog(null, "Xóa thành công");
                     else
@@ -114,12 +114,12 @@ public class PatientController {
     }
 
     private void searchPatient() {
-        this.view.getPatientPanel().getPnSubBenhNhan().getTfSearch().addActionListener(new ActionListener() {
+        this.view.getPatientPanel().getPnSubPatient().getTfSearch().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String charName = view.getPatientPanel().getPnSubBenhNhan().getTfSearch().getText();
+                String charName = view.getPatientPanel().getPnSubPatient().getTfSearch().getText();
                 List<Patient> patients = PatientDAO.findAllByCharName(charName);
-                view.getPatientPanel().getPnSubBenhNhan().getDtmPatient().setRowCount(0);
+                view.getPatientPanel().getPnSubPatient().getDtmPatient().setRowCount(0);
                 for (Patient patient : patients) {
                     Vector<Object> vec = new Vector<>();
                     vec.add(patient.getId());
@@ -131,18 +131,18 @@ public class PatientController {
                         vec.add("Nữ");
                     vec.add(patient.getPhone());
                     vec.add(patient.getAddress());
-                    view.getPatientPanel().getPnSubBenhNhan().getDtmPatient().addRow(vec);
+                    view.getPatientPanel().getPnSubPatient().getDtmPatient().addRow(vec);
                 }
             }
         });
     }
 
     private void resetForm() {
-        view.getPatientPanel().getPnSubBenhNhan().getTfId().setText("");
-        view.getPatientPanel().getPnSubBenhNhan().getTfName().setText("");
-        view.getPatientPanel().getPnSubBenhNhan().getTfPhone().setText("");
-        view.getPatientPanel().getPnSubBenhNhan().getTfYearOfBirth().setText("");
-        view.getPatientPanel().getPnSubBenhNhan().getTfAddress().setText("");
+        view.getPatientPanel().getPnSubPatient().getTfId().setText("");
+        view.getPatientPanel().getPnSubPatient().getTfName().setText("");
+        view.getPatientPanel().getPnSubPatient().getTfPhone().setText("");
+        view.getPatientPanel().getPnSubPatient().getTfYearOfBirth().setText("");
+        view.getPatientPanel().getPnSubPatient().getTfAddress().setText("");
     }
 
 }

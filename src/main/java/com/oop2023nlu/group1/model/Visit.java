@@ -1,5 +1,6 @@
 package com.oop2023nlu.group1.model;
 
+import com.oop2023nlu.group1.dao.MedicineDAO;
 import com.oop2023nlu.group1.dao.VisitDAO;
 import com.oop2023nlu.group1.observer.Observer;
 import com.oop2023nlu.group1.observer.Subject;
@@ -13,105 +14,124 @@ import java.util.UUID;
 @Entity
 @Table(name = "visit")
 public class Visit implements Subject {// Các lần khám bệnh
-	@Transient
-	private ArrayList<Observer> observers;
-	@Id
-	private String visitID;
-	private Date date;// ngày khám
-	private String symptom;// danh sách chuẩn đoán bệnh
-	private String conclusion;
-	@OneToMany
-	@JoinColumn(name = "visitID")
-	private List<PrescriptionMedicine> prescription;
+    @Transient
+    private ArrayList<Observer> observers;
+    @Id
+    private String visitID;
+    private Date date;// ngày khám
+    private String symptom;// danh sách chuẩn đoán bệnh
+    private String conclusion;
+    @OneToMany
+    @JoinColumn(name = "visitID")
+    private List<PrescriptionMedicine> prescription;
 
-	public Visit(String visitID, Date date, String symptom,String conclusion,List<PrescriptionMedicine> prescription) {
-		observers = new ArrayList<Observer>();
-		this.visitID = visitID;
-		this.date = date;
-		this.symptom = symptom;
-		this.conclusion = conclusion;
-		this.prescription = prescription;
-	}
-	public Visit() {
-		observers = new ArrayList<Observer>();
-	}
-	public Visit(Date date, String symptom,String conclusion,List<PrescriptionMedicine> prescription) {
-		observers = new ArrayList<Observer>();
-		this.date = date;
-		this.symptom = symptom;
-		this.conclusion = conclusion;
-		this.prescription = prescription;
-	}
+    public Visit(String visitID, Date date, String symptom, String conclusion, List<PrescriptionMedicine> prescription) {
+        observers = new ArrayList<Observer>();
+        this.visitID = visitID;
+        this.date = date;
+        this.symptom = symptom;
+        this.conclusion = conclusion;
+        this.prescription = prescription;
+    }
 
-	//	VISIT MODEL
-	public Visit addVisit(Visit visit) {
-		return VisitDAO.saveVisit(visit);
-	}
+    public Visit() {
+        observers = new ArrayList<>();
+    }
 
-	public boolean updateVisit(Visit visit) {
-		if(VisitDAO.updateVisit(visit)){
-			notifyObservers();
-			return true;
-		}
-		return false;
-	}
+    public Visit(Date date, String symptom, String conclusion, List<PrescriptionMedicine> prescription) {
+        observers = new ArrayList<>();
+        this.date = date;
+        this.symptom = symptom;
+        this.conclusion = conclusion;
+        this.prescription = prescription;
+    }
 
-	public int count() {
-		return VisitDAO.count();
-	}
+    //	VISIT MODEL
+    public Visit addVisit(Visit visit) {
+        Visit save = VisitDAO.saveVisit(visit);
+        notifyObservers();
+        return save;
+    }
 
-	public String getVisitID() {
-		return visitID;
-	}
+    public boolean updateVisit(Visit visit) {
+        if (VisitDAO.updateVisit(visit)) {
+            notifyObservers();
+            return true;
+        }
+        return false;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public int count() {
+        return VisitDAO.count();
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-		notifyObservers();
-	}
+    public String getVisitID() {
+        return visitID;
+    }
 
-	public String getConclusion() {
-		return conclusion;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public void setConclusion(String conclusion) {
-		this.conclusion = conclusion;
-	}
+    public void setDate(Date date) {
+        this.date = date;
+        notifyObservers();
+    }
 
-	public String getSymptom() {
-		return symptom;
-	}
+    public String getConclusion() {
+        return conclusion;
+    }
 
-	public void setSymptom(String symptom) {
-		this.symptom = symptom;
-		notifyObservers();
-	}
+    public void setConclusion(String conclusion) {
+        this.conclusion = conclusion;
+    }
 
-	public List<PrescriptionMedicine> getPrescription() {
-		return prescription;
-	}
+    public String getSymptom() {
+        return symptom;
+    }
 
-	public void setPrescription(List<PrescriptionMedicine> prescription) {
-		this.prescription = prescription;
-		notifyObservers();
-	}
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
+        notifyObservers();
+    }
 
-	@Override
-	public void registerObserver(Observer observer) {
-		observers.add(observer);
-	}
+    public List<Visit> getVisits() {
+        return VisitDAO.findAllVisit();
+    }
 
-	@Override
-	public void removeObserver(Observer o) {
-		observers.remove(o);
-	}
-	@Override
-	public void notifyObservers() {
-		for(Observer o : observers) {
-			o.update();
-		}
-	}
+    public List<Visit> getVisitByIdPatient(String idPatient) {
+        List<Visit> result = new ArrayList<>();
+        return result;
+    }
+
+    public List<Visit> getVisitByNumberPhone(String numberPhone) {
+        List<Visit> result = new ArrayList<>();
+        return result;
+    }
+
+    public List<PrescriptionMedicine> getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(List<PrescriptionMedicine> prescription) {
+        this.prescription = prescription;
+        notifyObservers();
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update();
+        }
+    }
 }

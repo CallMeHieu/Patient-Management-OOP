@@ -14,7 +14,7 @@ public class PnPatient extends JPanel {
 	JPanel pnTopMenu, pnContainer, pnCard;
 	JLabel lbCard1, lbCard2, lbCard3;
 	public Font font, fontMenu;
-	PnItemInfoPatient pnSubBenhNhan = new PnItemInfoPatient();
+	PnItemInfoPatient pnSubPatient = new PnItemInfoPatient();
 	PnItemDiagnostic pnItemDiagnostic = new PnItemDiagnostic();
 	PnItemPrescriptions pnItemPrescriptions = new PnItemPrescriptions();
 
@@ -25,8 +25,8 @@ public class PnPatient extends JPanel {
 		return pnItemPrescriptions;
 	}
 
-	public PnItemInfoPatient getPnSubBenhNhan() {
-		return pnSubBenhNhan;
+	public PnItemInfoPatient getPnSubPatient() {
+		return pnSubPatient;
 	}
 
 	public PnItemDiagnostic getPnItemDiagnostic() {
@@ -107,7 +107,7 @@ public class PnPatient extends JPanel {
 		 */
 		pnCard = new JPanel(cardPanelGroup);
 		pnContainer.add(pnCard);
-		pnCard.add(pnSubBenhNhan, "1");
+		pnCard.add(pnSubPatient, "1");
 		pnCard.add(pnItemDiagnostic, "2");
 		pnCard.add(pnItemPrescriptions, "3");
 
