@@ -2,8 +2,7 @@ package com.oop2023nlu.group1.view.panel.sub;
 
 import com.oop2023nlu.group1.custom.TableCustom;
 import com.oop2023nlu.group1.main.Main;
-import com.oop2023nlu.group1.model.Clinic;
-import com.oop2023nlu.group1.model.Patient;
+import com.oop2023nlu.group1.model.*;
 import com.oop2023nlu.group1.observer.Observer;
 
 import java.awt.BorderLayout;
@@ -29,13 +28,13 @@ import javax.swing.table.TableColumnModel;
 
 public class PnItemInfoPatient extends JPanel implements Observer {
 	private JPanel pnMain, pnTitle, pnInput, pnButton, pnSearch, pnTable;
-	private JButton btnAdd, btnEdit, btnRemove, btnView;
+	private JButton btnAdd, btnSave, btnRemove, btnView;
 	private JLabel lbId, lbName, lbYearOfBirth, lbGender, lbPhone, lbAddress, lbSearch;
 	private JTextField tfId, tfName, tfYearOfBirth, tfPhone, tfAddress, tfSearch;
 	private JComboBox<String> cbbGender;
 	private DefaultTableModel dtmPatient;
 	private JTable tbPatient;
-	private Clinic clinic;
+	private Patient patientModel;
 
 	public DefaultTableModel getDtmPatient() {
 		return dtmPatient;
@@ -57,8 +56,8 @@ public class PnItemInfoPatient extends JPanel implements Observer {
 		return btnAdd;
 	}
 
-	public JButton getBtnEdit() {
-		return btnEdit;
+	public JButton getBtnSave() {
+		return btnSave;
 	}
 
 	public JTextField getTfName() {
@@ -81,8 +80,8 @@ public class PnItemInfoPatient extends JPanel implements Observer {
 		return cbbGender;
 	}
 
-	public void setClinic(Clinic clinic) {
-		this.clinic = clinic;
+	public void setModel(Patient patientModel) {
+		this.patientModel = patientModel;
 	}
 
 	public JTextField getTfSearch() {
@@ -194,17 +193,17 @@ public class PnItemInfoPatient extends JPanel implements Observer {
 		 */
 		pnButton = new JPanel();
 		btnAdd = new JButton("Thêm");
-		btnEdit = new JButton("Lưu");
+		btnSave = new JButton("Lưu");
 		btnRemove = new JButton("Xóa");
 		btnView = new JButton("Khám bệnh");
 
 		Font fontButton = new Font("Tahoma", Font.PLAIN, 16);
 		btnAdd.setFont(fontButton);
-		btnEdit.setFont(fontButton);
+		btnSave.setFont(fontButton);
 		btnRemove.setFont(fontButton);
 		btnView.setFont(fontButton);
 		pnButton.add(btnAdd);
-		pnButton.add(btnEdit);
+		pnButton.add(btnSave);
 		pnButton.add(btnRemove);
 		pnButton.add(btnView);
 		pnMain.add(pnButton);
@@ -225,7 +224,12 @@ public class PnItemInfoPatient extends JPanel implements Observer {
 		pnTable.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
 		pnMain.add(pnTable);
 
-		dtmPatient = new DefaultTableModel();
+		dtmPatient =  new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Không cho phép chỉnh sửa các ô
+			}
+		};
 		dtmPatient.addColumn("Mã số");
 		dtmPatient.addColumn("Họ tên");
 		dtmPatient.addColumn("Năm sinh");
@@ -303,7 +307,8 @@ public class PnItemInfoPatient extends JPanel implements Observer {
 	@Override
 	public void update() {
 		dtmPatient.setRowCount(0);
-		for (Patient patient : clinic.getPatients()) {
+
+		for (Patient patient : patientModel.getPatients()) {
 			Vector<Object> vec = new Vector<>();
 			vec.add(patient.getId());
 			vec.add(patient.getName());

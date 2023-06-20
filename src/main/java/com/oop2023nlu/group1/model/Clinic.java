@@ -2,13 +2,14 @@ package com.oop2023nlu.group1.model;
 
 import com.oop2023nlu.group1.dao.PatientDAO;
 import com.oop2023nlu.group1.dao.MedicineDAO;
+import com.oop2023nlu.group1.dao.VisitDAO;
 import com.oop2023nlu.group1.observer.Observer;
 import com.oop2023nlu.group1.observer.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Clinic implements Subject { // Phòng khám
+public class Clinic implements Subject{ // Phòng khám
 	private ArrayList<Observer> observers;
 	private String name;
 	private String address;
@@ -22,51 +23,37 @@ public class Clinic implements Subject { // Phòng khám
 		this.phone = phone;
 	}
 
-	public List<Medicine> getMedicines() {
-		return MedicineDAO.findAllMedicines();
-	}
-	public List<Patient> getPatients() {
-		return PatientDAO.findAllPatients();
+	public Clinic() {
+		this.observers = new ArrayList<>();
 	}
 
-	public ArrayList<Observer> getObservers() {
-		return observers;
+//	public List<Medicine> getMedicines() {
+//		return MedicineDAO.findAllMedicines();
+//	}
+//	public List<Patient> getPatients() {
+//		return PatientDAO.findAllPatients();
+//	}
+
+	@Override
+	public void registerObserver(Observer o) {
+		observers.add(o);
 	}
 
-	public void setObservers(ArrayList<Observer> observers) {
-		this.observers = observers;
-		notifyObservers();
+	@Override
+	public void removeObserver(Observer o) {
+		observers.remove(o);
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-		notifyObservers();
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-		notifyObservers();
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-		notifyObservers();
+	@Override
+	public void notifyObservers() {
+		for(Observer o : observers) {
+			o.update();
+		}
 	}
 
 
 //	PATIENT MODEL
+	/*
 	public void addPatient(Patient patient) {
 		PatientDAO.savePatient(patient);
 		notifyObservers();
@@ -90,8 +77,10 @@ public class Clinic implements Subject { // Phòng khám
 		}
 		return false;
 	}
+*/
 
 //MEDICINE MODEL
+	/*
 	public void addMedicine(Medicine medicine) {
 		MedicineDAO.saveMedicine(medicine);
 		notifyObservers();
@@ -116,23 +105,22 @@ public class Clinic implements Subject { // Phòng khám
 		}
 		return false;
 	}
+*/
 
-	@Override
-	public void registerObserver(Observer o) {
-		observers.add(o);
+//	VISIT MODEL
+	/*
+	public void addVisit(Visit visit) {
+		VisitDAO.saveVisit(visit);
+		notifyObservers();
 	}
 
-	@Override
-	public void removeObserver(Observer o) {
-		observers.remove(o);
-	}
-
-	@Override
-	public void notifyObservers() {
-		for(Observer o : observers) {
-			o.update();
+	public boolean updateVisit(Visit visit) {
+		if(VisitDAO.updateVisit(visit)){
+			notifyObservers();
+			return true;
 		}
+		return false;
 	}
-
+*/
 
 }

@@ -4,17 +4,9 @@ import com.oop2023nlu.group1.main.Main;
 import com.oop2023nlu.group1.model.Clinic;
 import com.oop2023nlu.group1.model.Patient;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 
 public class PnItemDiagnostic extends JPanel {
@@ -24,6 +16,7 @@ public class PnItemDiagnostic extends JPanel {
 	private JTextArea taSymptom, taCnclude;
 	private JButton btnBack, btnContinue;
 	private Clinic clinic;
+
 
 	public PnItemDiagnostic() {
 		Main.changLNF("Windows");
@@ -86,8 +79,16 @@ public class PnItemDiagnostic extends JPanel {
 		tfPhone.setEditable(false);
 		tfAddress = new JTextField(24);
 		tfAddress.setEditable(false);
-		taSymptom = new JTextArea(4, 24);
-		taCnclude = new JTextArea(4, 24);
+		taSymptom = new JTextArea(2, 24);
+		taSymptom.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		taSymptom.setLineWrap(true);
+		taSymptom.setWrapStyleWord(true);
+
+		taCnclude = new JTextArea(2, 24);
+		taCnclude.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		taCnclude.setLineWrap(true);
+		taCnclude.setWrapStyleWord(true);
+
 
 		tfId.setFont(font);
 		tfName.setFont(font);

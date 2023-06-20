@@ -1,20 +1,27 @@
 package com.oop2023nlu.group1.main;
 
 import com.oop2023nlu.group1.controller.DiagnosticController;
-import com.oop2023nlu.group1.controller.MedicineManagementController;
+import com.oop2023nlu.group1.controller.MedicineController;
 import com.oop2023nlu.group1.controller.PatientController;
 import com.oop2023nlu.group1.controller.PrescriptionController;
 import com.oop2023nlu.group1. model.Clinic;
+import com.oop2023nlu.group1.model.Medicine;
+import com.oop2023nlu.group1.model.Patient;
+import com.oop2023nlu.group1.model.Visit;
 import com.oop2023nlu.group1.view.container.Container;
 
 public class Main {
 	public static void main(String[] args) {
 		Container view = new Container();
 		Clinic model = new Clinic("Phongkhamabc", "Thu duc", "18000018");
-		PatientController controller = new PatientController(view, model);
-		DiagnosticController diagnosticController = new DiagnosticController(view, model);
-		PrescriptionController prescriptionController = new PrescriptionController(view, model);
-		MedicineManagementController medicineController = new MedicineManagementController(view, model);
+		Patient patientModel = new Patient();
+		Medicine medicineModel = new Medicine();
+		Visit visitModel = new Visit();
+
+		PatientController patientController = new PatientController(view, patientModel);
+		DiagnosticController diagnosticController = new DiagnosticController(view, patientModel);
+		PrescriptionController prescriptionController = new PrescriptionController(view, medicineModel, visitModel);
+		MedicineController medicineController = new MedicineController(view, medicineModel);
 	}
 
 	public static void changLNF(String nameLNF) {

@@ -1,4 +1,4 @@
-package com.oop2023nlu.group1.view;
+package com.oop2023nlu.group1.view.panel;
 
 import com.oop2023nlu.group1.custom.TableCustom;
 import com.oop2023nlu.group1.main.Main;
@@ -25,7 +25,7 @@ public class PnPrescription extends JPanel implements Observer {
 	Font font, fontMenu;
 	private DefaultTableModel dtmMedicine, dtmPrescription;
 	private JTable tbMedicine, tbPrescription;
-	private Clinic clinic;
+	private Medicine medicineModel;
 
 	public PnPrescription() {
 		Main.changLNF("Windows");
@@ -33,12 +33,12 @@ public class PnPrescription extends JPanel implements Observer {
 		addEvents();
 	}
 
-	public Clinic getClinic() {
-		return clinic;
+	public Medicine getMedicineModel() {
+		return medicineModel;
 	}
 
-	public void setClinic(Clinic clinic) {
-		this.clinic = clinic;
+	public void setMedicineModel(Medicine medicineModel) {
+		this.medicineModel = medicineModel;
 	}
 
 	// Viết code tạo view trong đây
@@ -141,7 +141,7 @@ public class PnPrescription extends JPanel implements Observer {
 	@Override
 	public void update() {
 		dtmPrescription.setRowCount(0);
-		for (Medicine medicine : clinic.getMedicines()) {
+		for (Medicine medicine : medicineModel.getMedicines()) {
 			Vector<Object> vec = new Vector<>();
 			vec.add(medicine.getMedicineID());
 			vec.add(medicine.getName());

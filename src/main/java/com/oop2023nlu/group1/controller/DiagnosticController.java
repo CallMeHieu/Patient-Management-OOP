@@ -2,16 +2,13 @@ package com.oop2023nlu.group1.controller;
 
 import com.oop2023nlu.group1.model.Clinic;
 import com.oop2023nlu.group1.model.Patient;
-import com.oop2023nlu.group1.model.PrescriptionMedicine;
 import com.oop2023nlu.group1.model.Visit;
-import com.oop2023nlu.group1.utils.ModelUtils;
 import com.oop2023nlu.group1.view.container.Container;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -19,12 +16,12 @@ import javax.swing.JOptionPane;
 
 public class DiagnosticController {
     private Container view;
-    private Clinic model;
+    private Patient patientModel;
 
-    public DiagnosticController(Container view, Clinic model) {
+    public DiagnosticController(Container view, Patient patientModel) {
         super();
         this.view = view;
-        this.model = model;
+        this.patientModel = patientModel;
         initViewListeners();
     }
 
@@ -35,11 +32,11 @@ public class DiagnosticController {
     }
 
     private void nextToScreenPrescriptions() {
-        view.getPatientPanel().getPnSubChuanHoa().getBtnContinue().addActionListener(new ActionListener() {
+        view.getPatientPanel().getPnItemDiagnostic().getBtnContinue().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (view.getPatientPanel().getPnSubChuanHoa().getTaSymptom().getText().equals("")
-                        || view.getPatientPanel().getPnSubChuanHoa().getTaCnclude().getText().equals(""))
+                if (view.getPatientPanel().getPnItemDiagnostic().getTaSymptom().getText().equals("")
+                        || view.getPatientPanel().getPnItemDiagnostic().getTaCnclude().getText().equals(""))
                     return;
                 view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "3");
                 view.getPatientPanel().getLbCard3().setBackground(new Color(240, 240, 240));
@@ -48,15 +45,13 @@ public class DiagnosticController {
                 view.getPatientPanel().getLbCard2().setFont(view.getPatientPanel().fontMenu);
                 view.getPatientPanel().getLbCard1().setBackground(Color.WHITE);
                 view.getPatientPanel().getLbCard1().setFont(view.getPatientPanel().fontMenu);
-                String id = view.getPatientPanel().getPnSubChuanHoa().getTfId().getText();
-                String name = view.getPatientPanel().getPnSubChuanHoa().getTfName().getText();
-                String address = view.getPatientPanel().getPnSubChuanHoa().getTfAddress().getText();
-                String phone = view.getPatientPanel().getPnSubChuanHoa().getTfPhone().getText();
-                int yearOfBirth = Integer.parseInt(view.getPatientPanel().getPnSubChuanHoa().getTfBirthDay().getText());
-                String symptom = view.getPatientPanel().getPnSubChuanHoa().getTaSymptom().getText();
-                ;
-                String conclusion = view.getPatientPanel().getPnSubChuanHoa().getTaCnclude().getText();
-                ;
+                String id = view.getPatientPanel().getPnItemDiagnostic().getTfId().getText();
+                String name = view.getPatientPanel().getPnItemDiagnostic().getTfName().getText();
+                String address = view.getPatientPanel().getPnItemDiagnostic().getTfAddress().getText();
+                String phone = view.getPatientPanel().getPnItemDiagnostic().getTfPhone().getText();
+                int yearOfBirth = Integer.parseInt(view.getPatientPanel().getPnItemDiagnostic().getTfBirthDay().getText());
+                String symptom = view.getPatientPanel().getPnItemDiagnostic().getTaSymptom().getText();
+                String conclusion = view.getPatientPanel().getPnItemDiagnostic().getTaCnclude().getText();
                 Patient patient = new Patient(id, name, address, phone, yearOfBirth, false);
                 Visit visit = new Visit("", new Date(), symptom, conclusion, null);
                 view.getPatientPanel().getPnItemPrescriptions().loadInfo(patient, visit);
@@ -65,7 +60,7 @@ public class DiagnosticController {
     }
 
     private void backToScreenPatient() {
-        view.getPatientPanel().getPnSubChuanHoa().getBtnBack().addActionListener(new ActionListener() {
+        view.getPatientPanel().getPnItemDiagnostic().getBtnBack().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "1");
@@ -95,8 +90,8 @@ public class DiagnosticController {
                 view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
                 view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
                 String id = view.getPatientPanel().getPnSubBenhNhan().getTfId().getText();
-                Patient patient = model.findPatientById(id);
-                view.getPatientPanel().getPnSubChuanHoa().loadPatient(patient);
+                Patient patient = patientModel.findPatientById(id);
+                view.getPatientPanel().getPnItemDiagnostic().loadPatient(patient);
             }
         });
     }
