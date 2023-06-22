@@ -140,6 +140,7 @@ public class PnItemDiagnostic extends JPanel {
 		pnInput.add(pnCnclude);
 
 		Dimension lbSize = lbId.getPreferredSize();
+		lbSize.setSize(lbSize.getWidth() + 12, lbSize.getHeight());
 		lbId.setPreferredSize(lbSize);
 		lbName.setPreferredSize(lbSize);
 		lbBirthDay.setPreferredSize(lbSize);

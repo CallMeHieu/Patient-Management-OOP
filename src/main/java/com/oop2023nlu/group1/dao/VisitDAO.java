@@ -1,9 +1,14 @@
 package com.oop2023nlu.group1.dao;
 
+import com.oop2023nlu.group1.model.Medicine;
+import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.Visit;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VisitDAO {
 
@@ -50,5 +55,38 @@ public class VisitDAO {
             Long count = query.uniqueResult();
             return count.intValue();
         }
+    }
+
+    public static List<Visit> findAllVisit() {
+        List<Visit> visits = new ArrayList<>();
+        try (Session session = HibernateUtils.getFACTORY().openSession()) {
+            visits = session.createQuery("from Visit", Visit.class).getResultList();
+        }
+        return visits;
+    }
+
+    public static List<Visit> findAllVisitByPatient(String idPatient) {
+        List<Visit> visits = new ArrayList<>();
+        try (Session session = HibernateUtils.getFACTORY().openSession()) {
+            Patient patient = session.get(Patient.class, idPatient);
+            visits = patient.getVisits();
+        }
+        return visits;
+    }
+
+    public static List<Visit> findAllVisitByPatientPhone(String phone) {
+        List<Visit> visits = new ArrayList<>();
+        Patient patient = PatientDAO.findPatientByPhone(phone);
+        if (patient != null) {
+            visits = patient.getVisits();
+        }
+        return visits;
+    }
+    public static Visit findVisitById(String id) {
+        Visit visit = null;
+        try (Session session = HibernateUtils.getFACTORY().openSession()) {
+            visit = session.get(Visit.class, id);
+        }
+        return visit;
     }
 }
