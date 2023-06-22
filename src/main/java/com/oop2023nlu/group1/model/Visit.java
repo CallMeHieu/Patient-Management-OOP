@@ -6,14 +6,18 @@ import com.oop2023nlu.group1.observer.Observer;
 import com.oop2023nlu.group1.observer.Subject;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "visit")
 public class Visit implements Subject {// Các lần khám bệnh
+    public static final Comparator<Visit> DATE_DESCENDING_COMPARATOR = new Comparator<Visit>() {
+        @Override
+        public int compare(Visit visit1, Visit visit2) {
+            return visit2.getDate().compareTo(visit1.getDate());
+        }
+    };
+
     @Transient
     private ArrayList<Observer> observers;
     @Id
@@ -21,7 +25,7 @@ public class Visit implements Subject {// Các lần khám bệnh
     private Date date;// ngày khám
     private String symptom;// danh sách chuẩn đoán bệnh
     private String conclusion;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "visitID")
     private List<PrescriptionMedicine> prescription;
 
@@ -96,17 +100,21 @@ public class Visit implements Subject {// Các lần khám bệnh
     }
 
     public List<Visit> getVisits() {
-        return VisitDAO.findAllVisit();
+        List<Visit> visits = VisitDAO.findAllVisit();
+        Collections.sort(visits, DATE_DESCENDING_COMPARATOR);
+        return visits;
     }
 
     public List<Visit> getVisitByIdPatient(String idPatient) {
-        List<Visit> result = new ArrayList<>();
-        return result;
+        List<Visit> visits = VisitDAO.findAllVisitByPatient(idPatient);
+        Collections.sort(visits, DATE_DESCENDING_COMPARATOR);
+        return visits;
     }
 
     public List<Visit> getVisitByNumberPhone(String numberPhone) {
-        List<Visit> result = new ArrayList<>();
-        return result;
+        List<Visit> visits = VisitDAO.findAllVisitByPatientPhone(numberPhone);
+        Collections.sort(visits, DATE_DESCENDING_COMPARATOR);
+        return visits;
     }
 
     public List<PrescriptionMedicine> getPrescription() {
@@ -133,5 +141,18 @@ public class Visit implements Subject {// Các lần khám bệnh
         for (Observer o : observers) {
             o.update();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Visit visit = (Visit) o;
+        return Objects.equals(observers, visit.observers) && Objects.equals(visitID, visit.visitID) && Objects.equals(date, visit.date) && Objects.equals(symptom, visit.symptom) && Objects.equals(conclusion, visit.conclusion) && Objects.equals(prescription, visit.prescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(observers, visitID, date, symptom, conclusion, prescription);
     }
 }

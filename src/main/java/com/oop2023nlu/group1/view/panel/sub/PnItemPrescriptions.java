@@ -201,9 +201,9 @@ public class PnItemPrescriptions extends JPanel implements Observer {
                         tbPrescription.setValueAt(items.get(indexItem).getQuantity(), tbPrescription.getSelectedRow(), 4);
                     }
                 } else {
-                    if(valueCell == 0 && indexItem < 0) {
+                    if (valueCell == 0 && indexItem < 0) {
                         System.out.println("không làm gì hết");
-                    }else
+                    } else
                         System.out.println("LỖI GÌ ĐÓ Ở PnItemPrescriptions around row 205");
                 }
 
@@ -293,21 +293,20 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 
     public String getSymptom() {
         String symptom = lbSymptom.getText();
-        symptom = symptom.substring(symptom.lastIndexOf(" ") + 1);
-        System.out.println(symptom);
+        symptom = symptom.substring(13);
         return symptom;
     }
 
     public String getConclusion() {
         String conclusion = lbConclusion.getText();
-        conclusion = conclusion.substring(conclusion.lastIndexOf(" ") + 1);
-        System.out.println(conclusion);
+        conclusion = conclusion.substring(10);
         return conclusion;
     }
 
     public String getPatientId() {
         return lbId.getText();
     }
+
     public JPanel getPnMain() {
         return pnMain;
     }

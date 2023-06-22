@@ -106,7 +106,6 @@ CREATE TABLE `prescription_medicine` (
                                          `dosage` varchar(255) DEFAULT NULL,
                                          `quantity` int(11) NOT NULL,
                                          `medicineID` varchar(255) DEFAULT NULL,
-                                         `prescriptionID` varchar(255) DEFAULT NULL,
                                          `visitID` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
@@ -114,14 +113,14 @@ CREATE TABLE `prescription_medicine` (
 -- Đang đổ dữ liệu cho bảng `prescription_medicine`
 --
 
-INSERT INTO `prescription_medicine` (`id`, `dosage`, `quantity`, `medicineID`, `prescriptionID`, `visitID`) VALUES
-                                                                                                                ('1', '1 viên mỗi 6-8 giờ', 10, 'SP005', NULL, '1'),
-                                                                                                                ('2', '1 viên mỗi tối', 20, 'SP007', NULL, '1'),
-                                                                                                                ('3', '1 ống mỗi 8 giờ', 20, 'SP003', NULL, '1'),
-                                                                                                                ('4', '1 viên mỗi ngày', 40, 'SP006', NULL, '1'),
-                                                                                                                ('5', '1 ống mỗi 4-6 giờ', 10, 'SP029', NULL, '2'),
-                                                                                                                ('6', '1 viên mỗi ngày', 20, 'SP030', NULL, '2'),
-                                                                                                                ('7', '1 viên mỗi 4-6 giờ', 30, 'SP027', NULL, '2');
+INSERT INTO `prescription_medicine` (`id`, `dosage`, `quantity`, `medicineID`, `visitID`) VALUES
+                                                                                                                ('1', '1 viên mỗi 6-8 giờ', 10, 'SP005', '1'),
+                                                                                                                ('2', '1 viên mỗi tối', 20, 'SP007', '1'),
+                                                                                                                ('3', '1 ống mỗi 8 giờ', 20, 'SP003', '1'),
+                                                                                                                ('4', '1 viên mỗi ngày', 40, 'SP006', '1'),
+                                                                                                                ('5', '1 ống mỗi 4-6 giờ', 10, 'SP029', '2'),
+                                                                                                                ('6', '1 viên mỗi ngày', 20, 'SP030', '2'),
+                                                                                                                ('7', '1 viên mỗi 4-6 giờ', 30, 'SP027', '2');
 
 -- --------------------------------------------------------
 
@@ -167,7 +166,6 @@ ALTER TABLE `patient`
 ALTER TABLE `prescription_medicine`
     ADD PRIMARY KEY (`id`),
   ADD KEY `FKj33yx8ajia8l6l5od9h84k5y9` (`medicineID`),
-  ADD KEY `FK23j07cqb5vewlx2k35qbp7u9w` (`prescriptionID`),
   ADD KEY `FKamkaw38ckmsj30492hvd2mdjp` (`visitID`);
 
 --
@@ -185,7 +183,6 @@ ALTER TABLE `visit`
 -- Các ràng buộc cho bảng `prescription_medicine`
 --
 ALTER TABLE `prescription_medicine`
-    ADD CONSTRAINT `FK23j07cqb5vewlx2k35qbp7u9w` FOREIGN KEY (`prescriptionID`) REFERENCES `visit` (`visitID`),
   ADD CONSTRAINT `FKamkaw38ckmsj30492hvd2mdjp` FOREIGN KEY (`visitID`) REFERENCES `visit` (`visitID`),
   ADD CONSTRAINT `FKj33yx8ajia8l6l5od9h84k5y9` FOREIGN KEY (`medicineID`) REFERENCES `medicine` (`medicineID`);
 

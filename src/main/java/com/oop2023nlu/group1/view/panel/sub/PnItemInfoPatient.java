@@ -27,299 +27,300 @@ import javax.swing.table.TableColumnModel;
 
 
 public class PnItemInfoPatient extends JPanel implements Observer {
-	private JPanel pnMain, pnTitle, pnInput, pnButton, pnSearch, pnTable;
-	private JButton btnAdd, btnSave, btnRemove, btnView;
-	private JLabel lbId, lbName, lbYearOfBirth, lbGender, lbPhone, lbAddress, lbSearch;
-	private JTextField tfId, tfName, tfYearOfBirth, tfPhone, tfAddress, tfSearch;
-	private JComboBox<String> cbbGender;
-	private DefaultTableModel dtmPatient;
-	private JTable tbPatient;
-	private Patient patientModel;
+    private JPanel pnMain, pnTitle, pnInput, pnButton, pnSearch, pnTable;
+    private JButton btnAdd, btnSave, btnRemove, btnView;
+    private JLabel lbId, lbName, lbYearOfBirth, lbGender, lbPhone, lbAddress, lbSearch;
+    private JTextField tfId, tfName, tfYearOfBirth, tfPhone, tfAddress, tfSearch;
+    private JComboBox<String> cbbGender;
+    private DefaultTableModel dtmPatient;
+    private JTable tbPatient;
+    private Patient patientModel;
 
-	public DefaultTableModel getDtmPatient() {
-		return dtmPatient;
-	}
+    public DefaultTableModel getDtmPatient() {
+        return dtmPatient;
+    }
 
-	public JButton getBtnRemove() {
-		return btnRemove;
-	}
+    public JButton getBtnRemove() {
+        return btnRemove;
+    }
 
-	public JButton getBtnView() {
-		return btnView;
-	}
+    public JButton getBtnView() {
+        return btnView;
+    }
 
-	public JTextField getTfId() {
-		return tfId;
-	}
+    public JTextField getTfId() {
+        return tfId;
+    }
 
-	public JButton getBtnAdd() {
-		return btnAdd;
-	}
+    public JButton getBtnAdd() {
+        return btnAdd;
+    }
 
-	public JButton getBtnSave() {
-		return btnSave;
-	}
+    public JButton getBtnSave() {
+        return btnSave;
+    }
 
-	public JTextField getTfName() {
-		return tfName;
-	}
+    public JTextField getTfName() {
+        return tfName;
+    }
 
-	public JTextField getTfYearOfBirth() {
-		return tfYearOfBirth;
-	}
+    public JTextField getTfYearOfBirth() {
+        return tfYearOfBirth;
+    }
 
-	public JTextField getTfPhone() {
-		return tfPhone;
-	}
+    public JTextField getTfPhone() {
+        return tfPhone;
+    }
 
-	public JTextField getTfAddress() {
-		return tfAddress;
-	}
+    public JTextField getTfAddress() {
+        return tfAddress;
+    }
 
-	public JComboBox<String> getCbbGender() {
-		return cbbGender;
-	}
+    public JComboBox<String> getCbbGender() {
+        return cbbGender;
+    }
 
-	public void setModel(Patient patientModel) {
-		this.patientModel = patientModel;
-	}
+    public void setModel(Patient patientModel) {
+        this.patientModel = patientModel;
+    }
 
-	public JTextField getTfSearch() {
-		return tfSearch;
-	}
+    public JTextField getTfSearch() {
+        return tfSearch;
+    }
 
-	public PnItemInfoPatient() {
-		Main.changLNF("Windows");
-		addControls();
-		addEvents();
-	}
+    public PnItemInfoPatient() {
+        Main.changLNF("Windows");
+        addControls();
+        addEvents();
+    }
 
-	private void addControls() {
-		Font font = new Font("Tahoma", Font.PLAIN, 20);
+    private void addControls() {
+        Font font = new Font("Tahoma", Font.PLAIN, 20);
 
-		/*
-		 * ======================= PANEL CARD =======================
-		 */
+        /*
+         * ======================= PANEL CARD =======================
+         */
 
-		this.setLayout(new BorderLayout());
-		pnMain = new JPanel();
-		pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
-		this.add(pnMain, BorderLayout.CENTER);
-		/*
-		 * ======================= PANEL TITLE =======================
-		 */
-		pnTitle = new JPanel();
-		pnMain.add(pnTitle);
-		pnTitle.add(new JLabel("<html><h1>QUẢN LÝ BỆNH NHÂN</h1></html>"), BorderLayout.CENTER);
-		/*
-		 * ======================= PANEL INPUT =======================
-		 */
-		pnInput = new JPanel();
-		pnInput.setLayout(new BoxLayout(pnInput, BoxLayout.Y_AXIS));
-		pnMain.add(pnInput);
+        this.setLayout(new BorderLayout());
+        pnMain = new JPanel();
+        pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
+        this.add(pnMain, BorderLayout.CENTER);
+        /*
+         * ======================= PANEL TITLE =======================
+         */
+        pnTitle = new JPanel();
+        pnMain.add(pnTitle);
+        pnTitle.add(new JLabel("<html><h1>QUẢN LÝ BỆNH NHÂN</h1></html>"), BorderLayout.CENTER);
+        /*
+         * ======================= PANEL INPUT =======================
+         */
+        pnInput = new JPanel();
+        pnInput.setLayout(new BoxLayout(pnInput, BoxLayout.Y_AXIS));
+        pnMain.add(pnInput);
 
-		lbId = new JLabel("Mã số bệnh nhân");
-		lbName = new JLabel("Họ và tên");
-		lbYearOfBirth = new JLabel("Năm sinh");
-		lbGender = new JLabel("Giới tính");
-		lbPhone = new JLabel("Số điện thoại");
-		lbAddress = new JLabel("Địa chỉ");
+        lbId = new JLabel("Mã số bệnh nhân");
+        lbName = new JLabel("Họ và tên");
+        lbYearOfBirth = new JLabel("Năm sinh");
+        lbGender = new JLabel("Giới tính");
+        lbPhone = new JLabel("Số điện thoại");
+        lbAddress = new JLabel("Địa chỉ");
 
-		lbId.setFont(font);
-		lbName.setFont(font);
-		lbYearOfBirth.setFont(font);
-		lbGender.setFont(font);
-		lbPhone.setFont(font);
-		lbAddress.setFont(font);
+        lbId.setFont(font);
+        lbName.setFont(font);
+        lbYearOfBirth.setFont(font);
+        lbGender.setFont(font);
+        lbPhone.setFont(font);
+        lbAddress.setFont(font);
 
-		tfId = new JTextField(24);
-		tfId.setEditable(false);
-		tfName = new JTextField(24);
-		tfYearOfBirth = new JTextField(24);
-		cbbGender = new JComboBox<>();
-		cbbGender.addItem("Chọn giới tính");
-		cbbGender.addItem("Nam");
-		cbbGender.addItem("Nữ");
-		tfPhone = new JTextField(24);
-		tfAddress = new JTextField(24);
+        tfId = new JTextField(24);
+        tfId.setEditable(false);
+        tfName = new JTextField(24);
+        tfYearOfBirth = new JTextField(24);
+        cbbGender = new JComboBox<>();
+        cbbGender.addItem("Chọn giới tính");
+        cbbGender.addItem("Nam");
+        cbbGender.addItem("Nữ");
+        tfPhone = new JTextField(24);
+        tfAddress = new JTextField(24);
 
-		tfId.setFont(font);
-		tfName.setFont(font);
-		tfYearOfBirth.setFont(font);
-		cbbGender.setFont(font);
-		tfPhone.setFont(font);
-		tfAddress.setFont(font);
+        tfId.setFont(font);
+        tfName.setFont(font);
+        tfYearOfBirth.setFont(font);
+        cbbGender.setFont(font);
+        tfPhone.setFont(font);
+        tfAddress.setFont(font);
 
-		JPanel pnId = new JPanel();
-		pnId.add(lbId);
-		pnId.add(tfId);
-		pnInput.add(pnId);
+        JPanel pnId = new JPanel();
+        pnId.add(lbId);
+        pnId.add(tfId);
+        pnInput.add(pnId);
 
-		JPanel pnName = new JPanel();
-		pnName.add(lbName);
-		pnName.add(tfName);
-		pnInput.add(pnName);
+        JPanel pnName = new JPanel();
+        pnName.add(lbName);
+        pnName.add(tfName);
+        pnInput.add(pnName);
 
-		JPanel pnYearOfBirth = new JPanel();
-		pnYearOfBirth.add(lbYearOfBirth);
-		pnYearOfBirth.add(tfYearOfBirth);
-		pnInput.add(pnYearOfBirth);
+        JPanel pnYearOfBirth = new JPanel();
+        pnYearOfBirth.add(lbYearOfBirth);
+        pnYearOfBirth.add(tfYearOfBirth);
+        pnInput.add(pnYearOfBirth);
 
-		JPanel pnGender = new JPanel();
-		pnGender.add(lbGender);
-		pnGender.add(cbbGender);
-		pnInput.add(pnGender);
+        JPanel pnGender = new JPanel();
+        pnGender.add(lbGender);
+        pnGender.add(cbbGender);
+        pnInput.add(pnGender);
 
-		JPanel pnPhone = new JPanel();
-		pnPhone.add(lbPhone);
-		pnPhone.add(tfPhone);
-		pnInput.add(pnPhone);
+        JPanel pnPhone = new JPanel();
+        pnPhone.add(lbPhone);
+        pnPhone.add(tfPhone);
+        pnInput.add(pnPhone);
 
-		JPanel pnAddress = new JPanel();
-		pnAddress.add(lbAddress);
-		pnAddress.add(tfAddress);
-		pnInput.add(pnAddress);
+        JPanel pnAddress = new JPanel();
+        pnAddress.add(lbAddress);
+        pnAddress.add(tfAddress);
+        pnInput.add(pnAddress);
 
-		Dimension lbSize = lbId.getPreferredSize();
-		lbId.setPreferredSize(lbSize);
-		lbName.setPreferredSize(lbSize);
-		lbYearOfBirth.setPreferredSize(lbSize);
-		lbGender.setPreferredSize(lbSize);
-		lbPhone.setPreferredSize(lbSize);
-		lbAddress.setPreferredSize(lbSize);
-		cbbGender.setPreferredSize(tfId.getPreferredSize());
-		/*
-		 * ======================= PANEL BUTTON =======================
-		 */
-		pnButton = new JPanel();
-		btnAdd = new JButton("Thêm");
-		btnSave = new JButton("Lưu");
-		btnRemove = new JButton("Xóa");
-		btnView = new JButton("Khám bệnh");
+        Dimension lbSize = lbId.getPreferredSize();
+        lbSize.setSize(lbSize.getWidth() + 12, lbSize.getHeight());
+        lbId.setPreferredSize(lbSize);
+        lbName.setPreferredSize(lbSize);
+        lbYearOfBirth.setPreferredSize(lbSize);
+        lbGender.setPreferredSize(lbSize);
+        lbPhone.setPreferredSize(lbSize);
+        lbAddress.setPreferredSize(lbSize);
+        cbbGender.setPreferredSize(tfId.getPreferredSize());
+        /*
+         * ======================= PANEL BUTTON =======================
+         */
+        pnButton = new JPanel();
+        btnAdd = new JButton("Thêm");
+        btnSave = new JButton("Lưu");
+        btnRemove = new JButton("Xóa");
+        btnView = new JButton("Khám bệnh");
 
-		Font fontButton = new Font("Tahoma", Font.PLAIN, 16);
-		btnAdd.setFont(fontButton);
-		btnSave.setFont(fontButton);
-		btnRemove.setFont(fontButton);
-		btnView.setFont(fontButton);
-		pnButton.add(btnAdd);
-		pnButton.add(btnSave);
-		pnButton.add(btnRemove);
-		pnButton.add(btnView);
-		pnMain.add(pnButton);
+        Font fontButton = new Font("Tahoma", Font.PLAIN, 16);
+        btnAdd.setFont(fontButton);
+        btnSave.setFont(fontButton);
+        btnRemove.setFont(fontButton);
+        btnView.setFont(fontButton);
+        pnButton.add(btnAdd);
+        pnButton.add(btnSave);
+        pnButton.add(btnRemove);
+        pnButton.add(btnView);
+        pnMain.add(pnButton);
 
-		pnSearch = new JPanel();
-		lbSearch = new JLabel("Tìm kiếm");
-		lbSearch.setFont(font);
-		tfSearch = new JTextField(20);
-		tfSearch.setFont(font);
-		pnSearch.add(lbSearch);
-		pnSearch.add(tfSearch);
-		pnMain.add(pnSearch);
-		/*
-		 * ======================= PANEL TABLE =======================
-		 */
-		pnTable = new JPanel();
-		pnTable.setLayout(new BorderLayout());
-		pnTable.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
-		pnMain.add(pnTable);
+        pnSearch = new JPanel();
+        lbSearch = new JLabel("Tìm kiếm");
+        lbSearch.setFont(font);
+        tfSearch = new JTextField(20);
+        tfSearch.setFont(font);
+        pnSearch.add(lbSearch);
+        pnSearch.add(tfSearch);
+        pnMain.add(pnSearch);
+        /*
+         * ======================= PANEL TABLE =======================
+         */
+        pnTable = new JPanel();
+        pnTable.setLayout(new BorderLayout());
+        pnTable.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
+        pnMain.add(pnTable);
 
-		dtmPatient =  new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false; // Không cho phép chỉnh sửa các ô
-			}
-		};
-		dtmPatient.addColumn("Mã số");
-		dtmPatient.addColumn("Họ tên");
-		dtmPatient.addColumn("Năm sinh");
-		dtmPatient.addColumn("Giới tính");
-		dtmPatient.addColumn("Số điện thoại");
-		dtmPatient.addColumn("Địa chỉ");
+        dtmPatient = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Không cho phép chỉnh sửa các ô
+            }
+        };
+        dtmPatient.addColumn("Mã số");
+        dtmPatient.addColumn("Họ tên");
+        dtmPatient.addColumn("Năm sinh");
+        dtmPatient.addColumn("Giới tính");
+        dtmPatient.addColumn("Số điện thoại");
+        dtmPatient.addColumn("Địa chỉ");
 
-		tbPatient = new JTable();
-		tbPatient = new TableCustom(dtmPatient);
+        tbPatient = new JTable();
+        tbPatient = new TableCustom(dtmPatient);
 
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setHorizontalAlignment(JLabel.CENTER);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
 
-		tbPatient.getColumnModel().getColumn(0).setCellRenderer(renderer);
-		tbPatient.getColumnModel().getColumn(2).setCellRenderer(renderer);
-		tbPatient.getColumnModel().getColumn(3).setCellRenderer(renderer);
-		tbPatient.getColumnModel().getColumn(4).setCellRenderer(renderer);
-		tbPatient.getColumnModel().getColumn(5).setCellRenderer(renderer);
+        tbPatient.getColumnModel().getColumn(0).setCellRenderer(renderer);
+        tbPatient.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        tbPatient.getColumnModel().getColumn(3).setCellRenderer(renderer);
+        tbPatient.getColumnModel().getColumn(4).setCellRenderer(renderer);
+        tbPatient.getColumnModel().getColumn(5).setCellRenderer(renderer);
 
-		TableColumnModel columnModelBanHang = tbPatient.getColumnModel();
-		columnModelBanHang.getColumn(0).setPreferredWidth(60);
-		columnModelBanHang.getColumn(1).setPreferredWidth(200);
-		columnModelBanHang.getColumn(2).setPreferredWidth(80);
-		columnModelBanHang.getColumn(3).setPreferredWidth(80);
-		columnModelBanHang.getColumn(4).setPreferredWidth(140);
-		columnModelBanHang.getColumn(5).setPreferredWidth(300);
+        TableColumnModel columnModelBanHang = tbPatient.getColumnModel();
+        columnModelBanHang.getColumn(0).setPreferredWidth(60);
+        columnModelBanHang.getColumn(1).setPreferredWidth(200);
+        columnModelBanHang.getColumn(2).setPreferredWidth(80);
+        columnModelBanHang.getColumn(3).setPreferredWidth(80);
+        columnModelBanHang.getColumn(4).setPreferredWidth(140);
+        columnModelBanHang.getColumn(5).setPreferredWidth(300);
 
-		JScrollPane scrTblSanPham = new JScrollPane(tbPatient);
-		pnTable.add(scrTblSanPham, BorderLayout.CENTER);
-		pnMain.add(pnTable);
-	}
+        JScrollPane scrTblSanPham = new JScrollPane(tbPatient);
+        pnTable.add(scrTblSanPham, BorderLayout.CENTER);
+        pnMain.add(pnTable);
+    }
 
-	private void addEvents() {
-		tbPatient.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int row = tbPatient.getSelectedRow();
-				if (row > -1) {
-					tfId.setText(tbPatient.getValueAt(row, 0) + "");
-					tfName.setText(tbPatient.getValueAt(row, 1) + "");
-					tfYearOfBirth.setText(tbPatient.getValueAt(row, 2) + "");
-					int index = tbPatient.getValueAt(row, 3).equals("Nam") ? 1 : 2;
-					cbbGender.setSelectedIndex(index);
-					tfPhone.setText(tbPatient.getValueAt(row, 4) + "");
-					tfAddress.setText(tbPatient.getValueAt(row, 5) + "");
-				}
-			}
+    private void addEvents() {
+        tbPatient.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tbPatient.getSelectedRow();
+                if (row > -1) {
+                    tfId.setText(tbPatient.getValueAt(row, 0) + "");
+                    tfName.setText(tbPatient.getValueAt(row, 1) + "");
+                    tfYearOfBirth.setText(tbPatient.getValueAt(row, 2) + "");
+                    int index = tbPatient.getValueAt(row, 3).equals("Nam") ? 1 : 2;
+                    cbbGender.setSelectedIndex(index);
+                    tfPhone.setText(tbPatient.getValueAt(row, 4) + "");
+                    tfAddress.setText(tbPatient.getValueAt(row, 5) + "");
+                }
+            }
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
 
-			}
+            }
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
 
-			}
+            }
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
 
-			}
+            }
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
 
-			}
-		});
-	}
+            }
+        });
+    }
 
-	@Override
-	public void update() {
-		dtmPatient.setRowCount(0);
+    @Override
+    public void update() {
+        dtmPatient.setRowCount(0);
 
-		for (Patient patient : patientModel.getPatients()) {
-			Vector<Object> vec = new Vector<>();
-			vec.add(patient.getId());
-			vec.add(patient.getName());
-			vec.add(patient.getYearOfBirth());
-			if (patient.isGender()) {
-				vec.add("Nam");
-			} else
-				vec.add("Nữ");
-			vec.add(patient.getPhone());
-			vec.add(patient.getAddress());
-			dtmPatient.addRow(vec);
-		}
-	}
+        for (Patient patient : patientModel.getPatients()) {
+            Vector<Object> vec = new Vector<>();
+            vec.add(patient.getId());
+            vec.add(patient.getName());
+            vec.add(patient.getYearOfBirth());
+            if (patient.isGender()) {
+                vec.add("Nam");
+            } else
+                vec.add("Nữ");
+            vec.add(patient.getPhone());
+            vec.add(patient.getAddress());
+            dtmPatient.addRow(vec);
+        }
+    }
 }

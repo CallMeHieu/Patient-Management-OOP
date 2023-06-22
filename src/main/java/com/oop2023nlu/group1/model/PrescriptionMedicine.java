@@ -6,6 +6,7 @@ import com.oop2023nlu.group1.observer.Subject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "prescription_medicine")
@@ -96,6 +97,9 @@ public class PrescriptionMedicine implements Subject {
 	}
 
 	public String toString(){
-		return " - " + this.medicine.getMedicineID() + ", " + this.medicine.getName() + "(" + this.dosage +")"+ "SL: " + this.quantity + "\n";
+		return " - " + this.medicine.getMedicineID() + ", " + this.medicine.getName() + "(" + this.dosage +")"+ " SL: " + this.quantity + "\n";
+	}
+	public List<PrescriptionMedicine> findAllByVisitId(String idVisit){
+		return PrescriptionMedicineDAO.findAllByVisitId(idVisit);
 	}
 }

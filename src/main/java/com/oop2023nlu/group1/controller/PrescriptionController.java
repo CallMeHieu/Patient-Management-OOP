@@ -5,7 +5,9 @@ import com.oop2023nlu.group1.model.Medicine;
 import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.PrescriptionMedicine;
 import com.oop2023nlu.group1.model.Visit;
+import com.oop2023nlu.group1.utils.ModelUtils;
 import com.oop2023nlu.group1.view.container.Container;
+import com.oop2023nlu.group1.view.dialog.DialogPrescription;
 import com.oop2023nlu.group1.view.panel.sub.PnItemPrescriptions;
 
 import javax.persistence.Transient;
@@ -81,6 +83,18 @@ public class PrescriptionController {
                 Patient patient = patientModel.findPatientById(patientId);
                 patient.getVisits().add(visit);
                 patientModel.updatePatient(patient);
+                JOptionPane.showMessageDialog(null, "Thành công");
+                ModelUtils.visit = visit;
+                ModelUtils.patient = patient;
+                new DialogPrescription(view, prescription);
+
+                view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "1");
+                view.getPatientPanel().getLbCard1().setBackground(new Color(240, 240, 240));
+                view.getPatientPanel().getLbCard1().setFont(new Font("Tahoma", Font.PLAIN, 16));
+                view.getPatientPanel().getLbCard2().setBackground(Color.WHITE);
+                view.getPatientPanel().getLbCard2().setFont(view.getPatientPanel().fontMenu);
+                view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
+                view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
             }
         });
     }
