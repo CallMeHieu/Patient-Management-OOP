@@ -3,95 +3,71 @@ package com.oop2023nlu.group1.controller;
 import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.Visit;
 import com.oop2023nlu.group1.view.container.Container;
+import com.oop2023nlu.group1.view.panel.sub.PnItemDiagnostic;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 
 public class DiagnosticController {
     private Container view;
     private Patient patientModel;
+    private final PnItemDiagnostic pnItemDiagnostic;
 
     public DiagnosticController(Container view, Patient patientModel) {
         super();
         this.view = view;
         this.patientModel = patientModel;
+        this.pnItemDiagnostic = this.view.getPatientPanel().getPnItemDiagnostic();
         initViewListeners();
     }
 
     private void initViewListeners() {
-        loadDataOfTableDiagnostic();
         backToScreenPatient();
         nextToScreenPrescriptions();
     }
 
     private void nextToScreenPrescriptions() {
-        view.getPatientPanel().getPnItemDiagnostic().getBtnContinue().addActionListener(new ActionListener() {
+        pnItemDiagnostic.getBtnContinue().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (view.getPatientPanel().getPnItemDiagnostic().getTaSymptom().getText().equals("")
-                        || view.getPatientPanel().getPnItemDiagnostic().getTaCnclude().getText().equals(""))
+                if (pnItemDiagnostic.getTaSymptom().getText().equals("")
+                        || pnItemDiagnostic.getTaConclusion().getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin !!!");
                     return;
-                view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "3");
-                view.getPatientPanel().getLbCard3().setBackground(new Color(240, 240, 240));
-                view.getPatientPanel().getLbCard3().setFont(new Font("Tahoma", Font.PLAIN, 16));
-                view.getPatientPanel().getLbCard2().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard2().setFont(view.getPatientPanel().fontMenu);
-                view.getPatientPanel().getLbCard1().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard1().setFont(view.getPatientPanel().fontMenu);
-                String id = view.getPatientPanel().getPnItemDiagnostic().getTfId().getText();
-                String name = view.getPatientPanel().getPnItemDiagnostic().getTfName().getText();
-                String address = view.getPatientPanel().getPnItemDiagnostic().getTfAddress().getText();
-                String phone = view.getPatientPanel().getPnItemDiagnostic().getTfPhone().getText();
-                int yearOfBirth = Integer.parseInt(view.getPatientPanel().getPnItemDiagnostic().getTfBirthDay().getText());
-                String symptom = view.getPatientPanel().getPnItemDiagnostic().getTaSymptom().getText();
-                String conclusion = view.getPatientPanel().getPnItemDiagnostic().getTaCnclude().getText();
-                Patient patient = new Patient(id, name, address, phone, yearOfBirth, false);
+                }
+                view.changeScreen("3");
+
+                String symptom = pnItemDiagnostic.getTaSymptom().getText();
+                String conclusion = pnItemDiagnostic.getTaConclusion().getText();
                 Visit visit = new Visit("", new Date(), symptom, conclusion, null);
-                view.getPatientPanel().getPnItemPrescriptions().loadInfo(patient, visit);
+
+                view.getPatientPanel().getPnItemPrescriptions().loadInfo(getPatientModel(), visit);
             }
         });
     }
 
     private void backToScreenPatient() {
-        view.getPatientPanel().getPnItemDiagnostic().getBtnBack().addActionListener(new ActionListener() {
+        pnItemDiagnostic.getBtnBack().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "1");
-                view.getPatientPanel().getLbCard1().setBackground(new Color(240, 240, 240));
-                view.getPatientPanel().getLbCard1().setFont(new Font("Tahoma", Font.PLAIN, 16));
-                view.getPatientPanel().getLbCard2().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard2().setFont(view.getPatientPanel().fontMenu);
-                view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
+                view.changeScreen("1");
             }
         });
     }
 
-    private void loadDataOfTableDiagnostic() {
-        view.getPatientPanel().getPnSubPatient().getBtnView().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (view.getPatientPanel().getPnSubPatient().getTfId().getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn bệnh nhân");
-                    return;
-                }
-                view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "2");
-                view.getPatientPanel().getLbCard2().setBackground(new Color(240, 240, 240));
-                view.getPatientPanel().getLbCard2().setFont(new Font("Tahoma", Font.PLAIN, 16));
-                view.getPatientPanel().getLbCard1().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard1().setFont(view.getPatientPanel().fontMenu);
-                view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
-                String id = view.getPatientPanel().getPnSubPatient().getTfId().getText();
-                Patient patient = patientModel.findPatientById(id);
-                view.getPatientPanel().getPnItemDiagnostic().loadPatient(patient);
-            }
-        });
+    private Patient getPatientModel() {
+        String id = pnItemDiagnostic.getTfId().getText();
+        String name = pnItemDiagnostic.getTfName().getText();
+        String address = pnItemDiagnostic.getTfAddress().getText();
+        String phone = pnItemDiagnostic.getTfPhone().getText();
+        String gender = pnItemDiagnostic.getTfGender().getText();
+        int yearOfBirth = Integer.parseInt(pnItemDiagnostic.getTfBirthDay().getText());
+        if (gender.equalsIgnoreCase("Nữ"))
+            return new Patient(id, name, address, phone, yearOfBirth, false);
+        return new Patient(id, name, address, phone, yearOfBirth, true);
     }
 }

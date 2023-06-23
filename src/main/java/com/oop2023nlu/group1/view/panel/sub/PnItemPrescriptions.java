@@ -1,5 +1,6 @@
 package com.oop2023nlu.group1.view.panel.sub;
 
+import com.oop2023nlu.group1.utils.FontConstant;
 import com.oop2023nlu.group1.custom.TableCustom;
 import com.oop2023nlu.group1.main.Main;
 import com.oop2023nlu.group1.model.*;
@@ -30,8 +31,35 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         addControls();
     }
 
+    public void setMedicineModel(Medicine medicineModel) {
+        this.medicineModel = medicineModel;
+    }
+
+    public String getPatientId() {
+        return lbId.getText();
+    }
+
+    public JTextArea getTaPrescriptions() {
+        return taPrescriptions;
+    }
+
+    public JTextField getTfSearch() {
+        return tfSearch;
+    }
+
+    public DefaultTableModel getDtmPrescription() {
+        return dtmPrescription;
+    }
+
+    public JButton getBtnGetMedicines() {
+        return btnGetMedicines;
+    }
+
+    public List<PrescriptionMedicine> getItems() {
+        return items;
+    }
+
     private void addControls() {
-        Font font = new Font("Tahoma", Font.PLAIN, 20);
         /*
          * ======================= PANEL CARD =======================
          */
@@ -39,12 +67,14 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         pnMain = new JPanel();
         pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
         this.add(pnMain, BorderLayout.CENTER);
+
         /*
          * ======================= PANEL TITLE =======================
          */
         pnTitle = new JPanel();
         pnMain.add(pnTitle);
         pnTitle.add(new JLabel("<html><h1>TOA THUỐC</h1></html>"), BorderLayout.CENTER);
+
         /*
          * ======================= PANEL CONTENT =======================
          */
@@ -58,16 +88,16 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         lbSymptom = new JLabel();
         lbConclusion = new JLabel();
 
-        lbName.setFont(font);
-        lbYearOfBirth.setFont(font);
-        lbPhone.setFont(font);
-        lbAddress.setFont(font);
-        lbSymptom.setFont(font);
-        lbConclusion.setFont(font);
+        lbName.setFont(FontConstant.setFontPlain(20));
+        lbYearOfBirth.setFont(FontConstant.setFontPlain(20));
+        lbPhone.setFont(FontConstant.setFontPlain(20));
+        lbAddress.setFont(FontConstant.setFontPlain(20));
+        lbSymptom.setFont(FontConstant.setFontPlain(20));
+        lbConclusion.setFont(FontConstant.setFontPlain(20));
 
         taPrescriptions = new JTextArea(10, 30);
         taPrescriptions.setEditable(false);
-        taPrescriptions.setFont(font);
+        taPrescriptions.setFont(FontConstant.setFontPlain(20));
 
         JPanel pnInfo = new JPanel();
         pnInfo.setLayout(new BoxLayout(pnInfo, BoxLayout.X_AXIS));
@@ -91,7 +121,6 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         JPanel pnTa = new JPanel();
         JScrollPane scrollPane = new JScrollPane(taPrescriptions);
         pnTa.add(scrollPane);
-//		pnTa.add(taPrescriptions);
         pnContent.add(pnTa);
 
         Dimension lbSize = lbName.getPreferredSize();
@@ -117,11 +146,11 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 
         pnSearch = new JPanel();
         lbSearch = new JLabel("Tìm kiếm");
-        lbSearch.setFont(font);
+        lbSearch.setFont(FontConstant.setFontPlain(20));
         tfSearch = new JTextField(20);
-        tfSearch.setFont(font);
+        tfSearch.setFont(FontConstant.setFontPlain(20));
         btnGetMedicines = new JButton("Lấy thuốc");
-        btnGetMedicines.setFont(font);
+        btnGetMedicines.setFont(FontConstant.setFontPlain(20));
         pnSearch.add(lbSearch);
         pnSearch.add(tfSearch);
         pnSearch.add(btnGetMedicines);
@@ -146,7 +175,6 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         dtmPrescription.addColumn("Đơn vị");
         dtmPrescription.addColumn("Liều dùng");
         dtmPrescription.addColumn("Số lượng");
-
 
         tbPrescription = new JTable();
         tbPrescription = new TableCustom(dtmPrescription);
@@ -225,36 +253,16 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         tbPrescription.getColumnModel().getColumn(3).setCellRenderer(renderer);
         tbPrescription.getColumnModel().getColumn(4).setCellRenderer(renderer);
 
-        TableColumnModel columnModelBanHang = tbPrescription.getColumnModel();
-        columnModelBanHang.getColumn(0).setPreferredWidth(60);
-        columnModelBanHang.getColumn(1).setPreferredWidth(350);
-        columnModelBanHang.getColumn(2).setPreferredWidth(150);
-        columnModelBanHang.getColumn(3).setPreferredWidth(350);
-        columnModelBanHang.getColumn(4).setPreferredWidth(150);
+        TableColumnModel columnModel = tbPrescription.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(60);
+        columnModel.getColumn(1).setPreferredWidth(350);
+        columnModel.getColumn(2).setPreferredWidth(150);
+        columnModel.getColumn(3).setPreferredWidth(350);
+        columnModel.getColumn(4).setPreferredWidth(150);
 
-        JScrollPane scrTblSanPham = new JScrollPane(tbPrescription);
-        pnTable.add(scrTblSanPham, BorderLayout.CENTER);
+        JScrollPane scrollPane1 = new JScrollPane(tbPrescription);
+        pnTable.add(scrollPane1, BorderLayout.CENTER);
         pnMain.add(pnTable);
-
-//        Patient patient = new Patient("", "name", "address", "phone", 2001, true);
-//        lbName.setText(patient.getName());
-//        lbYearOfBirth.setText(patient.getYearOfBirth() + "");
-//        lbPhone.setText(patient.getPhone());
-//        lbAddress.setText(patient.getAddress());
-    }
-
-    @Override
-    public void update() {
-        dtmPrescription.setRowCount(0);
-        for (Medicine medicine : medicineModel.getMedicines()) {
-            Vector<Object> vec = new Vector<>();
-            vec.add(medicine.getMedicineID());
-            vec.add(medicine.getName());
-            vec.add(medicine.getUnit());
-            vec.add(medicine.getDefaultDosage());
-            vec.add(0);
-            dtmPrescription.addRow(vec);
-        }
     }
 
     public void loadInfo(Patient patient, Visit visit) {
@@ -265,30 +273,6 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         lbAddress.setText(patient.getAddress());
         lbSymptom.setText("Triệu chứng: " + visit.getSymptom());
         lbConclusion.setText("Kết luận: " + visit.getConclusion());
-    }
-
-    public Medicine getMedicineModel() {
-        return medicineModel;
-    }
-
-    public void setMedicineModel(Medicine medicineModel) {
-        this.medicineModel = medicineModel;
-    }
-
-    public JLabel getLbName() {
-        return lbName;
-    }
-
-    public JLabel getLbPhone() {
-        return lbPhone;
-    }
-
-    public JLabel getLbAddress() {
-        return lbAddress;
-    }
-
-    public JLabel getLbYearOfBirth() {
-        return lbYearOfBirth;
     }
 
     public String getSymptom() {
@@ -305,75 +289,17 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         return conclusion;
     }
 
-    public String getPatientId() {
-        return lbId.getText();
-    }
-
-    public JPanel getPnMain() {
-        return pnMain;
-    }
-
-    public JPanel getPnTitle() {
-        return pnTitle;
-    }
-
-    public JPanel getPnTable() {
-        return pnTable;
-    }
-
-    public JPanel getPnSearch() {
-        return pnSearch;
-    }
-
-    public JPanel getPnContent() {
-        return pnContent;
-    }
-
-    public JPanel getPnButton() {
-        return pnButton;
-    }
-
-    public JLabel getLbSearch() {
-        return lbSearch;
-    }
-
-    public JTextArea getTaPrescriptions() {
-        return taPrescriptions;
-    }
-
-    public JTextField getTfSearch() {
-        return tfSearch;
-    }
-
-    public DefaultTableModel getDtmPrescription() {
-        return dtmPrescription;
-    }
-
-    public JTable getTbPrescription() {
-        return tbPrescription;
-    }
-
-    public JButton getBtnBack() {
-        return btnBack;
-    }
-
-    public JButton getBtnSave() {
-        return btnSave;
-    }
-
-    public JButton getBtnGetMedicines() {
-        return btnGetMedicines;
-    }
-
-    public void setLbPhone(JLabel lbPhone) {
-        this.lbPhone = lbPhone;
-    }
-
-    public void setLbYearOfBirth(JLabel lbYearOfBirth) {
-        this.lbYearOfBirth = lbYearOfBirth;
-    }
-
-    public List<PrescriptionMedicine> getItems() {
-        return items;
+    @Override
+    public void update() {
+        dtmPrescription.setRowCount(0);
+        for (Medicine medicine : medicineModel.getMedicines()) {
+            Vector<Object> vec = new Vector<>();
+            vec.add(medicine.getMedicineID());
+            vec.add(medicine.getName());
+            vec.add(medicine.getUnit());
+            vec.add(medicine.getDefaultDosage());
+            vec.add(0);
+            dtmPrescription.addRow(vec);
+        }
     }
 }

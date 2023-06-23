@@ -32,7 +32,6 @@ public class DialogPrescription extends JDialog {
             pnTitle.add(new JLabel("<html><h1>Toa thuốc</h1></html>"), BorderLayout.CENTER);
         }
 
-//        JPanel pnContent = new JPanel(new GridLayout(4, 2));
         JPanel pnContent = new JPanel();
         pnContent.setLayout(new BoxLayout(pnContent, BoxLayout.Y_AXIS));
         contentPanel.add(pnContent, BorderLayout.CENTER);
@@ -67,8 +66,7 @@ public class DialogPrescription extends JDialog {
         }
         pnContent.add(panel);
 
-        setLocationRelativeTo(null); // Căn chỉnh dialog vào giữa màn hình
-
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }
