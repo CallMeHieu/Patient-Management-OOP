@@ -23,16 +23,14 @@ import java.util.Vector;
 
 
 public class PrescriptionController {
-    private Container view;
-    private Medicine medicineModel;
-    private Visit visitModel;
-    private PrescriptionMedicine prescriptionMedicineModel = new PrescriptionMedicine();
-    private Patient patientModel = new Patient();
+    private final Container view;
+    private final Visit visitModel;
+    private final PrescriptionMedicine prescriptionMedicineModel = new PrescriptionMedicine();
+    private final Patient patientModel = new Patient();
 
     public PrescriptionController(Container view, Medicine medicineModel, Visit visitModel) {
         super();
         this.view = view;
-        this.medicineModel = medicineModel;
         this.visitModel = visitModel;
         initViewListeners();
         medicineModel.registerObserver(view.getPatientPanel().getPnItemPrescriptions());

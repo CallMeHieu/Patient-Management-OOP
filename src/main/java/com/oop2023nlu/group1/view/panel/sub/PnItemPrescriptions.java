@@ -293,13 +293,15 @@ public class PnItemPrescriptions extends JPanel implements Observer {
 
     public String getSymptom() {
         String symptom = lbSymptom.getText();
-        symptom = symptom.substring(13);
+        symptom = symptom.substring(symptom.lastIndexOf(":") + 2);
+        System.out.println(symptom);
         return symptom;
     }
 
     public String getConclusion() {
         String conclusion = lbConclusion.getText();
-        conclusion = conclusion.substring(10);
+        conclusion = conclusion.substring(conclusion.lastIndexOf(":") + 2);
+        System.out.println(conclusion);
         return conclusion;
     }
 
