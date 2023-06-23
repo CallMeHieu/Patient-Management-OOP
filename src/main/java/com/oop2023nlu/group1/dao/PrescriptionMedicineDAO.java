@@ -1,11 +1,15 @@
 package com.oop2023nlu.group1.dao;
+
 import com.oop2023nlu.group1.model.PrescriptionMedicine;
+import com.oop2023nlu.group1.model.Visit;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PrescriptionMedicineDAO {
-
-
     public static PrescriptionMedicine savePrescriptionMedicine(PrescriptionMedicine prescriptionMedicine) {
         Session session = HibernateUtils.getFACTORY().openSession();
         Transaction transaction = null;
@@ -26,6 +30,7 @@ public class PrescriptionMedicineDAO {
         return savedPrescriptionMedicine;
 
     }
+
     public static int count() {
         try (Session session = HibernateUtils.getFACTORY().openSession()) {
             String hql = "SELECT COUNT(*) FROM PrescriptionMedicine";
@@ -33,5 +38,14 @@ public class PrescriptionMedicineDAO {
             Long count = query.uniqueResult();
             return count.intValue();
         }
+    }
+
+    public static List<PrescriptionMedicine> findAllByVisitId(String idVisit) {
+        List<PrescriptionMedicine> prescriptionMedicines = new ArrayList<>();
+        try (Session session = HibernateUtils.getFACTORY().openSession()) {
+            Visit visit = session.get(Visit.class, idVisit);
+            prescriptionMedicines = visit.getPrescription();
+        }
+        return prescriptionMedicines;
     }
 }

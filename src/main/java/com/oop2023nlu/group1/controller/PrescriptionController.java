@@ -5,10 +5,13 @@ import com.oop2023nlu.group1.model.Medicine;
 import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.PrescriptionMedicine;
 import com.oop2023nlu.group1.model.Visit;
+import com.oop2023nlu.group1.utils.ModelUtils;
 import com.oop2023nlu.group1.view.container.Container;
+import com.oop2023nlu.group1.view.dialog.DialogPrescription;
 import com.oop2023nlu.group1.view.panel.sub.PnItemPrescriptions;
 
 import javax.persistence.Transient;
+import javax.swing.*;
 import javax.transaction.Transactional;
 import java.awt.Color;
 import java.awt.Font;
@@ -63,27 +66,39 @@ public class PrescriptionController {
             @Override
             @Transactional
             public void actionPerformed(ActionEvent e) {
-               String patientId = panel.getPatientId();
-               String symptom = panel.getSymptom();
-               String conclusion = panel.getConclusion();
-               List<PrescriptionMedicine> prescription = panel.getItems();
-               for(PrescriptionMedicine item : prescription){
-                   item.setId(prescriptionMedicineModel.count() + 1 + "");
-                   item = prescriptionMedicineModel.addPrescriptionMedicine(item);
-               }
+                String patientId = panel.getPatientId();
+                String symptom = panel.getSymptom();
+                String conclusion = panel.getConclusion();
+                List<PrescriptionMedicine> prescription = panel.getItems();
+                for (PrescriptionMedicine item : prescription) {
+                    item.setId(prescriptionMedicineModel.count() + 1 + "");
+                    item = prescriptionMedicineModel.addPrescriptionMedicine(item);
+                }
 
-               String visitID = visitModel.count() + 1 + "";
-               Visit visit = new Visit(visitID, new Date(), symptom, conclusion, prescription);
-               visit = visitModel.addVisit(visit);
-               Patient patient = patientModel.findPatientById(patientId);
-               patient.getVisits().add(visit);
-               patientModel.updatePatient(patient);
+                String visitID = visitModel.count() + 1 + "";
+                Visit visit = new Visit(visitID, new Date(), symptom, conclusion, prescription);
+                visit = visitModel.addVisit(visit);
+                Patient patient = patientModel.findPatientById(patientId);
+                patient.getVisits().add(visit);
+                patientModel.updatePatient(patient);
+                JOptionPane.showMessageDialog(null, "Thành công");
+                ModelUtils.visit = visit;
+                ModelUtils.patient = patient;
+                new DialogPrescription(view, prescription);
+
+                view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "1");
+                view.getPatientPanel().getLbCard1().setBackground(new Color(240, 240, 240));
+                view.getPatientPanel().getLbCard1().setFont(new Font("Tahoma", Font.PLAIN, 16));
+                view.getPatientPanel().getLbCard2().setBackground(Color.WHITE);
+                view.getPatientPanel().getLbCard2().setFont(view.getPatientPanel().fontMenu);
+                view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
+                view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
             }
         });
     }
 
-//    private void selectedMedicine() {
-//        view.getPatientPanel().getPnItemPrescriptions().getBtnSelected().addActionListener(new ActionListener() {
+//    private void getSelectedMedicines() {
+//        view.getPatientPanel().getPnItemPrescriptions().getBtnGetMedicines().addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
 //                int row = view.getPatientPanel().getPnItemPrescriptions().getTbPrescription().getSelectedRow();
@@ -98,7 +113,7 @@ public class PrescriptionController {
 //                    String after = " - " + id + ", " + name + "(" + defaultDosage +")"+ "\n";
 //                    StringBuilder result = new StringBuilder();
 //                    result.append(before);
-//                    result.append(after);
+//                    result.append(MedicineDAO.findMedicineById(id).toString());
 //                    if (before.contains(id)) {
 //                        JOptionPane.showMessageDialog(null, "Đã thêm thuốc này");
 //                        return;
@@ -111,19 +126,20 @@ public class PrescriptionController {
 //    }
 
     private void getSelectedMedicines() {
-        List<PrescriptionMedicine> items =  view.getPatientPanel().getPnItemPrescriptions().getItems();
+        List<PrescriptionMedicine> items = view.getPatientPanel().getPnItemPrescriptions().getItems();
         view.getPatientPanel().getPnItemPrescriptions().getBtnGetMedicines().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 StringBuilder result = new StringBuilder();
-                for(PrescriptionMedicine item : items){
-                    result.append(item.toString()) ;
+                for (PrescriptionMedicine item : items) {
+                    result.append(item.toString());
                 }
                 view.getPatientPanel().getPnItemPrescriptions().getTaPrescriptions().setText("");
                 view.getPatientPanel().getPnItemPrescriptions().getTaPrescriptions().setText(result.toString());
             }
         });
     }
+
 
     private void searchMedicine() {
         this.view.getPatientPanel().getPnItemPrescriptions().getTfSearch().addActionListener(new ActionListener() {
@@ -132,20 +148,20 @@ public class PrescriptionController {
                 String charName = view.getPatientPanel().getPnItemPrescriptions().getTfSearch().getText();
                 List<Medicine> medicines = MedicineDAO.findAllByCharName(charName);
                 view.getPatientPanel().getPnItemPrescriptions().getDtmPrescription().setRowCount(0);
-                List<PrescriptionMedicine> items =  view.getPatientPanel().getPnItemPrescriptions().getItems();
+                List<PrescriptionMedicine> items = view.getPatientPanel().getPnItemPrescriptions().getItems();
                 for (Medicine medicine : medicines) {
                     Vector<Object> vec = new Vector<>();
                     vec.add(medicine.getMedicineID());
                     vec.add(medicine.getName());
                     vec.add(medicine.getUnit());
                     vec.add(medicine.getDefaultDosage());
-                    for(PrescriptionMedicine item : items){
-                        if(item.getMedicine().getMedicineID().equals(medicine.getMedicineID())){
+                    for (PrescriptionMedicine item : items) {
+                        if (item.getMedicine().getMedicineID().equals(medicine.getMedicineID())) {
                             vec.add(item.getQuantity());
                             break;
                         }
                     }
-                    if(vec.size() == 4) vec.add(0);
+                    if (vec.size() == 4) vec.add(0);
                     view.getPatientPanel().getPnItemPrescriptions().getDtmPrescription().addRow(vec);
                 }
             }

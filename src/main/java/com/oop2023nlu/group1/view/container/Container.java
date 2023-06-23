@@ -4,10 +4,8 @@ package com.oop2023nlu.group1.view.container;
 import com.oop2023nlu.group1.main.Main;
 import com.oop2023nlu.group1.utils.SystemColor;
 import com.oop2023nlu.group1.view.panel.PnPrescription;
-import com.oop2023nlu.group1.view.panel.PnDanh;
 import com.oop2023nlu.group1.view.panel.PnMedicine;
 import com.oop2023nlu.group1.view.panel.PnPatient;
-import com.oop2023nlu.group1.view.panel.sub.PnItemDiagnostic;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -27,14 +25,12 @@ import javax.swing.WindowConstants;
 
 
 public class Container extends JFrame {
-	JPanel pnMenu, pnRight, pnTitle, pnContent, pnPatient, pnDinh, pnDanh, pnDuc, pnMedicine;
-	JLabel lbLogo, lbPatient, lbDinh, lbDanh, lbDuc, lbMedicine;
+	JPanel pnMenu, pnRight, pnTitle, pnContent, pnPatient, pnPrPrescription, pnMedicine;
+	JLabel lbLogo, lbPatient, lbPrescription, lbMedicine;
 	ArrayList<JLabel> listMenu;
 	CardLayout cardMenuLeftGroup = new CardLayout();
 	PnPatient patientPanel;
 	PnPrescription prescriptionPanel;
-	PnDanh danhPanel;
-	PnItemDiagnostic ducPanel;
 	PnMedicine medicinePanel;
 
 	public Container() {
@@ -90,16 +86,12 @@ public class Container extends JFrame {
 		pnMenu.add(lbLogo);
 
 		lbPatient = new JLabel("Bệnh nhân", JLabel.CENTER);
-		lbDinh = new JLabel("Toa thuốc", JLabel.CENTER);
-		lbDanh = new JLabel("Chức năng - Danh", JLabel.CENTER);
-		lbDuc = new JLabel("Chức năng - Đức", JLabel.CENTER);
+		lbPrescription = new JLabel("Tra cứu toa thuốc", JLabel.CENTER);
 		lbMedicine = new JLabel("Quản lí thuốc", JLabel.CENTER);
 
 		listMenu = new ArrayList<>();
 		listMenu.add(lbPatient);
-		listMenu.add(lbDinh);
-		listMenu.add(lbDanh);
-		listMenu.add(lbDuc);
+		listMenu.add(lbPrescription);
 		listMenu.add(lbMedicine);
 
 		for (JLabel jLabel : listMenu) {
@@ -142,32 +134,20 @@ public class Container extends JFrame {
 		pnRight.add(pnContent);
 
 		pnPatient = new JPanel();
-		pnDinh = new JPanel();
-		pnDanh = new JPanel();
-		pnDuc = new JPanel();
+		pnPrPrescription = new JPanel();
 		pnMedicine = new JPanel();
 
 		pnContent.add(pnPatient, "1");
-		pnContent.add(pnDinh, "2");
-		pnContent.add(pnDanh, "3");
-		pnContent.add(pnDuc, "4");
-		pnContent.add(pnMedicine, "5");
+		pnContent.add(pnPrPrescription, "2");
+		pnContent.add(pnMedicine, "3");
 
 		patientPanel = new PnPatient();
 		pnPatient.setLayout(new BorderLayout());
 		pnPatient.add(patientPanel, BorderLayout.CENTER);
 
 		prescriptionPanel = new PnPrescription();
-		pnDinh.setLayout(new BorderLayout());
-		pnDinh.add(prescriptionPanel, BorderLayout.CENTER);
-
-		danhPanel = new PnDanh();
-		pnDanh.setLayout(new BorderLayout());
-		pnDanh.add(danhPanel, BorderLayout.CENTER);
-
-		ducPanel = new PnItemDiagnostic();
-		pnDuc.setLayout(new BorderLayout());
-		pnDuc.add(ducPanel, BorderLayout.CENTER);
+		pnPrPrescription.setLayout(new BorderLayout());
+		pnPrPrescription.add(prescriptionPanel, BorderLayout.CENTER);
 
 		medicinePanel = new PnMedicine();
 		pnMedicine.setLayout(new BorderLayout());
@@ -188,14 +168,10 @@ public class Container extends JFrame {
 					String card = "";
 					if (jLabel == lbPatient) {
 						card = "1";
-					} else if (jLabel == lbDinh) {
+					} else if (jLabel == lbPrescription) {
 						card = "2";
-					} else if (jLabel == lbDanh) {
-						card = "3";
-					} else if (jLabel == lbDuc) {
-						card = "4";
 					} else {
-						card = "5";
+						card = "3";
 					}
 					cardMenuLeftGroup.show(pnContent, card);
 				}

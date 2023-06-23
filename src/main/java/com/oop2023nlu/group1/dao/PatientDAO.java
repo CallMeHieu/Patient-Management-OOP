@@ -2,11 +2,14 @@ package com.oop2023nlu.group1.dao;
 
 import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.Visit;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PatientDAO {
 
@@ -36,6 +39,15 @@ public class PatientDAO {
             patient = session.get(Patient.class, id);
         }
         return patient;
+    }
+
+    public static Patient findPatientByPhone(String phone) {
+        try (Session session = HibernateUtils.getFACTORY().openSession()) {
+            String hql = "FROM Patient p WHERE p.phone = :phone";
+            Query<Patient> query = session.createQuery(hql, Patient.class);
+            query.setParameter("phone", phone);
+            return query.uniqueResult();
+        }
     }
 
     public static List<Patient> findAllPatients() {
@@ -88,6 +100,7 @@ public class PatientDAO {
         }
         return false;
     }
+
     public static List<Patient> findAllByCharName(String charName) {
         List<Patient> result = new ArrayList<>();
         for (Patient patient : findAllPatients()) {
@@ -97,4 +110,17 @@ public class PatientDAO {
         }
         return result;
     }
+
+    public static Patient findPatientByVisitId(String idVisit) {
+        Visit visit = VisitDAO.findVisitById(idVisit);
+//        List<Patient> patients = findAllPatients();
+        Set<Patient> patients = new HashSet<>(findAllPatients());
+        for (Patient patient : patients) {
+            for (Visit v : new HashSet<>(VisitDAO.findAllVisitByPatient(patient.getId()))) {
+                if (v.getVisitID().equalsIgnoreCase(idVisit)) return patient;
+            }
+        }
+        return null;
+    }
+
 }
