@@ -7,14 +7,8 @@ import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.Visit;
 import com.oop2023nlu.group1.view.container.Container;
 
-import javax.swing.*;
-import java.util.HashSet;
-
 public class Main {
     public static void main(String[] args) {
-//        System.out.println(PatientDAO.findPatientByVisitId("10").toString());
-//        System.out.println(new HashSet<>(VisitDAO.findAllVisitByPatient("005")).size());
-
         Container view = new Container();
         Clinic model = new Clinic("Phongkhamabc", "Thu duc", "18000018");
         Patient patientModel = new Patient();

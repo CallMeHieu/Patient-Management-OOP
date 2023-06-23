@@ -10,11 +10,8 @@ import com.oop2023nlu.group1.view.container.Container;
 import com.oop2023nlu.group1.view.dialog.DialogPrescription;
 import com.oop2023nlu.group1.view.panel.sub.PnItemPrescriptions;
 
-import javax.persistence.Transient;
 import javax.swing.*;
 import javax.transaction.Transactional;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -32,10 +29,10 @@ public class PrescriptionController {
         super();
         this.view = view;
         this.visitModel = visitModel;
-        initViewListeners();
         medicineModel.registerObserver(view.getPatientPanel().getPnItemPrescriptions());
         view.getPatientPanel().getPnItemPrescriptions().setMedicineModel(medicineModel);
         medicineModel.notifyObservers();
+        initViewListeners();
     }
 
     private void initViewListeners() {
@@ -49,13 +46,7 @@ public class PrescriptionController {
         view.getPatientPanel().getPnItemPrescriptions().btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "2");
-                view.getPatientPanel().getLbCard2().setBackground(new Color(240, 240, 240));
-                view.getPatientPanel().getLbCard2().setFont(new Font("Tahoma", Font.PLAIN, 16));
-                view.getPatientPanel().getLbCard1().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard1().setFont(view.getPatientPanel().fontMenu);
-                view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
+                view.changeScreen("2");
             }
         });
     }
@@ -85,45 +76,10 @@ public class PrescriptionController {
                 ModelUtils.visit = visit;
                 ModelUtils.patient = patient;
                 new DialogPrescription(view, prescription);
-
-                view.getPatientPanel().getCardPanelGroup().show(view.getPatientPanel().getPnCard(), "1");
-                view.getPatientPanel().getLbCard1().setBackground(new Color(240, 240, 240));
-                view.getPatientPanel().getLbCard1().setFont(new Font("Tahoma", Font.PLAIN, 16));
-                view.getPatientPanel().getLbCard2().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard2().setFont(view.getPatientPanel().fontMenu);
-                view.getPatientPanel().getLbCard3().setBackground(Color.WHITE);
-                view.getPatientPanel().getLbCard3().setFont(view.getPatientPanel().fontMenu);
+                view.changeScreen("1");
             }
         });
     }
-
-//    private void getSelectedMedicines() {
-//        view.getPatientPanel().getPnItemPrescriptions().getBtnGetMedicines().addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                int row = view.getPatientPanel().getPnItemPrescriptions().getTbPrescription().getSelectedRow();
-//                if (row > -1) {
-//                    String id = view.getPatientPanel().getPnItemPrescriptions().getTbPrescription().getValueAt(row, 0)
-//                            .toString();
-//                    String name = view.getPatientPanel().getPnItemPrescriptions().getTbPrescription().getValueAt(row, 1)
-//                            .toString();
-//                    String defaultDosage = view.getPatientPanel().getPnItemPrescriptions().getTbPrescription().getValueAt(row, 3)
-//                            .toString();
-//                    String before = view.getPatientPanel().getPnItemPrescriptions().getTaPrescriptions().getText();
-//                    String after = " - " + id + ", " + name + "(" + defaultDosage +")"+ "\n";
-//                    StringBuilder result = new StringBuilder();
-//                    result.append(before);
-//                    result.append(MedicineDAO.findMedicineById(id).toString());
-//                    if (before.contains(id)) {
-//                        JOptionPane.showMessageDialog(null, "Đã thêm thuốc này");
-//                        return;
-//                    }
-//                    view.getPatientPanel().getPnItemPrescriptions().getTaPrescriptions().setText("");
-//                    view.getPatientPanel().getPnItemPrescriptions().getTaPrescriptions().setText(result.toString());
-//                }
-//            }
-//        });
-//    }
 
     private void getSelectedMedicines() {
         List<PrescriptionMedicine> items = view.getPatientPanel().getPnItemPrescriptions().getItems();

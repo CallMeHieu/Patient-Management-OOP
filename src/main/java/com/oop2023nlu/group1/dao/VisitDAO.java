@@ -1,6 +1,5 @@
 package com.oop2023nlu.group1.dao;
 
-import com.oop2023nlu.group1.model.Medicine;
 import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.Visit;
 import org.hibernate.Session;
@@ -83,7 +82,7 @@ public class VisitDAO {
         return visits;
     }
     public static Visit findVisitById(String id) {
-        Visit visit = null;
+        Visit visit = new Visit();
         try (Session session = HibernateUtils.getFACTORY().openSession()) {
             visit = session.get(Visit.class, id);
         }

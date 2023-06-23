@@ -113,7 +113,6 @@ public class PatientDAO {
 
     public static Patient findPatientByVisitId(String idVisit) {
         Visit visit = VisitDAO.findVisitById(idVisit);
-//        List<Patient> patients = findAllPatients();
         Set<Patient> patients = new HashSet<>(findAllPatients());
         for (Patient patient : patients) {
             for (Visit v : new HashSet<>(VisitDAO.findAllVisitByPatient(patient.getId()))) {
