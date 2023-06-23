@@ -1,6 +1,7 @@
 package com.oop2023nlu.group1.dao;
 
 import com.oop2023nlu.group1.model.Patient;
+import com.oop2023nlu.group1.model.Visit;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -65,9 +66,17 @@ public class PatientDAO {
     }
 
     public static boolean updatePatient(Patient patient) {
+        Patient patientInDB = findPatientById(patient.getId());
+        if (patientInDB == null) {
+            return false;
+        }else {
+            patient.getVisits().addAll(patientInDB.getVisits());
+        }
+
         Transaction transaction = null;
         try (Session session = HibernateUtils.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
+
             session.update(patient);
             transaction.commit();
             return true;
