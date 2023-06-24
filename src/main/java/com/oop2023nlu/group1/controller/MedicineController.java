@@ -53,7 +53,7 @@ public class MedicineController {
                         JOptionPane.showMessageDialog(null, "Thêm thành công");
                     }
                 } else {
-                    resetForm();
+                   pnMedicine.resetForm();
                 }
             }
 
@@ -115,13 +115,6 @@ public class MedicineController {
                 }
             }
         });
-    }
-
-    private void resetForm() {
-        pnMedicine.getTfId().setText("");
-        pnMedicine.getTfName().setText("");
-        pnMedicine.getTfDosage().setText("");
-        pnMedicine.getTfUnit().setText("");
     }
 
     private Medicine getMedicineModel() {

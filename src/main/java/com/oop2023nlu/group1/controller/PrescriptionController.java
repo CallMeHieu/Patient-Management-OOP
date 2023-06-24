@@ -76,6 +76,9 @@ public class PrescriptionController {
                 ModelUtils.visit = visit;
                 ModelUtils.patient = patient;
                 new DialogPrescription(view, prescription);
+                view.getPatientPanel().getPnItemInfoPatient().resetForm();
+                view.getPatientPanel().getPnItemDiagnostic().resetForm();
+                view.getPatientPanel().getPnItemPrescriptions().resetForm();
                 view.changeScreen("1");
             }
         });

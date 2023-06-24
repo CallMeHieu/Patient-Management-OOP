@@ -307,6 +307,14 @@ public class PnItemInfoPatient extends JPanel implements Observer {
         });
     }
 
+    public void resetForm() {
+        tfId.setText("");
+        tfName.setText("");
+        tfPhone.setText("");
+        tfYearOfBirth.setText("");
+        tfAddress.setText("");
+    }
+
     @Override
     public void update() {
         dtmPatient.setRowCount(0);
