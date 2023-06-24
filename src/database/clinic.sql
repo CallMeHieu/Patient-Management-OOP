@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 20, 2023 lúc 02:25 PM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Thời gian đã tạo: Th6 24, 2023 lúc 07:01 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,45 +29,45 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `medicine` (
                             `medicineID` varchar(255) NOT NULL,
+                            `defaultDosage` varchar(255) DEFAULT NULL,
                             `name` varchar(255) DEFAULT NULL,
-                            `unit` varchar(255) DEFAULT NULL,
-                            `defaultDosage` varchar(255) DEFAULT NULL
+                            `unit` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `medicine`
 --
 
-INSERT INTO `medicine` (`medicineID`, `name`, `unit`, `defaultDosage`) VALUES
-                                                                           ('SP001', 'Albuterol', 'Hũ', '1 viên mỗi 12 giờ'),
-                                                                           ('SP002', 'Gabapentin', 'Ống', '2 ống mỗi ngày'),
-                                                                           ('SP003', 'Amoxicillin', 'Ống', '1 ống mỗi 8 giờ'),
-                                                                           ('SP005', 'Ibuprofen', 'Vỉ', '1 viên mỗi 6-8 giờ'),
-                                                                           ('SP006', 'Venlafaxine', 'Vỉ', '1 viên mỗi ngày'),
-                                                                           ('SP007', 'Pregabalin', 'Hộp', '1 viên mỗi tối'),
-                                                                           ('SP008', 'Ranitidine', 'Ống', '1 ống mỗi 12 giờ'),
-                                                                           ('SP009', 'Tramadol', 'Ống', '1 ống mỗi 4-6 giờ'),
-                                                                           ('SP010', 'Simvastatin', 'Vỉ', '1 viên mỗi ngày'),
-                                                                           ('SP011', 'Codeine', 'Hộp', '1 viên mỗi 4-6 giờ'),
-                                                                           ('SP012', 'Sertraline', 'Vỉ', '1 viên mỗi ngày'),
-                                                                           ('SP013', 'Oxycodone', 'Ống', '1 ống mỗi 4-6 giờ'),
-                                                                           ('SP014', 'Cetirizine', 'Hộp', '1 viên mỗi ngày'),
-                                                                           ('SP015', 'Paracetamol', 'Hộp', '1-2 viên mỗi 4-6 giờ'),
-                                                                           ('SP016', 'Amlodipine', 'Ống', '1 ống mỗi ngày'),
-                                                                           ('SP017', 'Citalopram', 'Hộp', '1 viên mỗi ngày'),
-                                                                           ('SP018', 'Metformin', 'Ống', '1 ống mỗi bữa ăn'),
-                                                                           ('SP019', 'Diazepam', 'Vỉ', '1-2 viên mỗi 6-8 giờ'),
-                                                                           ('SP020', 'Losartan', 'Ống', '1 ống mỗi ngày'),
-                                                                           ('SP021', 'Fluoxetine', 'Hộp', '1 viên mỗi ngày'),
-                                                                           ('SP022', 'Aspirin', 'Hộp', '1-2 viên mỗi 4-6 giờ'),
-                                                                           ('SP023', 'Omeprazole', 'Hộp', '1 viên mỗi ngày'),
-                                                                           ('SP024', 'Lisinopril', 'Vỉ', '1 viên mỗi ngày'),
-                                                                           ('SP025', 'Escitalopram', 'Ống', '1 ống mỗi ngày'),
-                                                                           ('SP026', 'Atorvastatin', 'Hộp', '1 viên mỗi ngày'),
-                                                                           ('SP027', 'Loperamide', 'Vỉ', '1 viên mỗi 4-6 giờ'),
-                                                                           ('SP028', 'Prednisone', 'Vỉ', '1 viên mỗi ngày'),
-                                                                           ('SP029', 'Morphine', 'Ống', '1 ống mỗi 4-6 giờ'),
-                                                                           ('SP030', 'Metoprolol', 'Vỉ', '1 viên mỗi ngày');
+INSERT INTO `medicine` (`medicineID`, `defaultDosage`, `name`, `unit`) VALUES
+                                                                           ('SP1', '1 viên mỗi 12 giờ', 'Albuterol', 'Hũ'),
+                                                                           ('SP10', '1 viên mỗi ngày', 'Simvastatin', 'Vỉ'),
+                                                                           ('SP11', '1 viên mỗi 4-6 giờ', 'Codeine', 'Hộp'),
+                                                                           ('SP12', '1 viên mỗi ngày', 'Sertraline', 'Vỉ'),
+                                                                           ('SP13', '1 ống mỗi 4-6 giờ', 'Oxycodone', 'Ống'),
+                                                                           ('SP14', '1 viên mỗi ngày', 'Cetirizine', 'Hộp'),
+                                                                           ('SP15', '1-2 viên mỗi 4-6 giờ', 'Paracetamol', 'Hộp'),
+                                                                           ('SP16', '1 ống mỗi ngày', 'Amlodipine', 'Ống'),
+                                                                           ('SP17', '1 viên mỗi ngày', 'Citalopram', 'Hộp'),
+                                                                           ('SP18', '1 ống mỗi bữa ăn', 'Metformin', 'Ống'),
+                                                                           ('SP19', '1-2 viên mỗi 6-8 giờ', 'Diazepam', 'Vỉ'),
+                                                                           ('SP2', '2 ống mỗi ngày', 'Gabapentin', 'Ống'),
+                                                                           ('SP20', '1 ống mỗi ngày', 'Losartan', 'Ống'),
+                                                                           ('SP21', '1 viên mỗi ngày', 'Fluoxetine', 'Hộp'),
+                                                                           ('SP22', '1-2 viên mỗi 4-6 giờ', 'Aspirin', 'Hộp'),
+                                                                           ('SP23', '1 viên mỗi ngày', 'Omeprazole', 'Hộp'),
+                                                                           ('SP24', '1 viên mỗi ngày', 'Lisinopril', 'Vỉ'),
+                                                                           ('SP25', '1 ống mỗi ngày', 'Escitalopram', 'Ống'),
+                                                                           ('SP26', '1 viên mỗi ngày', 'Atorvastatin', 'Hộp'),
+                                                                           ('SP27', '1 viên mỗi 4-6 giờ', 'Loperamide', 'Vỉ'),
+                                                                           ('SP28', '1 viên mỗi ngày', 'Prednisone', 'Vỉ'),
+                                                                           ('SP29', '1 viên mỗi ngày', 'Metoprolol', 'Vỉ'),
+                                                                           ('SP3', '1 ống mỗi 8 giờ', 'Amoxicillin', 'Ống'),
+                                                                           ('SP4', '1 ống mỗi 4-6 giờ', 'Morphine', 'Ống'),
+                                                                           ('SP5', '1 viên mỗi 6-8 giờ', 'Ibuprofen', 'Vỉ'),
+                                                                           ('SP6', '1 viên mỗi ngày', 'Venlafaxine', 'Vỉ'),
+                                                                           ('SP7', '1 viên mỗi tối', 'Pregabalin', 'Hộp'),
+                                                                           ('SP8', '1 ống mỗi 12 giờ', 'Ranitidine', 'Ống'),
+                                                                           ('SP9', '1 ống mỗi 4-6 giờ', 'Tramadol', 'Ống');
 
 -- --------------------------------------------------------
 
@@ -89,11 +89,12 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`patientID`, `address`, `gender`, `name`, `phone`, `yearOfBirth`) VALUES
-                                                                                             ('001', '35 đường số 4, Trường Thọ, Thủ Đức', b'0', 'Nguyễn Văn Hiếu ngu', '0798631497', 2001),
-                                                                                             ('002', 'Trần Phú, Phủ Hà, Quận 12', b'1', 'Nguyễn Trường Đình', '0163149752', 2001),
-                                                                                             ('003', 'KTX A Nông Lâm, Linh Trung, Thủ Đức', b'1', 'Trần Đình Danh', '0786951463', 2001),
-                                                                                             ('004', 'Làng đại học, Linh Trung, Thủ Đức', b'1', 'Nguyễn Hoàng Đức', '0335942367', 2001),
-                                                                                             ('005', '123 abc', b'0', 'a', '123456789', 2001);
+                                                                                             ('BN1', '34 đường số 4, phường Trường Thọ, thành phố Thủ Đức', b'1', 'Nguyễn Văn Hiêu', '0798631497', 2001),
+                                                                                             ('BN2', 'phường Phủ Hà, thành phố Phan Rang Tháp Chàm', b'1', 'Nguyễn Trường Đình', '0123456789', 2001),
+                                                                                             ('BN3', 'thị xã An Nhơn, Bình Định', b'1', 'Trần Đình Danh', '0987654321', 2001),
+                                                                                             ('BN4', 'Đà Lạt, Lâm Đồng', b'1', 'Nguyễn Hoàng Đức', '0123789456', 2001),
+                                                                                             ('BN5', 'Đồng Nai', b'1', 'Nguyễn Văn Minh', '0456321789', 2001),
+                                                                                             ('BN6', 'An Nhơn, Bình Định', b'0', 'Trần Thi Danh', '0147258369', 2002);
 
 -- --------------------------------------------------------
 
@@ -114,13 +115,21 @@ CREATE TABLE `prescription_medicine` (
 --
 
 INSERT INTO `prescription_medicine` (`id`, `dosage`, `quantity`, `medicineID`, `visitID`) VALUES
-                                                                                                                ('1', '1 viên mỗi 6-8 giờ', 10, 'SP005', '1'),
-                                                                                                                ('2', '1 viên mỗi tối', 20, 'SP007', '1'),
-                                                                                                                ('3', '1 ống mỗi 8 giờ', 20, 'SP003', '1'),
-                                                                                                                ('4', '1 viên mỗi ngày', 40, 'SP006', '1'),
-                                                                                                                ('5', '1 ống mỗi 4-6 giờ', 10, 'SP029', '2'),
-                                                                                                                ('6', '1 viên mỗi ngày', 20, 'SP030', '2'),
-                                                                                                                ('7', '1 viên mỗi 4-6 giờ', 30, 'SP027', '2');
+                                                                                              ('1', '1 viên mỗi ngày', 4, 'SP14', '1'),
+                                                                                              ('10', '1 ống mỗi 4-6 giờ', 4, 'SP9', '3'),
+                                                                                              ('11', '1 viên mỗi 4-6 giờ', 9, 'SP11', '4'),
+                                                                                              ('12', '1 viên mỗi ngày', 9, 'SP14', '4'),
+                                                                                              ('13', '1 ống mỗi 4-6 giờ', 7, 'SP13', '5'),
+                                                                                              ('14', '1 ống mỗi ngày', 6, 'SP20', '6'),
+                                                                                              ('15', '1 viên mỗi ngày', 4, 'SP21', '6'),
+                                                                                              ('2', '1 viên mỗi ngày', 9, 'SP26', '1'),
+                                                                                              ('3', '1 ống mỗi 12 giờ', 1, 'SP8', '1'),
+                                                                                              ('4', '1 viên mỗi ngày', 4, 'SP14', '2'),
+                                                                                              ('5', '1 viên mỗi ngày', 9, 'SP26', '2'),
+                                                                                              ('6', '1 ống mỗi 12 giờ', 1, 'SP8', '2'),
+                                                                                              ('7', '1 viên mỗi 12 giờ', 9, 'SP1', '2'),
+                                                                                              ('8', '1 viên mỗi ngày', 9, 'SP10', '2'),
+                                                                                              ('9', '1 viên mỗi tối', 6, 'SP7', '3');
 
 -- --------------------------------------------------------
 
@@ -141,8 +150,12 @@ CREATE TABLE `visit` (
 --
 
 INSERT INTO `visit` (`visitID`, `conclusion`, `date`, `symptom`, `patientID`) VALUES
-                                                                                  ('1', ' ngu', '2023-06-20 17:57:12.000000', ' ngu', '005'),
-                                                                                  ('2', ' đần', '2023-06-20 17:59:00.000000', ' đần	', '005');
+                                                                                  ('1', 'viêm họng', '2023-06-24 11:19:54.000000', 'ho, rát họng', 'BN2'),
+                                                                                  ('2', 'vết thương ngoài da', '2023-06-24 11:25:45.000000', 'trầy, nhiễm trùng', 'BN2'),
+                                                                                  ('3', 'sử dụng quá nhiều rượu bia', '2023-06-24 11:45:12.000000', 'đau đầu, buồn nôn', 'BN3'),
+                                                                                  ('4', 'căng thẳng dẫn đến stress', '2023-06-24 11:48:25.000000', 'rụn tóc, mất ngủ', 'BN6'),
+                                                                                  ('5', 'Thiếu ngủ', '2023-06-24 11:58:43.000000', 'Uể oải, mất ngủ', 'BN1'),
+                                                                                  ('6', 'thoái hóa sương khớp', '2023-06-24 12:00:50.000000', 'đau lưng, mỏi gối', 'BN4');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -183,7 +196,7 @@ ALTER TABLE `visit`
 -- Các ràng buộc cho bảng `prescription_medicine`
 --
 ALTER TABLE `prescription_medicine`
-  ADD CONSTRAINT `FKamkaw38ckmsj30492hvd2mdjp` FOREIGN KEY (`visitID`) REFERENCES `visit` (`visitID`),
+    ADD CONSTRAINT `FKamkaw38ckmsj30492hvd2mdjp` FOREIGN KEY (`visitID`) REFERENCES `visit` (`visitID`),
   ADD CONSTRAINT `FKj33yx8ajia8l6l5od9h84k5y9` FOREIGN KEY (`medicineID`) REFERENCES `medicine` (`medicineID`);
 
 --

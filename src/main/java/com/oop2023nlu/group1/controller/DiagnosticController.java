@@ -44,7 +44,7 @@ public class DiagnosticController {
                 String symptom = pnItemDiagnostic.getTaSymptom().getText();
                 String conclusion = pnItemDiagnostic.getTaConclusion().getText();
                 Visit visit = new Visit("", new Date(), symptom, conclusion, null);
-
+                view.getPatientPanel().getPnItemPrescriptions().resetForm();
                 view.getPatientPanel().getPnItemPrescriptions().loadInfo(getPatientModel(), visit);
             }
         });

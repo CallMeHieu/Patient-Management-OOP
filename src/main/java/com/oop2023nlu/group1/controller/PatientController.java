@@ -50,10 +50,10 @@ public class PatientController {
                     List<Visit> visits = new ArrayList<>();
                     patient.setVisits(visits);
                     patientModel.addPatient(patient);
-                    resetForm();
+                    pnItemInfoPatient.resetForm();
                     JOptionPane.showMessageDialog(null, "Thêm thành công");
                 } else {
-                    resetForm();
+                    pnItemInfoPatient.resetForm();
                 }
             }
         });
@@ -103,6 +103,7 @@ public class PatientController {
                 view.changeScreen("2");
                 String id = pnItemInfoPatient.getTfId().getText();
                 Patient patient = patientModel.findPatientById(id);
+                view.getPatientPanel().getPnItemDiagnostic().resetForm();
                 view.getPatientPanel().getPnItemDiagnostic().loadPatient(patient);
             }
         });
@@ -130,15 +131,6 @@ public class PatientController {
             }
         });
     }
-
-    private void resetForm() {
-        pnItemInfoPatient.getTfId().setText("");
-        pnItemInfoPatient.getTfName().setText("");
-        pnItemInfoPatient.getTfPhone().setText("");
-        pnItemInfoPatient.getTfYearOfBirth().setText("");
-        pnItemInfoPatient.getTfAddress().setText("");
-    }
-
     private Patient getPatientModel() {
         String id = pnItemInfoPatient.getTfId().getText();
         String name = pnItemInfoPatient.getTfName().getText();

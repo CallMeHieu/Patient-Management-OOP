@@ -284,6 +284,13 @@ public class PnMedicine extends JPanel implements Observer {
         });
     }
 
+    public void resetForm() {
+        tfId.setText("");
+        tfName.setText("");
+        tfDosage.setText("");
+        tfUnit.setText("");
+    }
+
     @Override
     public void update() {
         dtmMedicine.setRowCount(0);

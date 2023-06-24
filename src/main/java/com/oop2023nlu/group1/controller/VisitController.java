@@ -9,6 +9,7 @@ import com.oop2023nlu.group1.view.container.Container;
 import com.oop2023nlu.group1.view.dialog.DialogPrescription;
 import com.oop2023nlu.group1.view.panel.PnPrescription;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -92,7 +93,7 @@ public class VisitController {
             public void actionPerformed(ActionEvent e) {
                 String input = pnPrescription.getTfInput().getText();
                 String type = pnPrescription.getCbbFilter().getSelectedItem() + "";
-                List<Visit> visits = new ArrayList<>();
+                List<Visit> visits = visitModel.getVisits();
                 if (type.equalsIgnoreCase("Mã bệnh nhân")) {
                     visits = visitModel.getVisitByIdPatient(input);
                 }

@@ -209,6 +209,7 @@ public class PnItemDiagnostic extends JPanel {
         pnMain.add(pnTable);
 
     }
+
     public void loadPatient(Patient patient) {
         tfId.setText(patient.getId());
         tfName.setText(patient.getName());
@@ -220,5 +221,16 @@ public class PnItemDiagnostic extends JPanel {
         }
         tfPhone.setText(patient.getPhone());
         tfAddress.setText(patient.getAddress());
+    }
+
+    public void resetForm() {
+        tfId.setText("");
+        tfName.setText("");
+        tfBirthDay.setText("");
+        tfGender.setText("");
+        tfPhone.setText("");
+        tfAddress.setText("");
+        taSymptom.setText("");
+        taConclusion.setText("");
     }
 }

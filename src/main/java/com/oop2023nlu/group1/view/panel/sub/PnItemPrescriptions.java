@@ -289,6 +289,18 @@ public class PnItemPrescriptions extends JPanel implements Observer {
         return conclusion;
     }
 
+    public void resetForm() {
+        lbId.setText("");
+        lbName.setText("");
+        lbYearOfBirth.setText("");
+        lbPhone.setText("");
+        lbAddress.setText("");
+        lbSymptom.setText("");
+        lbConclusion.setText("");
+        taPrescriptions.setText("");
+        tfSearch.setText("");
+    }
+
     @Override
     public void update() {
         dtmPrescription.setRowCount(0);
