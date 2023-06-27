@@ -1,10 +1,13 @@
 package com.oop2023nlu.group1.view.dialog;
 
 import com.oop2023nlu.group1.model.PrescriptionMedicine;
+import com.oop2023nlu.group1.utils.FontConstant;
 import com.oop2023nlu.group1.utils.ModelUtils;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -20,7 +23,7 @@ public class DialogPrescription extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        setBounds(100, 100, 500, 600);
+        setBounds(100, 100, 600, 500);
         Font font = new Font("Tahoma", Font.PLAIN, 18);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 20, 5));
@@ -32,7 +35,6 @@ public class DialogPrescription extends JDialog {
             pnTitle.add(new JLabel("<html><h1>Toa thuốc</h1></html>"), BorderLayout.CENTER);
         }
 
-//        JPanel pnContent = new JPanel(new GridLayout(4, 2));
         JPanel pnContent = new JPanel();
         pnContent.setLayout(new BoxLayout(pnContent, BoxLayout.Y_AXIS));
         contentPanel.add(pnContent, BorderLayout.CENTER);
@@ -57,8 +59,14 @@ public class DialogPrescription extends JDialog {
         pnContent.add(lbSymptom);
         pnContent.add(lbConclusion);
 
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Danh sách thuốc");
+        titledBorder.setTitleFont(FontConstant.setFontPlain(16));
+        Border emptyBorder = BorderFactory.createEmptyBorder(20, 0, 20, 50);
+        Border border = BorderFactory.createCompoundBorder(titledBorder, emptyBorder);
+
         panel = new JPanel();
-        panel.setBorder(new EmptyBorder(20, 0, 20, 0));
+
+        panel.setBorder(border);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         for (int i = 0; i < prescriptionMedicines.size(); i++) {
             JLabel label = new JLabel((i + 1) + " " + prescriptionMedicines.get(i).toString());
@@ -67,8 +75,7 @@ public class DialogPrescription extends JDialog {
         }
         pnContent.add(panel);
 
-        setLocationRelativeTo(null); // Căn chỉnh dialog vào giữa màn hình
-
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }

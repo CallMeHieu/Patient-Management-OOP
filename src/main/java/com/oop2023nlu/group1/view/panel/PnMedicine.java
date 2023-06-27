@@ -1,5 +1,6 @@
 package com.oop2023nlu.group1.view.panel;
 
+import com.oop2023nlu.group1.utils.FontConstant;
 import com.oop2023nlu.group1.custom.TableCustom;
 import com.oop2023nlu.group1.main.Main;
 import com.oop2023nlu.group1.model.Medicine;
@@ -28,12 +29,11 @@ import javax.swing.table.TableColumnModel;
 
 
 public class PnMedicine extends JPanel implements Observer {
-    JPanel pnMain, pnTitle, pnInput, pnButton, pnTable, pnSearch;
-    JLabel lbId, lbName, lbDosage, lbUnit, lbSearch,lbSelectUnit;
-    JTextField tfId, tfName, tfDosage, tfSearch, tfUnit;
-    JComboBox<String> cbbUnit;
-    public JButton btnAdd, btnEdit, btnRemove;
-    Font font, fontMenu;
+    private JPanel pnMain, pnTitle, pnInput, pnButton, pnTable, pnSearch;
+    private JLabel lbId, lbName, lbDosage, lbUnit, lbSearch, lbSelectUnit;
+    private JTextField tfId, tfName, tfDosage, tfSearch, tfUnit;
+    private JComboBox<String> cbbUnit;
+    private JButton btnAdd, btnEdit, btnRemove;
     private DefaultTableModel dtmMedicine;
     private JTable tbMedicine;
     private Medicine medicineModel;
@@ -44,15 +44,47 @@ public class PnMedicine extends JPanel implements Observer {
         addEvents();
     }
 
+    public void setMedicineModel(Medicine medicineModel) {
+        this.medicineModel = medicineModel;
+    }
+
+    public JTextField getTfId() {
+        return tfId;
+    }
+
+    public JTextField getTfName() {
+        return tfName;
+    }
+
+    public JTextField getTfDosage() {
+        return tfDosage;
+    }
+
+    public JTextField getTfUnit() {
+        return tfUnit;
+    }
+
+    public JTextField getTfSearch() {
+        return tfSearch;
+    }
+
+    public DefaultTableModel getDtmMedicine() {
+        return dtmMedicine;
+    }
+
+    public JButton getBtnAdd() {
+        return btnAdd;
+    }
+
+    public JButton getBtnEdit() {
+        return btnEdit;
+    }
+
+    public JButton getBtnRemove() {
+        return btnRemove;
+    }
+
     private void addControls() {
-        font = new Font("Tahoma", Font.PLAIN, 20);
-        fontMenu = new Font("Tahoma", Font.PLAIN, 14);
-        this.setLayout(new BorderLayout());
-
-        /*
-         * ======================= PANEL CARD =======================
-         */
-
         this.setLayout(new BorderLayout());
         pnMain = new JPanel();
         pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
@@ -76,11 +108,11 @@ public class PnMedicine extends JPanel implements Observer {
         lbDosage = new JLabel("Liều dùng");
         lbSelectUnit = new JLabel("Nhập");
 
-        lbId.setFont(font);
-        lbName.setFont(font);
-        lbDosage.setFont(font);
-        lbUnit.setFont(font);
-        lbSelectUnit.setFont(font);
+        lbId.setFont(FontConstant.setFontPlain(20));
+        lbName.setFont(FontConstant.setFontPlain(20));
+        lbDosage.setFont(FontConstant.setFontPlain(20));
+        lbUnit.setFont(FontConstant.setFontPlain(20));
+        lbSelectUnit.setFont(FontConstant.setFontPlain(20));
 
         tfId = new JTextField(24);
         tfId.setEditable(false);
@@ -99,7 +131,7 @@ public class PnMedicine extends JPanel implements Observer {
                 String selectedItem = cbbUnit.getSelectedItem().toString();
                 if (selectedItem.equals("Chọn đơn vị")) {
                     tfUnit.setEditable(true);
-                    tfUnit.setFont(font);
+                    tfUnit.setFont(FontConstant.setFontPlain(20));
                     tfUnit.setForeground(Color.BLACK);
                     tfUnit.setText("");
                     lbSelectUnit.setForeground(Color.BLACK);
@@ -112,11 +144,11 @@ public class PnMedicine extends JPanel implements Observer {
             }
         });
 
-        tfId.setFont(font);
-        tfName.setFont(font);
-        tfDosage.setFont(font);
-        tfUnit.setFont(font);
-        cbbUnit.setFont(font);
+        tfId.setFont(FontConstant.setFontPlain(20));
+        tfName.setFont(FontConstant.setFontPlain(20));
+        tfDosage.setFont(FontConstant.setFontPlain(20));
+        tfUnit.setFont(FontConstant.setFontPlain(20));
+        cbbUnit.setFont(FontConstant.setFontPlain(20));
 
         JPanel pnId = new JPanel();
         pnId.add(lbId);
@@ -169,9 +201,9 @@ public class PnMedicine extends JPanel implements Observer {
 
         pnSearch = new JPanel();
         lbSearch = new JLabel("Tìm kiếm");
-        lbSearch.setFont(font);
+        lbSearch.setFont(FontConstant.setFontPlain(20));
         tfSearch = new JTextField(20);
-        tfSearch.setFont(font);
+        tfSearch.setFont(FontConstant.setFontPlain(20));
         pnSearch.add(lbSearch);
         pnSearch.add(tfSearch);
         pnMain.add(pnSearch);
@@ -200,56 +232,16 @@ public class PnMedicine extends JPanel implements Observer {
         tbMedicine.getColumnModel().getColumn(2).setCellRenderer(renderer);
         tbMedicine.getColumnModel().getColumn(3).setCellRenderer(renderer);
 
-        TableColumnModel columnModelBanHang = tbMedicine.getColumnModel();
-        columnModelBanHang.getColumn(0).setPreferredWidth(60);
-        columnModelBanHang.getColumn(1).setPreferredWidth(400);
-        columnModelBanHang.getColumn(2).setPreferredWidth(200);
-        columnModelBanHang.getColumn(3).setPreferredWidth(400);
+        TableColumnModel columnModel = tbMedicine.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(60);
+        columnModel.getColumn(1).setPreferredWidth(400);
+        columnModel.getColumn(2).setPreferredWidth(200);
+        columnModel.getColumn(3).setPreferredWidth(400);
 
-        JScrollPane scrTblSanPham = new JScrollPane(tbMedicine);
-        pnTable.add(scrTblSanPham, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(tbMedicine);
+        pnTable.add(scrollPane, BorderLayout.CENTER);
         pnMain.add(pnTable);
 
-    }
-
-    @Override
-    public void update() {
-        dtmMedicine.setRowCount(0);
-        for (Medicine medicine : medicineModel.getMedicines()) {
-            Vector<Object> vec = new Vector<>();
-            vec.add(medicine.getMedicineID());
-            vec.add(medicine.getName());
-            vec.add(medicine.getUnit());
-            vec.add(medicine.getDefaultDosage());
-            dtmMedicine.addRow(vec);
-        }
-    }
-
-    public Medicine getMedicineModel() {
-        return medicineModel;
-    }
-
-    public void setMedicineModel(Medicine medicineModel) {
-        this.medicineModel = medicineModel;
-    }
-
-    public JTextField getTfId() {
-        return tfId;
-    }
-
-    public JTextField getTfName() {
-        return tfName;
-    }
-
-    public JTextField getTfDosage() {
-        return tfDosage;
-    }
-    public JTextField getTfUnit() {
-        return tfUnit;
-    }
-
-    public JComboBox<String> getCbbUnit() {
-        return cbbUnit;
     }
 
     private void addEvents() {
@@ -290,21 +282,25 @@ public class PnMedicine extends JPanel implements Observer {
 
             }
         });
-        tfSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String charName = tfSearch.getText();
-                List<Medicine> medicines = medicineModel.findAllByCharName(charName);
-                dtmMedicine.setRowCount(0);
-                for (Medicine medicine : medicines) {
-                    Vector<Object> vec = new Vector<>();
-                    vec.add(medicine.getMedicineID());
-                    vec.add(medicine.getName());
-                    vec.add(medicine.getUnit());
-                    vec.add(medicine.getDefaultDosage());
-                    dtmMedicine.addRow(vec);
-                }
-            }
-        });
+    }
+
+    public void resetForm() {
+        tfId.setText("");
+        tfName.setText("");
+        tfDosage.setText("");
+        tfUnit.setText("");
+    }
+
+    @Override
+    public void update() {
+        dtmMedicine.setRowCount(0);
+        for (Medicine medicine : medicineModel.getMedicines()) {
+            Vector<Object> vec = new Vector<Object>();
+            vec.add(medicine.getMedicineID());
+            vec.add(medicine.getName());
+            vec.add(medicine.getUnit());
+            vec.add(medicine.getDefaultDosage());
+            dtmMedicine.addRow(vec);
+        }
     }
 }

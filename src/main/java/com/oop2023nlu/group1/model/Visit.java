@@ -1,6 +1,5 @@
 package com.oop2023nlu.group1.model;
 
-import com.oop2023nlu.group1.dao.MedicineDAO;
 import com.oop2023nlu.group1.dao.VisitDAO;
 import com.oop2023nlu.group1.observer.Observer;
 import com.oop2023nlu.group1.observer.Subject;
@@ -99,7 +98,7 @@ public class Visit implements Subject {// Các lần khám bệnh
         notifyObservers();
     }
 
-    public List<Visit> getVisits() {
+        public List<Visit> getVisits() {
         List<Visit> visits = VisitDAO.findAllVisit();
         Collections.sort(visits, DATE_DESCENDING_COMPARATOR);
         return visits;

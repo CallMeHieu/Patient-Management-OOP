@@ -2,9 +2,12 @@ package com.oop2023nlu.group1.controller;
 
 import com.oop2023nlu.group1.model.Medicine;
 import com.oop2023nlu.group1.view.container.Container;
+import com.oop2023nlu.group1.view.panel.PnMedicine;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -12,70 +15,57 @@ import javax.swing.JOptionPane;
 public class MedicineController {
     private Container view;
     private Medicine medicineModel;
+    private PnMedicine pnMedicine;
 
     public MedicineController(Container view, Medicine medicineModel) {
         this.view = view;
         this.medicineModel = medicineModel;
-        initViewListeners();
+        this.pnMedicine = view.getMedicinePanel();
         this.medicineModel.registerObserver(view.getMedicinePanel());
         this.view.getMedicinePanel().setMedicineModel(medicineModel);
         this.medicineModel.notifyObservers();
+        initViewListeners();
     }
 
     private void initViewListeners() {
-        addMedicine();
-        updateMedicine();
-        deleteMedicine();
-        searchMedicine();
+        add();
+        update();
+        delete();
+        search();
     }
 
-
-    private void addMedicine() {
-        this.view.getMedicinePanel().btnAdd.addActionListener(new ActionListener() {
+    private void add() {
+        pnMedicine.getBtnAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (view.getMedicinePanel().getTfId().getText().equals("")) {
+                if (pnMedicine.getTfId().getText().equals("")) {
                     String id = "";
-                    if (medicineModel.getMedicines() == null) {
-                        id = "SP001";
-                    } else
-                        id = "SP00" + (medicineModel.getMedicines().size() + 1);
-                    String name = view.getMedicinePanel().getTfName().getText();
-                    String dosage = view.getMedicinePanel().getTfDosage().getText();
-                    String unit = view.getMedicinePanel().getTfUnit().getText();
-                    Medicine medicine = new Medicine(id, name, unit, dosage);
-                    if(name.equals("") || dosage.equals("") || unit.equals("")){
+                    if (medicineModel.getMedicines() == null)
+                        id = "SP1";
+                    else
+                        id = "SP" + (medicineModel.getMedicines().size() + 1);
+                    Medicine medicine = getMedicineModel();
+                    medicine.setMedicineID(id);
+                    if (medicine.getName().equals("") || medicine.getDefaultDosage().equals("") || medicine.getUnit().equals("")) {
                         JOptionPane.showMessageDialog(null, "Hãy nhập đủ dữ liệu");
-                    }else{
+                    } else {
                         medicineModel.addMedicine(medicine);
                         JOptionPane.showMessageDialog(null, "Thêm thành công");
                     }
                 } else {
-                    resetForm();
+                   pnMedicine.resetForm();
                 }
             }
 
         });
     }
 
-    private void resetForm() {
-        view.getMedicinePanel().getTfId().setText("");
-        view.getMedicinePanel().getTfName().setText("");
-        view.getMedicinePanel().getTfDosage().setText("");
-    }
-
-    private void updateMedicine() {
-        this.view.getMedicinePanel().btnEdit.addActionListener(new ActionListener() {
+    private void update() {
+        pnMedicine.getBtnEdit().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = view.getMedicinePanel().getTfId().getText();
-                if (medicineModel.findMedicineById(id) != null) {
-                    String name = view.getMedicinePanel().getTfName().getText();
-                    String dosage = view.getMedicinePanel().getTfDosage().getText();
-                    String unit = view.getMedicinePanel().getTfUnit().getText();
-                    System.out.println(dosage);
-                    System.out.println(unit);
-                    Medicine medicine = new Medicine(id, name, unit, dosage);
+                if (medicineModel.findMedicineById(pnMedicine.getTfId().getText()) != null) {
+                    Medicine medicine = getMedicineModel();
                     if (medicineModel.updateMedicine(medicine))
                         JOptionPane.showMessageDialog(null, "Cập nhật thành công");
                     else
@@ -87,8 +77,8 @@ public class MedicineController {
         });
     }
 
-    private void deleteMedicine() {
-        this.view.getMedicinePanel().btnRemove.addActionListener(new ActionListener() {
+    private void delete() {
+        pnMedicine.getBtnRemove().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc là xóa loại thuốc này", "Xác nhận",
@@ -108,6 +98,30 @@ public class MedicineController {
         });
     }
 
-    private void searchMedicine() {
+    private void search() {
+        pnMedicine.getTfSearch().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String charName = pnMedicine.getTfSearch().getText();
+                List<Medicine> medicines = medicineModel.findAllByCharName(charName);
+                pnMedicine.getDtmMedicine().setRowCount(0);
+                for (Medicine medicine : medicines) {
+                    Vector<Object> vec = new Vector<>();
+                    vec.add(medicine.getMedicineID());
+                    vec.add(medicine.getName());
+                    vec.add(medicine.getUnit());
+                    vec.add(medicine.getDefaultDosage());
+                    pnMedicine.getDtmMedicine().addRow(vec);
+                }
+            }
+        });
+    }
+
+    private Medicine getMedicineModel() {
+        String id = pnMedicine.getTfId().getText();
+        String name = pnMedicine.getTfName().getText();
+        String dosage = pnMedicine.getTfDosage().getText();
+        String unit = pnMedicine.getTfUnit().getText();
+        return new Medicine(id, name, unit, dosage);
     }
 }

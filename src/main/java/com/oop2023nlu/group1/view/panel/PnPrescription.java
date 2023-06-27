@@ -1,5 +1,6 @@
 package com.oop2023nlu.group1.view.panel;
 
+import com.oop2023nlu.group1.utils.FontConstant;
 import com.oop2023nlu.group1.custom.TableCustom;
 import com.oop2023nlu.group1.main.Main;
 import com.oop2023nlu.group1.model.Visit;
@@ -15,7 +16,6 @@ import javax.swing.table.TableColumnModel;
 
 public class PnPrescription extends JPanel implements Observer {
     JPanel pnMain, pnTitle, pnInput, pnButton, pnTable, pnTablePrescription;
-    Font font, fontMenu;
     private DefaultTableModel dtmPrescription;
     private JTable tbPrescription;
     private JLabel lbIdPatient, lbFilter;
@@ -28,24 +28,28 @@ public class PnPrescription extends JPanel implements Observer {
         addControls();
     }
 
-    public Visit getVisitModel() {
-        return visitModel;
-    }
-
     public void setVisitModel(Visit visitModel) {
         this.visitModel = visitModel;
     }
 
-    // Viết code tạo view trong đây
+    public JTextField getTfInput() {
+        return tfInput;
+    }
+
+    public JComboBox<String> getCbbFilter() {
+        return cbbFilter;
+    }
+
+
+    public DefaultTableModel getDtmPrescription() {
+        return dtmPrescription;
+    }
+
+    public JTable getTbPrescription() {
+        return tbPrescription;
+    }
+
     public void addControls() {
-        font = new Font("Tahoma", Font.PLAIN, 20);
-        fontMenu = new Font("Tahoma", Font.PLAIN, 14);
-        this.setLayout(new BorderLayout());
-
-        /*
-         * ======================= PANEL CARD =======================
-         */
-
         this.setLayout(new BorderLayout());
         pnMain = new JPanel();
         pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
@@ -66,16 +70,16 @@ public class PnPrescription extends JPanel implements Observer {
         lbFilter = new JLabel("Lọc theo");
         lbIdPatient = new JLabel("Nhập thông tin tìm kiếm");
 
-        lbFilter.setFont(font);
-        lbIdPatient.setFont(font);
+        lbFilter.setFont(FontConstant.setFontPlain(20));
+        lbIdPatient.setFont(FontConstant.setFontPlain(20));
 
         cbbFilter = new JComboBox<>();
         cbbFilter.addItem("Mã bệnh nhân");
         cbbFilter.addItem("Số điện thoại");
         tfInput = new JTextField(24);
 
-        cbbFilter.setFont(font);
-        tfInput.setFont(font);
+        cbbFilter.setFont(FontConstant.setFontPlain(20));
+        tfInput.setFont(FontConstant.setFontPlain(20));
 
         JPanel pnFilter = new JPanel();
         pnFilter.add(lbFilter);
@@ -108,13 +112,13 @@ public class PnPrescription extends JPanel implements Observer {
         tbPrescription = new JTable();
         tbPrescription = new TableCustom(dtmPrescription);
 
-        DefaultTableCellRenderer renderer1 = new DefaultTableCellRenderer();
-        renderer1.setHorizontalAlignment(JLabel.CENTER);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
 
-        tbPrescription.getColumnModel().getColumn(0).setCellRenderer(renderer1);
-        tbPrescription.getColumnModel().getColumn(1).setCellRenderer(renderer1);
-        tbPrescription.getColumnModel().getColumn(2).setCellRenderer(renderer1);
-        tbPrescription.getColumnModel().getColumn(3).setCellRenderer(renderer1);
+        tbPrescription.getColumnModel().getColumn(0).setCellRenderer(renderer);
+        tbPrescription.getColumnModel().getColumn(1).setCellRenderer(renderer);
+        tbPrescription.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        tbPrescription.getColumnModel().getColumn(3).setCellRenderer(renderer);
 
         TableColumnModel columnModel = tbPrescription.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(60);
@@ -131,32 +135,12 @@ public class PnPrescription extends JPanel implements Observer {
     public void update() {
         dtmPrescription.setRowCount(0);
         for (Visit visit : visitModel.getVisits()) {
-            Vector<Object> vec = new Vector<>();
+            Vector<Object> vec = new Vector<Object>();
             vec.add(visit.getVisitID());
             vec.add(visit.getDate().toString());
             vec.add(visit.getSymptom());
             vec.add(visit.getConclusion());
             dtmPrescription.addRow(vec);
         }
-    }
-
-    public JTextField getTfInput() {
-        return tfInput;
-    }
-
-    public JComboBox<String> getCbbFilter() {
-        return cbbFilter;
-    }
-
-    public JPanel getPnMain() {
-        return pnMain;
-    }
-
-    public DefaultTableModel getDtmPrescription() {
-        return dtmPrescription;
-    }
-
-    public JTable getTbPrescription() {
-        return tbPrescription;
     }
 }
