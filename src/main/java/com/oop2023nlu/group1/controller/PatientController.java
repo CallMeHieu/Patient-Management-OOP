@@ -47,7 +47,7 @@ public class PatientController {
                     } else id = "BN" + (patientModel.getPatients().size() + 1);
                     Patient patient = getPatientModel();
                     patient.setId(id);
-                    List<Visit> visits = new ArrayList<>();
+                    ArrayList<Visit> visits = new ArrayList<>();
                     patient.setVisits(visits);
                     patientModel.addPatient(patient);
                     pnItemInfoPatient.resetForm();
