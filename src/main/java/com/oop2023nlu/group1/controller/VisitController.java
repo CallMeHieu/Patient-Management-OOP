@@ -91,25 +91,30 @@ public class VisitController {
         pnPrescription.getTfInput().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String input = pnPrescription.getTfInput().getText();
-                String type = pnPrescription.getCbbFilter().getSelectedItem() + "";
-                List<Visit> visits = visitModel.getVisits();
-                if (type.equalsIgnoreCase("Mã bệnh nhân")) {
-                    visits = visitModel.getVisitByIdPatient(input);
+                try {
+                    String input = pnPrescription.getTfInput().getText();
+                    String type = pnPrescription.getCbbFilter().getSelectedItem() + "";
+                    List<Visit> visits = visitModel.getVisits();
+                    if (type.equalsIgnoreCase("Mã bệnh nhân")) {
+                        visits = visitModel.getVisitByIdPatient(input.toUpperCase());
+                    }
+                    if (type.equalsIgnoreCase("Số điện thoại")) {
+                        visits = visitModel.getVisitByNumberPhone(input);
+                    }
+                    pnPrescription.getDtmPrescription().setRowCount(0);
+                    Set<Visit> visitSet = new HashSet<>(visits);
+                    for (Visit visit : visitSet) {
+                        Vector<Object> vec = new Vector<>();
+                        vec.add(visit.getVisitID());
+                        vec.add(visit.getDate().toString());
+                        vec.add(visit.getSymptom());
+                        vec.add(visit.getConclusion());
+                        pnPrescription.getDtmPrescription().addRow(vec);
+                    }
+                } catch (NullPointerException exception) {
+                    JOptionPane.showMessageDialog(null, "No data");
                 }
-                if (type.equalsIgnoreCase("Số điện thoại")) {
-                    visits = visitModel.getVisitByNumberPhone(input);
-                }
-                pnPrescription.getDtmPrescription().setRowCount(0);
-                Set<Visit> visitSet = new HashSet<>(visits);
-                for (Visit visit : visitSet) {
-                    Vector<Object> vec = new Vector<>();
-                    vec.add(visit.getVisitID());
-                    vec.add(visit.getDate().toString());
-                    vec.add(visit.getSymptom());
-                    vec.add(visit.getConclusion());
-                    pnPrescription.getDtmPrescription().addRow(vec);
-                }
+
             }
         });
     }
