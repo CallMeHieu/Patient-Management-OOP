@@ -1,5 +1,4 @@
 package com.oop2023nlu.group1.dao;
-
 import com.oop2023nlu.group1.model.Patient;
 import com.oop2023nlu.group1.model.Visit;
 import org.hibernate.Session;
