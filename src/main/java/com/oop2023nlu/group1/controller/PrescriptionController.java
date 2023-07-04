@@ -11,7 +11,6 @@ import com.oop2023nlu.group1.view.dialog.DialogPrescription;
 import com.oop2023nlu.group1.view.panel.sub.PnItemPrescriptions;
 
 import javax.swing.*;
-import javax.transaction.Transactional;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -55,7 +54,6 @@ public class PrescriptionController {
         PnItemPrescriptions panel = view.getPatientPanel().getPnItemPrescriptions();
         panel.btnSave.addActionListener(new ActionListener() {
             @Override
-            @Transactional
             public void actionPerformed(ActionEvent e) {
                 String patientId = panel.getPatientId();
                 String symptom = panel.getSymptom();
@@ -68,9 +66,12 @@ public class PrescriptionController {
 
                 String visitID = visitModel.count() + 1 + "";
                 Visit visit = new Visit(visitID, new Date(), symptom, conclusion, prescription);
-                visit = visitModel.addVisit(visit);
+                visitModel.saveVisit(visit);
                 Patient patient = patientModel.findPatientById(patientId);
+                System.out.println("before add :" + patient.getVisits().size());
                 patient.getVisits().add(visit);
+                System.out.println("before add :" + patient.getVisits().size());
+
                 patientModel.updatePatient(patient);
                 JOptionPane.showMessageDialog(null, "Thành công");
                 ModelUtils.visit = visit;
@@ -79,6 +80,7 @@ public class PrescriptionController {
                 view.getPatientPanel().getPnItemInfoPatient().resetForm();
                 view.getPatientPanel().getPnItemDiagnostic().resetForm();
                 view.getPatientPanel().getPnItemPrescriptions().resetForm();
+                panel.getItems().clear();
                 view.changeScreen("1");
             }
         });

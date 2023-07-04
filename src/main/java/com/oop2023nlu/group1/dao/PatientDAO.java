@@ -80,23 +80,26 @@ public class PatientDAO {
     public static boolean updatePatient(Patient patient) {
         Patient patientInDB = findPatientById(patient.getId());
         if (patientInDB == null) {
+            System.out.println("Patient not found");
             return false;
         }else {
-            patient.getVisits().addAll(patientInDB.getVisits());
+            if(patient.getVisits().size() == 0){
+                patient.getVisits().addAll(patientInDB.getVisits());
+            }
         }
 
         Transaction transaction = null;
         try (Session session = HibernateUtils.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-
+            System.out.println("p :" + patient.getId() +" size : "+ patient.getVisits().size());
             session.update(patient);
             transaction.commit();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
         }
         return false;
     }

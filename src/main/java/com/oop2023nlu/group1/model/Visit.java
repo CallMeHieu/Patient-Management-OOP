@@ -50,7 +50,7 @@ public class Visit implements Subject {// Các lần khám bệnh
     }
 
     //	VISIT MODEL
-    public Visit addVisit(Visit visit) {
+    public Visit saveVisit(Visit visit) {
         Visit save = VisitDAO.saveVisit(visit);
         notifyObservers();
         return save;

@@ -154,4 +154,8 @@ public class Patient implements Subject {// bệnh nhân
     public String toString() {
         return "Patient [id=" + id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", yearOfBirth=";
     }
+
+    public Patient clone(Patient p) {
+        return new Patient(p.getId(), p.getName(), p.getAddress(), p.getPhone(), p.getYearOfBirth(), p.isGender(), p.getVisits());
+    }
 }
