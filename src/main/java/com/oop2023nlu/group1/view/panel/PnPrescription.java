@@ -15,7 +15,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 public class PnPrescription extends JPanel implements Observer {
-    JPanel pnMain, pnTitle, pnInput, pnButton, pnTable, pnTablePrescription;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JPanel pnMain, pnTitle, pnInput, pnButton, pnTable, pnTablePrescription;
     private DefaultTableModel dtmPrescription;
     private JTable tbPrescription;
     private JLabel lbIdPatient, lbFilter;

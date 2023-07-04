@@ -48,4 +48,21 @@ public class PrescriptionMedicineDAO {
         }
         return prescriptionMedicines;
     }
+
+    public static boolean isContains(String id) {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        session.beginTransaction();
+
+        boolean contains= session.createQuery("select count(*) from PrescriptionMedicine where id = :id", Long.class)
+                .setParameter("id", id)
+                .getSingleResult() > 0;
+
+        session.getTransaction().commit();
+        return contains;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isContains("6"));
+        System.out.println(isContains("10"));
+    }
 }

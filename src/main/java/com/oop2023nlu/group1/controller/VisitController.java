@@ -40,7 +40,6 @@ public class VisitController {
 
     private void show() {
         pnPrescription.getTbPrescription().addMouseListener(new MouseListener() {
-            @Override
             public void mouseClicked(MouseEvent e) {
                 int row = pnPrescription.getTbPrescription().getSelectedRow();
                 String idVisit = pnPrescription.getTbPrescription().getValueAt(row, 0) + "";
@@ -65,22 +64,18 @@ public class VisitController {
                 }
             }
 
-            @Override
             public void mousePressed(MouseEvent e) {
 
             }
 
-            @Override
             public void mouseReleased(MouseEvent e) {
 
             }
 
-            @Override
             public void mouseEntered(MouseEvent e) {
 
             }
 
-            @Override
             public void mouseExited(MouseEvent e) {
 
             }
@@ -89,22 +84,22 @@ public class VisitController {
 
     private void search() {
         pnPrescription.getTfInput().addActionListener(new ActionListener() {
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 try {
                     String input = pnPrescription.getTfInput().getText();
                     String type = pnPrescription.getCbbFilter().getSelectedItem() + "";
                     List<Visit> visits = visitModel.getVisits();
                     if (type.equalsIgnoreCase("Mã bệnh nhân")) {
-                        visits = visitModel.getVisitByIdPatient(input.toUpperCase());
+                        visits = visitModel.getVisitsByIdPatient(input.toUpperCase());
                     }
                     if (type.equalsIgnoreCase("Số điện thoại")) {
-                        visits = visitModel.getVisitByNumberPhone(input);
+                        visits = visitModel.getVisitsByNumberPhone(input);
                     }
                     pnPrescription.getDtmPrescription().setRowCount(0);
-                    Set<Visit> visitSet = new HashSet<>(visits);
+                    Set<Visit> visitSet = new HashSet(visits);
                     for (Visit visit : visitSet) {
-                        Vector<Object> vec = new Vector<>();
+                        Vector<Object> vec = new Vector();
                         vec.add(visit.getVisitID());
                         vec.add(visit.getDate().toString());
                         vec.add(visit.getSymptom());

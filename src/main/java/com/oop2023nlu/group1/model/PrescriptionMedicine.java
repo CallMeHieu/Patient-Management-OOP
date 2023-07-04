@@ -102,4 +102,8 @@ public class PrescriptionMedicine implements Subject {
 	public List<PrescriptionMedicine> findAllByVisitId(String idVisit){
 		return PrescriptionMedicineDAO.findAllByVisitId(idVisit);
 	}
+
+	public boolean isContains(String id){
+		return PrescriptionMedicineDAO.isContains(id);
+	}
 }

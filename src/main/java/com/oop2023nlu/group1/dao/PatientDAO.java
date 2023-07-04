@@ -125,4 +125,21 @@ public class PatientDAO {
         return null;
     }
 
+    public static boolean isContains(String id) {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        session.beginTransaction();
+
+        boolean contains = session.createQuery("select count(*) from Patient where id = :id", Long.class)
+                .setParameter("id", id)
+                .getSingleResult() > 0;
+
+        session.getTransaction().commit();
+        return contains;
+    }
+    public static void main(String[] args) {
+        System.out.println(isContains("6"));
+        System.out.println(isContains("10"));
+        System.out.println(isContains("BN4"));
+        System.out.println(isContains("BN10"));
+    }
 }

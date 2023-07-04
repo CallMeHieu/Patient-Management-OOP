@@ -147,7 +147,7 @@ public class Container extends JFrame {
     }
 
     public void addEvent() {
-        for (JLabel jLabel : listMenu) {
+        for (final JLabel jLabel : listMenu) {
             jLabel.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {

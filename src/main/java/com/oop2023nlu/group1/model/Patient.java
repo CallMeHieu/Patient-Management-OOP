@@ -77,6 +77,10 @@ public class Patient implements Subject {// bệnh nhân
         }
         return false;
     }
+
+    public boolean isContains(String id) {
+        return PatientDAO.isContains(id);
+    }
     @Override
     public void registerObserver(Observer o) {
         observers.add(o);

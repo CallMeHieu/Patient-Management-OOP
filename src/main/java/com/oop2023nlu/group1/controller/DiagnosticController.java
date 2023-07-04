@@ -32,7 +32,6 @@ public class DiagnosticController {
 
     private void nextToScreenPrescriptions() {
         pnItemDiagnostic.getBtnContinue().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 if (pnItemDiagnostic.getTaSymptom().getText().equals("")
                         || pnItemDiagnostic.getTaConclusion().getText().equals("")) {
@@ -52,7 +51,6 @@ public class DiagnosticController {
 
     private void backToScreenPatient() {
         pnItemDiagnostic.getBtnBack().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 view.changeScreen("1");
             }

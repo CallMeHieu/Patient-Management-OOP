@@ -43,7 +43,6 @@ public class PrescriptionController {
 
     private void backScreen() {
         view.getPatientPanel().getPnItemPrescriptions().btnBack.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 view.changeScreen("2");
             }
@@ -51,26 +50,35 @@ public class PrescriptionController {
     }
 
     private void saveVisit() {
-        PnItemPrescriptions panel = view.getPatientPanel().getPnItemPrescriptions();
+        final PnItemPrescriptions panel = view.getPatientPanel().getPnItemPrescriptions();
         panel.btnSave.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 String patientId = panel.getPatientId();
                 String symptom = panel.getSymptom();
                 String conclusion = panel.getConclusion();
                 List<PrescriptionMedicine> prescription = panel.getItems();
                 for (PrescriptionMedicine item : prescription) {
-                    item.setId(prescriptionMedicineModel.count() + 1 + "");
+                    int itemId = prescriptionMedicineModel.count() + 1;
+                    while (true) {
+                        if (prescriptionMedicineModel.isContains(String.valueOf(itemId))) itemId += 1;
+                        else break;
+                    }
+                    item.setId(String.valueOf(itemId));
                     item = prescriptionMedicineModel.addPrescriptionMedicine(item);
                 }
 
-                String visitID = visitModel.count() + 1 + "";
-                Visit visit = new Visit(visitID, new Date(), symptom, conclusion, prescription);
+                int visitID = visitModel.count() + 1;
+                while (true) {
+                    if (visitModel.isConstain(String.valueOf(visitID))) visitID += 1;
+                    else break;
+                }
+                Visit visit = new Visit(String.valueOf(visitID), new Date(), symptom, conclusion, prescription);
+                System.out.println("IdVisit : " + visit.getVisitID());
                 visitModel.saveVisit(visit);
                 Patient patient = patientModel.findPatientById(patientId);
                 System.out.println("before add :" + patient.getVisits().size());
                 patient.getVisits().add(visit);
-                System.out.println("before add :" + patient.getVisits().size());
+                System.out.println("after add :" + patient.getVisits().size());
 
                 patientModel.updatePatient(patient);
                 JOptionPane.showMessageDialog(null, "Thành công");
@@ -87,9 +95,9 @@ public class PrescriptionController {
     }
 
     private void getSelectedMedicines() {
-        List<PrescriptionMedicine> items = view.getPatientPanel().getPnItemPrescriptions().getItems();
+        final List<PrescriptionMedicine> items = view.getPatientPanel().getPnItemPrescriptions().getItems();
         view.getPatientPanel().getPnItemPrescriptions().getBtnGetMedicines().addActionListener(new ActionListener() {
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 StringBuilder result = new StringBuilder();
                 for (PrescriptionMedicine item : items) {
@@ -104,14 +112,13 @@ public class PrescriptionController {
 
     private void searchMedicine() {
         this.view.getPatientPanel().getPnItemPrescriptions().getTfSearch().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 String charName = view.getPatientPanel().getPnItemPrescriptions().getTfSearch().getText();
                 List<Medicine> medicines = MedicineDAO.findAllByCharName(charName);
                 view.getPatientPanel().getPnItemPrescriptions().getDtmPrescription().setRowCount(0);
                 List<PrescriptionMedicine> items = view.getPatientPanel().getPnItemPrescriptions().getItems();
                 for (Medicine medicine : medicines) {
-                    Vector<Object> vec = new Vector<>();
+                    Vector<Object> vec = new Vector<Object>();
                     vec.add(medicine.getMedicineID());
                     vec.add(medicine.getName());
                     vec.add(medicine.getUnit());

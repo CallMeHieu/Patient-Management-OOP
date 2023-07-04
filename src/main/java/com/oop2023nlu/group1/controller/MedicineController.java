@@ -36,7 +36,6 @@ public class MedicineController {
 
     private void add() {
         pnMedicine.getBtnAdd().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 if (pnMedicine.getTfId().getText().equals("")) {
                     String id = "";
@@ -62,7 +61,6 @@ public class MedicineController {
 
     private void update() {
         pnMedicine.getBtnEdit().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 if (medicineModel.findMedicineById(pnMedicine.getTfId().getText()) != null) {
                     Medicine medicine = getMedicineModel();
@@ -79,7 +77,6 @@ public class MedicineController {
 
     private void delete() {
         pnMedicine.getBtnRemove().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc là xóa loại thuốc này", "Xác nhận",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -100,13 +97,13 @@ public class MedicineController {
 
     private void search() {
         pnMedicine.getTfSearch().addActionListener(new ActionListener() {
-            @Override
+   
             public void actionPerformed(ActionEvent e) {
                 String charName = pnMedicine.getTfSearch().getText();
                 List<Medicine> medicines = medicineModel.findAllByCharName(charName);
                 pnMedicine.getDtmMedicine().setRowCount(0);
                 for (Medicine medicine : medicines) {
-                    Vector<Object> vec = new Vector<>();
+                    Vector<Object> vec = new Vector();
                     vec.add(medicine.getMedicineID());
                     vec.add(medicine.getName());
                     vec.add(medicine.getUnit());

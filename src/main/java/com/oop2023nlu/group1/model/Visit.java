@@ -24,7 +24,7 @@ public class Visit implements Subject {// Các lần khám bệnh
     private Date date;// ngày khám
     private String symptom;// danh sách chuẩn đoán bệnh
     private String conclusion;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "visitID")
     private List<PrescriptionMedicine> prescription;
 
@@ -104,18 +104,20 @@ public class Visit implements Subject {// Các lần khám bệnh
         return visits;
     }
 
-    public List<Visit> getVisitByIdPatient(String idPatient) {
+    public List<Visit> getVisitsByIdPatient(String idPatient) {
         List<Visit> visits = VisitDAO.findAllVisitByPatient(idPatient);
         Collections.sort(visits, DATE_DESCENDING_COMPARATOR);
         return visits;
     }
 
-    public List<Visit> getVisitByNumberPhone(String numberPhone) {
+    public List<Visit> getVisitsByNumberPhone(String numberPhone) {
         List<Visit> visits = VisitDAO.findAllVisitByPatientPhone(numberPhone);
         Collections.sort(visits, DATE_DESCENDING_COMPARATOR);
         return visits;
     }
-
+    public boolean isConstain(String visitID) {
+        return VisitDAO.isContainVisit(visitID);
+    }
     public List<PrescriptionMedicine> getPrescription() {
         return prescription;
     }

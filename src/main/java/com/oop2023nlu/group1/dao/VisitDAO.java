@@ -87,4 +87,21 @@ public class VisitDAO {
         }
         return visit;
     }
+
+    public static boolean isContainVisit(String id) {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        session.beginTransaction();
+
+        boolean containsVisit = session.createQuery("select count(*) from Visit where visitID = :id", Long.class)
+                .setParameter("id", id)
+                .getSingleResult() > 0;
+
+        session.getTransaction().commit();
+        return containsVisit;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isContainVisit("6"));
+        System.out.println(isContainVisit("10"));
+    }
 }

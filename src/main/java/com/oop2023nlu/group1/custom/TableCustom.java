@@ -35,7 +35,7 @@ public class TableCustom extends JTable {
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		this.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 
-		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(defaultTableModel);
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter(defaultTableModel);
 		this.setRowSorter(sorter);
 	}
 }

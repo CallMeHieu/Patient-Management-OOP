@@ -23,6 +23,7 @@ public class PatientController {
         this.patientModel = patientModel;
         this.pnItemInfoPatient = view.getPatientPanel().getPnItemInfoPatient();
         this.patientModel.registerObserver(pnItemInfoPatient);
+        this.patientModel.registerObserver(view.getPrescriptionPanel());
         this.view.getPatientPanel().getPnItemInfoPatient().setModel(patientModel);
         this.patientModel.notifyObservers();
         initViewListeners();
@@ -38,16 +39,25 @@ public class PatientController {
 
     private void add() {
         pnItemInfoPatient.getBtnAdd().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 if (pnItemInfoPatient.getTfId().getText().equals("")) {
                     String id;
                     if (patientModel.getPatients() == null) {
                         id = "BN1";
-                    } else id = "BN" + (patientModel.getPatients().size() + 1);
+                    } else {
+                        int countPatient = patientModel.getPatients().size() + 1;
+                        while (true){
+                            if(patientModel.isContains("BN"+countPatient)){
+                                countPatient += 1;
+                            }else break;
+                        }
+                        id = "BN" + countPatient;
+                    }
+
+
                     Patient patient = getPatientModel();
                     patient.setId(id);
-                    ArrayList<Visit> visits = new ArrayList<>();
+                    ArrayList<Visit> visits = new ArrayList<Visit>();
                     patient.setVisits(visits);
                     patientModel.addPatient(patient);
                     pnItemInfoPatient.resetForm();
@@ -61,7 +71,6 @@ public class PatientController {
 
     private void update() {
         pnItemInfoPatient.getBtnSave().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 if (patientModel.findPatientById(pnItemInfoPatient.getTfId().getText()) != null) {
                     if (patientModel.updatePatient(getPatientModel()))
@@ -76,7 +85,6 @@ public class PatientController {
 
     private void delete() {
         pnItemInfoPatient.getBtnRemove().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc là xóa bệnh nhân này", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
@@ -94,7 +102,6 @@ public class PatientController {
 
     private void diagnose() {
         pnItemInfoPatient.getBtnDiagnostic().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 if (pnItemInfoPatient.getTfId().getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn bệnh nhân");
@@ -111,7 +118,6 @@ public class PatientController {
 
     private void search() {
         pnItemInfoPatient.getTfSearch().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 String charName = pnItemInfoPatient.getTfSearch().getText();
                 List<Patient> patients = PatientDAO.findAllByCharName(charName);
